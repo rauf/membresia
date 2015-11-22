@@ -1,0 +1,64 @@
+app.global.title = Membresia
+
+app.menu.logout = logout
+app.menu.profile = profile
+app.home.welcome = Welcome back
+app.menu.user.title = Users
+app.menu.user.list = List all users
+app.menu.user.create = Create a new user
+app.menu.member.list = List all members
+app.menu.member.create = Create a new member
+
+adminUser.form.validation.password = No password was given.
+adminUser.form.validation.password.length = Given password is less than five characters.
+
+member.form.global.new.title = Create new member
+member.form.global.edit.title = Edit member
+
+member.form.validation.name = No name was given.
+member.form.validation.lastName  = No last name was given.
+member.form.validation.nif = No nif was given.
+member.form.validation.email = No email was given or format is invalid.
+member.form.validation.address = No address was given.
+member.form.validation.city = No city was given.
+member.form.validation.state = No state/province was given.
+member.form.validation.country = No country was given.
+member.form.validation.cp = No postal code was given.
+member.form.validation.phone = No phone was given.
+member.form.validation.subscription = Unknown subscription: {0}
+
+member.form.label.name = Name
+member.form.label.lastName = Surname
+member.form.label.nif = Identification number
+member.form.label.email = Email
+member.form.label.address = Address
+member.form.label.city = City
+member.form.label.state = State/Province
+member.form.label.cp = Postal Code
+member.form.label.country = Country
+member.form.label.phone = Phone
+member.form.label.subscriptions = Subscriptions
+
+member.form.placeholder.name =
+member.form.placeholder.lastName =
+member.form.placeholder.nif =
+member.form.placeholder.email =
+member.form.placeholder.address =
+member.form.placeholder.city =
+member.form.placeholder.state =
+member.form.placeholder.cp =
+member.form.placeholder.country =
+member.form.placeholder.phone =
+member.form.placeholder.subscriptions =
+
+member.form.helper.name = Please enter your name
+member.form.helper.lastName = Please enter your last name
+member.form.helper.nif = Please enter your nif
+member.form.helper.email = Please enter your email
+member.form.helper.address = Please enter your physical address
+member.form.helper.city = Please enter your city
+member.form.helper.state = Please enter your state or province of residency
+member.form.helper.country = Please enter your country of residency
+member.form.helper.cp = Please enter your address postal code
+member.form.helper.phone = Please enter a contact phone number
+member.form.helper.subscriptions = Please select the desired subscriptions

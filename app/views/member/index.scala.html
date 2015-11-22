@@ -1,0 +1,135 @@
+@(message: String)
+
+    @import play.i18n._;
+    @import views.html.common._
+
+    @main(Messages.get("app.global.title") + " - Member's List") {
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="section-subtitle">Member's List</h2>
+            </div>
+        </div>
+
+        <section class="search-engine">
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-10 col-xs-12">
+                                <label for="keyword" class="sr-only">Search by</label>
+                                <input class="form-control" type="input" name="keyword" id="keyword" placeholder="Search by...">
+                            </div>
+                            <div class="col-md-2 col-xs-12">
+                                <button type="submit" class="btn btn-default">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="component-list">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>City</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="item-id">MEM-0001</th>
+                                <td class="item-title">Julio M. Fernandez</td>
+                                <td class="item-info">0650417486</td>
+                                <td class="item-info">Amsterdam</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="#" class="fa fa-trash-o">&nbsp</a>
+                                        <a href="#" class="fa fa-money">&nbsp;</a>
+                                        <a href="#" class="fa fa-pencil-square-o">&nbsp</a>
+                                        <a href="#" class="fa fa-folder-open-o">&nbsp;</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-id">MEM-0001</th>
+                                <td class="item-title">Julio M. Fernandez</td>
+                                <td class="item-info">0650417486</td>
+                                <td class="item-info">Amsterdam</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="#" class="fa fa-trash-o">&nbsp</a>
+                                        <a href="#" class="fa fa-money">&nbsp;</a>
+                                        <a href="#" class="fa fa-pencil-square-o">&nbsp</a>
+                                        <a href="#" class="fa fa-folder-open-o">&nbsp;</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-id">MEM-0001</th>
+                                <td class="item-title">Julio M. Fernandez</td>
+                                <td class="item-info">0650417486</td>
+                                <td class="item-info">Amsterdam</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="#" class="fa fa-trash-o">&nbsp</a>
+                                        <a href="#" class="fa fa-money">&nbsp;</a>
+                                        <a href="#" class="fa fa-pencil-square-o">&nbsp</a>
+                                        <a href="#" class="fa fa-folder-open-o">&nbsp;</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-id">MEM-0001</th>
+                                <td class="item-title">Julio M. Fernandez</td>
+                                <td class="item-info">0650417486</td>
+                                <td class="item-info">Amsterdam</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="#" class="fa fa-trash-o">&nbsp</a>
+                                        <a href="#" class="fa fa-money">&nbsp;</a>
+                                        <a href="#" class="fa fa-pencil-square-o">&nbsp</a>
+                                        <a href="#" class="fa fa-folder-open-o">&nbsp;</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-id">MEM-0001</th>
+                                <td class="item-title">Julio M. Fernandez</td>
+                                <td class="item-info">0650417486</td>
+                                <td class="item-info">Amsterdam</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="#" class="fa fa-trash-o">&nbsp</a>
+                                        <a href="#" class="fa fa-money">&nbsp;</a>
+                                        <a href="#" class="fa fa-pencil-square-o">&nbsp</a>
+                                        <a href="#" class="fa fa-folder-open-o">&nbsp;</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="item-id">MEM-0001</th>
+                                <td class="item-title">Julio M. Fernandez</td>
+                                <td class="item-info">0650417486</td>
+                                <td class="item-info">Amsterdam</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="#" class="fa fa-trash-o">&nbsp</a>
+                                        <a href="#" class="fa fa-money">&nbsp;</a>
+                                        <a href="#" class="fa fa-pencil-square-o">&nbsp</a>
+                                        <a href="#" class="fa fa-folder-open-o">&nbsp;</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    }

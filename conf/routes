@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET           /                            controllers.Member.index()
+GET           /all-members                 controllers.Member.index()
+GET           /show-member/:token          controllers.Member.show(token: String)
+GET           /create-member               controllers.Member.create()
+POST          /save-member                 controllers.Member.save()
+GET           /edit-member                 controllers.Member.edit(token: String)
+PUT           /update-member               controllers.Member.update()
+DELETE        /delete-member/:token        controllers.Member.remove(token: String)
+GET           /make-payment                controllers.Member.makePayment(token: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

@@ -1,0 +1,34 @@
+@(
+        field: Field,
+        label: String = "",
+        placeholder: String = "",
+        help: String = "",
+        error: String = "",
+        required: Boolean = false,
+        fieldType: String = "input"
+)
+
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <label class="control-label">@label @if(required) {(*)}</label>
+    <div class="control-item">
+        <input
+        type="@fieldType"
+        class="form-control"
+        id="@field.id"
+        name="@field.name"
+        value="@field.value.getOrElse("")"
+            @if(placeholder) {
+                placeholder="@placeholder"
+            }
+            @if(required != "") {
+                required="required"
+                oninvalid="this.setCustomValidity('@error')"
+                onchange="this.setCustomValidity('')"
+        }
+        />
+        <span class="help-block">@help</span>
+        <span class="error-block">@{
+            field.error.map { error => error.message }
+        }</span>
+    </div>
+</div>

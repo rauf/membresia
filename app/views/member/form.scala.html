@@ -1,0 +1,175 @@
+@import views.member.MemberFormData
+
+@(
+        title: String,
+        memberForm: play.data.Form[MemberFormData],
+        subscriptions: Map[String, Boolean]
+)
+
+@import play.i18n._;
+@import views.html.common._
+@import views.html.bootstrap._
+
+
+@main(Messages.get("app.global.title") + " - " + title) {
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="section-subtitle">@title</h2>
+        </div>
+    </div>
+
+    @if(flash.containsKey("error")) {
+        <div class="row">
+            <div class="col-md-12">
+                <div id="error-message" class="alert alert-danger" role="alert">
+                @flash.get("error")
+                </div>
+            </div>
+        </div>
+    }
+
+    @if(flash.containsKey("success")) {
+        <div class="row">
+            <div class="col-md-12">
+                <div id="success-message" class="alert alert-success" role="alert">
+                @flash.get("success")
+                </div>
+            </div>
+        </div>
+    }
+
+    @helper.form(action = routes.Member.save()) {
+
+        <div class="row">
+
+            <div class="col-md-3">
+            @input(memberForm("name"),
+                label = Messages.get("member.form.label.name"),
+                placeholder = Messages.get("member.form.placeholder.name"),
+                help = Messages.get("member.form.helper.name"),
+                error = Messages.get("member.form.validation.name"),
+
+                required = true
+            )
+            </div>
+
+            <div class="col-md-4">
+            @input(memberForm("lastName"),
+                label = Messages.get("member.form.label.lastName"),
+                placeholder = Messages.get("member.form.placeholder.lastName"),
+                help = Messages.get("member.form.helper.lastName"),
+                error = Messages.get("member.form.validation.lastName"),
+                required = true
+            )
+            </div>
+
+            <div class="col-md-3">
+            @input(memberForm("nif"),
+                label = Messages.get("member.form.label.nif"),
+                placeholder = Messages.get("member.form.placeholder.nif"),
+                help = Messages.get("member.form.helper.nif"),
+                error = Messages.get("member.form.validation.nif"),
+                required = true
+            )
+            </div>
+
+            <div class="col-md-5">
+            @input(memberForm("Email"),
+                label = Messages.get("member.form.label.email"),
+                placeholder = Messages.get("member.form.placeholder.email"),
+                help = Messages.get("member.form.helper.email"),
+                error = Messages.get("member.form.validation.email"),
+                required = true,
+                fieldType = "email"
+            )
+            </div>
+
+            <div class="col-md-4">
+            @input(memberForm("phone"),
+                label = Messages.get("member.form.label.phone"),
+                placeholder = Messages.get("member.form.placeholder.phone"),
+                help = Messages.get("member.form.helper.phone"),
+                error = Messages.get("member.form.validation.phone"),
+                required = true
+            )
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+            @input(memberForm("address"),
+                label = Messages.get("member.form.label.address"),
+                placeholder = Messages.get("member.form.placeholder.address"),
+                help = Messages.get("member.form.helper.address"),
+                error = Messages.get("member.form.validation.address"),
+                required = true
+            )
+            </div>
+
+            <div class="col-md-4">
+            @input(memberForm("city"),
+                label = Messages.get("member.form.label.city"),
+                placeholder = Messages.get("member.form.placeholder.city"),
+                help = Messages.get("member.form.helper.city"),
+                error = Messages.get("member.form.validation.city"),
+                required = true
+            )
+            </div>
+
+            <div class="col-md-4">
+            @input(memberForm("state"),
+                label = Messages.get("member.form.label.state"),
+                placeholder = Messages.get("member.form.placeholder.state"),
+                help = Messages.get("member.form.helper.state"),
+                error = Messages.get("member.form.validation.state"),
+                required = true
+            )
+            </div>
+
+            <div class="col-md-4">
+            @input(memberForm("country"),
+                label = Messages.get("member.form.label.country"),
+                placeholder = Messages.get("member.form.placeholder.country"),
+                help = Messages.get("member.form.helper.country"),
+                error = Messages.get("member.form.validation.country"),
+                required = true
+            )
+            </div>
+
+            <div class="col-md-4">
+            @input(memberForm("cp"),
+                label = Messages.get("member.form.label.cp"),
+                placeholder = Messages.get("member.form.placeholder.cp"),
+                help = Messages.get("member.form.helper.cp"),
+                error = Messages.get("member.form.validation.cp"),
+                required = true
+            )
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4">
+            @checkboxes(memberForm("subscriptions"),
+                label = Messages.get("member.form.label.subscriptions"),
+                checkboxMap = subscriptions,
+                help = Messages.get("member.form.helper.subscriptions")
+            )
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-offset-9 col-md-3">
+                <div class="form-group">
+                    <button id="submit" type="submit" value="Submit" class="btn btn-primary">Submit</button>
+                    <button id="cancel" class="btn cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    }
+}

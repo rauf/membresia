@@ -1,0 +1,25 @@
+@import play.i18n._
+
+<nav class="nav-main">
+    <div class="nav-item">
+        <strong>@Messages.get("app.menu.user.title")</strong>
+        <a href="#">@Messages.get("app.menu.user.list")</a>
+        <a href="#">@Messages.get("app.menu.user.create")</a>
+    </div>
+    <div class="nav-item">
+        <strong>@Messages.get("app.menu.member.title")</strong>
+        <a href="@routes.Member.index()">@Messages.get("app.menu.member.list")</a>
+        <a href="@routes.Member.create()">@Messages.get("app.menu.member.create")</a>
+    </div>
+    <div class="nav-item">
+        <strong>@Messages.get("app.menu.subscription.title")</strong>
+        <a href="#">@Messages.get("app.menu.subscription.list")</a>
+        <a href="#">@Messages.get("app.menu.subscription.create")</a>
+    </div>
+    <div class="nav-item">
+        <strong>@Messages.get("app.menu.message.title")</strong>
+        <a href="#">@Messages.get("app.menu.message.send")</a>
+        <a href="#">@Messages.get("app.menu.messageTemplate.list")</a>
+        <a href="#">@Messages.get("app.menu.messageTemplate.create")</a>
+    </div>
+</nav>
