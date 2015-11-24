@@ -9,7 +9,7 @@ import com.avaje.ebean.Model;
 
 import play.data.format.*;
 import play.data.validation.*;
-import views.member.MemberFormData;
+import services.MemberFormData;
 
 @Entity
 @Table(name = "subscrition")
@@ -56,7 +56,7 @@ public class Subscription extends Model {
         List<Subscription> allSubscriptions = new ArrayList<>();
         Map<String, Boolean> subscriptionMap = new HashMap<String, Boolean>();
         for (Subscription subscription : allSubscriptions) {
-            subscriptionMap.put(subscription.title, (member != null && member.subscriptions.contains(subscription.title)));
+            subscriptionMap.put(subscription.title, (member != null && member.getSubscriptions().contains(subscription.title)));
         }
         return subscriptionMap;
     }
@@ -64,5 +64,85 @@ public class Subscription extends Model {
     @Override
     public String toString() {
         return String.format("[Subscription %s]", this.title);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public String getPeriocity() {
+        return periocity;
+    }
+
+    public void setPeriocity(String periocity) {
+        this.periocity = periocity;
+    }
+
+    public Date getDueDatePeriod() {
+        return dueDatePeriod;
+    }
+
+    public void setDueDatePeriod(Date dueDatePeriod) {
+        this.dueDatePeriod = dueDatePeriod;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public List<Installment> getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(List<Installment> installments) {
+        this.installments = installments;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 }

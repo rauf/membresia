@@ -1,0 +1,21 @@
+@()
+
+@if(flash.containsKey("error")) {
+    <div class="row">
+        <div class="col-md-12">
+            <div id="error-message" class="alert alert-danger" role="alert">
+            @flash.get("error")
+            </div>
+        </div>
+    </div>
+}
+
+@if(flash.containsKey("success")) {
+    <div class="row">
+        <div class="col-md-12">
+            <div id="success-message" class="alert alert-success" role="alert">
+            @flash.get("success")
+            </div>
+        </div>
+    </div>
+}

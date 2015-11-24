@@ -1,0 +1,12 @@
+@()
+
+@import play.i18n.Messages;
+
+<div class="row">
+    <div class="col-md-offset-9 col-md-3">
+        <div class="form-group">
+            <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.submit")</button>
+            <a id="cancel" href="@routes.MemberController.index()" class="btn cancel">@Messages.get("app.global.form.cancel")</a>
+        </div>
+    </div>
+</div>

@@ -9,8 +9,22 @@ app.menu.user.create = Create a new user
 app.menu.member.list = List all members
 app.menu.member.create = Create a new member
 
+app.global.validation.message = Please correct errors above.
+app.global.form.submit = Save
+app.global.form.cancel = Cancel
+
+app.common.form.select.default = Please select a value
+
 adminUser.form.validation.password = No password was given.
 adminUser.form.validation.password.length = Given password is less than five characters.
+
+member.list.global.title = Members' List
+member.list.search.label = Search by
+member.list.search.placeholder = Search by...
+member.list.search.button = Search
+member.list.table.name = Name
+member.list.table.phone = Contact phone
+member.list.table.city = City (State)
 
 member.form.global.new.title = Create new member
 member.form.global.edit.title = Edit member
@@ -62,3 +76,7 @@ member.form.helper.country = Please enter your country of residency
 member.form.helper.cp = Please enter your address postal code
 member.form.helper.phone = Please enter a contact phone number
 member.form.helper.subscriptions = Please select the desired subscriptions
+
+member.form.save.message.notification = The member {0} has been created/updated correctly.
+member.form.remove.message.success = The selected member has been removed.
+member.form.remove.message.error = The selected member could not me removed.

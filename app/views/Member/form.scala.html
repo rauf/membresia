@@ -1,45 +1,24 @@
-@import views.member.MemberFormData
+@import services.MemberFormData
+@import java.util;
 
 @(
         title: String,
         memberForm: play.data.Form[MemberFormData],
-        subscriptions: Map[String, Boolean]
+        subscriptions: util.Map[String, Boolean]
 )
 
-@import play.i18n._;
+@import play.i18n.Messages;
 @import views.html.common._
 @import views.html.bootstrap._
 
 
 @main(Messages.get("app.global.title") + " - " + title) {
 
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="section-subtitle">@title</h2>
-        </div>
-    </div>
+    @common.pageHeader(title)
 
-    @if(flash.containsKey("error")) {
-        <div class="row">
-            <div class="col-md-12">
-                <div id="error-message" class="alert alert-danger" role="alert">
-                @flash.get("error")
-                </div>
-            </div>
-        </div>
-    }
+    @common.notification()
 
-    @if(flash.containsKey("success")) {
-        <div class="row">
-            <div class="col-md-12">
-                <div id="success-message" class="alert alert-success" role="alert">
-                @flash.get("success")
-                </div>
-            </div>
-        </div>
-    }
-
-    @helper.form(action = routes.Member.save()) {
+    @helper.form(action = routes.MemberController.save()) {
 
         <div class="row">
 
@@ -153,23 +132,21 @@
         <div class="row">
 
             <div class="col-md-4">
-            @checkboxes(memberForm("subscriptions"),
+            @select(memberForm("subscriptions"),
                 label = Messages.get("member.form.label.subscriptions"),
-                checkboxMap = subscriptions,
-                help = Messages.get("member.form.helper.subscriptions")
+                optionMap = subscriptions,
+                isMultiple = true,
+                help = Messages.get("member.form.helper.subscriptions"),
+                required = false
             )
             </div>
 
         </div>
 
+        @hidden(memberForm("id"))
+        @hidden(memberForm("token"))
+        @hidden(memberForm("memberId"))
 
-        <div class="row">
-            <div class="col-md-offset-9 col-md-3">
-                <div class="form-group">
-                    <button id="submit" type="submit" value="Submit" class="btn btn-primary">Submit</button>
-                    <button id="cancel" class="btn cancel">Cancel</button>
-                </div>
-            </div>
-        </div>
+        @common.formButtons()
     }
 }

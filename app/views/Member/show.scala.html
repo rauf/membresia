@@ -1,0 +1,9 @@
+@(member: Member)
+
+@import play.i18n._;
+@import views.html.common._
+
+@main(Messages.get("app.global.title") + " - " + member) {
+
+    @common.pageHeader(member.toString)
+}

@@ -1,25 +1,42 @@
-@(field: Field, label: String = "", optionMap: Map[String, Boolean], isMultiple: Boolean, help: String = "", required: Boolean = false)
+@import java.util
+@(
+        field: Field,
+        label: String,
+        optionMap: util.Map[String, Boolean],
+        isMultiple: Boolean,
+        help: String,
+        required: Boolean = false
+)
+    @import play.i18n.Messages;
 
-<div class="form-group @if(field.hasErrors) {has-error}">
-    <label class="control-label" for="@field.id">@label @if(required) {(*)}</label>
-    <div class="control-item">
-        <select
-        class="form-control"
-        id="@field.id"
-        name="@if(isMultiple) {@(field.name + "[]")} else {
-    @field.name
-    }"
-        @if(isMultiple) {multiple="multiple"}>
-        @if(!isMultiple) {
-            <option class="blank" value="">Please select a value</option>
-        }
-        @for( (optionName, isSelected) <- optionMap) {
-            <option id="@optionName" value="@optionName" @if(isSelected) {selected}>@optionName </option>
-        }
-        </select>
-        <span class="help-block">@help</span>
-        <span class="error-block">@{
-            field.error.map { error => error.message }
-        }</span>
+    <div class="form-group @if(field.hasErrors) {has-error}">
+        <label class="control-label" for="@field.id">
+            @label
+            @if(required) {(*)}
+        </label>
+        <div class="control-item">
+            <select
+            class="form-control"
+            id="@field.id"
+            name="@if(isMultiple) {(field.name + '[])} else {field.name}"
+                @if(isMultiple) {
+                    multiple="multiple"}>
+                @if(!isMultiple) {
+                    <option class="blank" value="">@Messages.get("app.common.form.select.default")</option>
+                }
+                @for( (optionName, isSelected) <- optionMap) {
+                    <option
+                    id="@optionName"
+                    value="@optionName"
+                        @if(isSelected) {
+                            selected="selected"}>
+                    @optionName
+                    </option>
+                }
+            </select>
+            <span class="help-block">@help</span>
+            <span class="error-block">@{
+                field.error.map { error => error.message }
+            }</span>
+        </div>
     </div>
-</div>

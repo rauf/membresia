@@ -28,6 +28,7 @@ create table installment (
 
 create table member (
   id                        bigint auto_increment not null,
+  member_id                 varchar(255),
   email                     varchar(255),
   name                      varchar(255),
   last_name                 varchar(255),
@@ -41,6 +42,7 @@ create table member (
   phone                     varchar(255),
   created_at                datetime(6) not null,
   updated_at                datetime(6) not null,
+  constraint uq_member_member_id unique (member_id),
   constraint uq_member_email unique (email),
   constraint uq_member_token unique (token),
   constraint pk_member primary key (id))
