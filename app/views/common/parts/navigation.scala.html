@@ -1,0 +1,58 @@
+@()
+
+@import play.i18n.Messages
+
+<ul class="sidebar-menu">
+    <li class="header">@Messages.get("app.global.menu.title")</li>
+    <li>
+        <a href="@routes.MemberController.index()">
+            <i class="fa fa-th"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>@Messages.get("app.menu.member.title")</span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.member.list")</a></li>
+            <li><a href="@routes.MemberController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.member.create")</a></li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>@Messages.get("app.menu.subscription.title")</span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.list")</a></li>
+            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.create")</a></li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>@Messages.get("app.menu.message.title")</span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.message.send")</a></li>
+            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.list")</a></li>
+            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.create")</a></li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>@Messages.get("app.menu.adminUser.title")</span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="@routes.AdminUserController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.list")</a></li>
+            <li><a href="@routes.AdminUserController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.create")</a></li>
+        </ul>
+    </li>
+</ul>

@@ -27,6 +27,7 @@ public class MemberFormData {
     protected String nif;
     protected String token;
     protected List<String> subscriptions = new ArrayList<>();
+    protected Integer mode;
 
     public Member member = new Member();
 
@@ -228,5 +229,13 @@ public class MemberFormData {
 
     public void setSubscriptions(List<String> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public Integer getMode() {
+        return mode;
+    }
+
+    public void setMode(Integer mode) {
+        this.mode = mode;
     }
 }

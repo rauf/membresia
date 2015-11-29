@@ -1,0 +1,61 @@
+@(title: String)(content: Html)
+
+    @import views.html.common.parts._;
+
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>Messages.get("app.global.title") - @title</title>
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+            <link rel="stylesheet" href="@routes.Assets.versioned("AdminLTE-2.3.0/bootstrap/css/bootstrap.min.css")">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+            <link rel="stylesheet" href="@routes.Assets.versioned("AdminLTE-2.3.0/dist/css/AdminLTE.min.css")">
+            <link rel="stylesheet" href="@routes.Assets.versioned("AdminLTE-2.3.0/dist/css/skins/_all-skins.min.css")">
+
+                <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+                <![endif]-->
+        </head>
+
+        <body class="hold-transition skin-blue sidebar-mini">
+            <div class="wrapper">
+                @header()
+                @sidebar()
+                <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>
+                    @title
+                    </h1>
+                </section>
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                        @content
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+                <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 0.9
+                </div>
+                <strong>Copyright &copy; 2015-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong>
+                All rights reserved.
+            </footer>
+
+
+                <div class="control-sidebar-bg"></div>
+            </div>
+
+            <script src="@routes.Assets.versioned("AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+            <script src="@routes.Assets.versioned("AdminLTE-2.3.0/bootstrap/js/bootstrap.min.js")"></script>
+            <script src="@routes.Assets.versioned("AdminLTE-2.3.0/plugins/fastclick/fastclick.min.js")"></script>
+            <script src="@routes.Assets.versioned("AdminLTE-2.3.0/dist/js/app.min.js")"></script>
+            <script src="@routes.Assets.versioned("AdminLTE-2.3.0/dist/js/demo.js")"></script>
+        </body>
+    </html>

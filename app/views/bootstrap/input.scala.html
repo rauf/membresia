@@ -5,7 +5,8 @@
         help: String = "",
         error: String = "",
         required: Boolean = false,
-        fieldType: String = "input"
+        fieldType: String = "input",
+        showValue: Boolean = true
 )
 
 <div class="form-group @if(field.hasErrors) {has-error}">
@@ -16,7 +17,9 @@
         class="form-control"
         id="@field.id"
         name="@field.name"
-        value="@field.value.getOrElse("")"
+            @if(showValue) {
+                value="@field.value.getOrElse("")"
+            }
             @if(placeholder) {
                 placeholder="@placeholder"
             }
@@ -26,7 +29,7 @@
                 onchange="this.setCustomValidity('')"
         }
         />
-        <span class="help-block">@help</span>
+        <p class="help-block">@help</p>
         <span class="error-block">@{
             field.error.map { error => error.message }
         }</span>

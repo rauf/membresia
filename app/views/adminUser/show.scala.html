@@ -1,0 +1,9 @@
+@(adminUser: AdminUser)
+
+    @import play.i18n._;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
+
+    @main(Messages.get("app.global.title") + " - " + adminUser) {
+
+    }

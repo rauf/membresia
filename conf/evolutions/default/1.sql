@@ -10,6 +10,7 @@ create table adminUser (
   name                      varchar(255),
   last_name                 varchar(255),
   token                     varchar(255),
+  password_raw              varchar(255),
   created_at                datetime(6) not null,
   updated_at                datetime(6) not null,
   constraint uq_adminUser_email unique (email),

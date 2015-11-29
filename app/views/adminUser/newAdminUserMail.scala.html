@@ -1,0 +1,11 @@
+@(subject: String, user: AdminUser)
+
+@import play.i18n._;
+@import views.html.common.templates.mailTemplate;
+
+@mailTemplate(subject: String) {
+    <h1>@Messages.get("adminUser.mail.body.line1")</h1>
+    <p>@Messages.get("adminUser.mail.body.line2")</p> <p>@Messages.get("adminUser.mail.body.line3a") <b>@user.getEmail</b> @Messages.get("adminUser.mail.body.line3b") <b>@user.getPasswordRaw</b></p>
+    <p>@Messages.get("adminUser.mail.body.line4")</p>
+    <p>@Messages.get("adminUser.mail.body.line5")</p>
+}

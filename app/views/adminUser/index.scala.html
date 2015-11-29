@@ -1,0 +1,57 @@
+@import java.util
+@(title: String, adminUsers: util.List[models.AdminUser])
+
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
+
+    @main(title) {
+
+        <div class="box">
+            <div class="box-header with-border">
+                @notification()
+                <a href="@routes.AdminUserController.create()" class="btn btn-primary pull-right" role="button">@Messages.get("adminUser.form.global.new.title")</a>
+            </div>
+            <div class="box-body">
+                @if(!adminUsers.isEmpty) {
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>@Messages.get("adminUser.list.table.name")</th>
+                            <th>@Messages.get("adminUser.list.table.email")</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        @for( adminUser <- adminUsers) {
+                            <tr>
+                                <td class="item-title">@adminUser.getLastName, @adminUser.getName</td>
+                                <td class="item-info">@adminUser.getEmail</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <a href="@routes.AdminUserController.remove(adminUser.getToken)" role="button" class="btn btn-danger fa fa-trash-o"></a>
+                                        <a href="@routes.AdminUserController.edit(adminUser.getToken)" class="btn btn-primary fa fa-pencil-square-o"></a>
+                                        <a href="@routes.AdminUserController.show(adminUser.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                } else {
+                    <div class="callout callout-info">
+                        <h4>@Messages.get("adminUser.list.empty.title")</h4>
+                        <p>@Messages.get("adminUser.list.empty.text") <a href="@routes.MemberController.create()">@Messages.get("adminUser.list.empty.link")</a></p>
+                    </div>
+                }
+                <div class="box-footer clearfix">
+                @if(!adminUsers.isEmpty) {
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                }
+                </div>
+            </div>
+        </div>
+    }
+

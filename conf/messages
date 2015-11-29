@@ -1,34 +1,57 @@
+##### Global #####
 app.global.title = Membresia
+app.global.menu.title = MAIN NAVIGATION
 
+##### User profile box #####
+app.home.welcome = Welcome back
 app.menu.logout = logout
 app.menu.profile = profile
-app.home.welcome = Welcome back
-app.menu.user.title = Users
-app.menu.user.list = List all users
-app.menu.user.create = Create a new user
+
+##### Navigation #####
+app.menu.adminUser.title = Admin Users
+app.menu.adminUser.list = List all admin users
+app.menu.adminUser.create = Create a new admin user
+
+app.menu.member.title = Members
 app.menu.member.list = List all members
 app.menu.member.create = Create a new member
 
+app.menu.subscription.title = Subscriptions
+app.menu.subscription.list = List all subscriptions
+app.menu.subscription.create = Create a new subscription
+
+app.menu.message.title = Messaging
+app.menu.message.send = Compose new message
+app.menu.messageTemplate.list = List all message templates
+app.menu.messageTemplate.create = Create a message template
+
+##### Global form #####
 app.global.validation.message = Please correct errors above.
 app.global.form.submit = Save
 app.global.form.cancel = Cancel
-
 app.common.form.select.default = Please select a value
 
-adminUser.form.validation.password = No password was given.
-adminUser.form.validation.password.length = Given password is less than five characters.
+##### Form members #####
 
+# List
 member.list.global.title = Members' List
 member.list.search.label = Search by
 member.list.search.placeholder = Search by...
 member.list.search.button = Search
 member.list.table.name = Name
 member.list.table.phone = Contact phone
+member.list.table.email = Email
 member.list.table.city = City (State)
+member.list.empty.link = Click here to create a new member
+member.list.empty.text = There are no members available to be shown.
+member.list.empty.title =  No members available
 
-member.form.global.new.title = Create new member
+
+# Titles
+member.form.global.new.title = Create a new member
 member.form.global.edit.title = Edit member
 
+# Validation
 member.form.validation.name = No name was given.
 member.form.validation.lastName  = No last name was given.
 member.form.validation.nif = No nif was given.
@@ -41,6 +64,7 @@ member.form.validation.cp = No postal code was given.
 member.form.validation.phone = No phone was given.
 member.form.validation.subscription = Unknown subscription: {0}
 
+# Validation
 member.form.label.name = Name
 member.form.label.lastName = Surname
 member.form.label.nif = Identification number
@@ -53,6 +77,7 @@ member.form.label.country = Country
 member.form.label.phone = Phone
 member.form.label.subscriptions = Subscriptions
 
+# Placeholder
 member.form.placeholder.name =
 member.form.placeholder.lastName =
 member.form.placeholder.nif =
@@ -65,18 +90,78 @@ member.form.placeholder.country =
 member.form.placeholder.phone =
 member.form.placeholder.subscriptions =
 
-member.form.helper.name = Please enter your name
-member.form.helper.lastName = Please enter your last name
-member.form.helper.nif = Please enter your nif
-member.form.helper.email = Please enter your email
-member.form.helper.address = Please enter your physical address
-member.form.helper.city = Please enter your city
-member.form.helper.state = Please enter your state or province of residency
-member.form.helper.country = Please enter your country of residency
-member.form.helper.cp = Please enter your address postal code
+# Helpers
+member.form.helper.name = Please enter the member name
+member.form.helper.lastName = Please enter the member last name
+member.form.helper.nif = Please enter the member nif
+member.form.helper.email = Please enter the member email
+member.form.helper.address = Please enter the physical address
+member.form.helper.city = Please enter the member city
+member.form.helper.state = Please enter the member state or province of residency
+member.form.helper.country = Please enter the member country of residency
+member.form.helper.cp = Please enter the member address postal code
 member.form.helper.phone = Please enter a contact phone number
 member.form.helper.subscriptions = Please select the desired subscriptions
 
+# Messages
 member.form.save.message.notification = The member {0} has been created/updated correctly.
 member.form.remove.message.success = The selected member has been removed.
 member.form.remove.message.error = The selected member could not me removed.
+
+member.mail.subject.newAccount = new account information
+member.mail.body.line1 = Hi there.
+member.mail.body.line2 = You have been register as a member at Membresia.
+member.mail.body.line3 = You will be receiving periodical mails with instructions on how to make your installment payments online.
+member.mail.body.line4 = Thanks, have a lovely day.
+
+##### Form admin users
+
+# List
+adminUser.list.global.title = Admin User's List
+adminUser.list.table.name = Name
+adminUser.list.table.email = Email
+adminUser.list.empty.link = Click here to create a new admin user
+adminUser.list.empty.text = There are no admin users available to be shown.
+adminUser.list.empty.title =  No admin users available
+
+# Titles
+adminUser.form.global.new.title = Create a new user
+adminUser.form.global.edit.title = Edit user
+
+# Labels
+adminUser.form.label.name = Name
+adminUser.form.label.lastName = Last Name
+adminUser.form.label.email= Email
+adminUser.form.label.password= Password
+
+# Helpers
+adminUser.form.helper.name = Please enter the user name
+adminUser.form.helper.lastName = Please enter the user last name
+adminUser.form.helper.password = Please enter user password
+adminUser.form.helper.email = Please enter the user email
+
+# Placeholder
+adminUser.form.placeholder.name =
+adminUser.form.placeholder.lastName =
+adminUser.form.placeholder.password =
+adminUser.form.placeholder.email =
+
+# Validation
+adminUser.form.validation.name = No name was given.
+adminUser.form.validation.lastName  = No last name was given.
+adminUser.form.validation.password = No password was given.
+adminUser.form.validation.password.length = Given password is less than five characters.
+adminUser.form.validation.email = No email was given or format is invalid.
+
+# Messages
+adminUser.form.save.message.notification = The user "{0}" has been created/updated correctly.
+adminUser.form.remove.message.success = The selected user has been removed.
+adminUser.form.remove.message.error = The selected user could not me removed.
+
+adminUser.mail.subject.newAccount = new account information
+adminUser.mail.body.line1 = Hi there.
+adminUser.mail.body.line2 =You have been register as an administrator user at Membresia.
+adminUser.mail.body.line3a = You username is
+adminUser.mail.body.line3b = and your current password is
+adminUser.mail.body.line4 = Please remember that you may want to change your username/email address at password at any time from you user profile.
+adminUser.mail.body.line5 = Thanks, have a lovely day.

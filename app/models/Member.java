@@ -205,9 +205,8 @@ public class Member extends Model {
      * @return
      */
     public String toString() {
-        return this.getLastName() + ", " + this.getName() + " (" + this.getMemberId() + ")";
+        return this.getName() + " " + this.getLastName();
     }
-
 
     public Long getId() {
         return id;

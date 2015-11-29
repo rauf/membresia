@@ -1,67 +1,62 @@
 @import java.util
 @(members: util.List[models.Member], title: String)
 
-@import play.i18n.Messages;
-@import views.html.common._
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
 
-@main(Messages.get("app.global.title") + " - " + title) {
+    @main(title) {
 
-    @common.pageHeader(title)
-
-    @common.notification()
-
-    <section class="search-engine">
-        <div class="row">
-            <div class="col-md-12">
-                <form>
-                    <div class="row">
-                        <div class="col-md-10 col-xs-12">
-                            <label for="keyword" class="sr-only">@Messages.get("member.list.search.label")</label>
-                            <input class="form-control" type="input" name="keyword" id="keyword" placeholder="@Messages.get("member.list.search.placeholder")">
-                        </div>
-                        <div class="col-md-2 col-xs-12">
-                            <button type="submit" class="btn btn-default">@Messages.get("member.list.search.button")</button>
-                        </div>
-                    </div>
-                </form>
+        <div class="box">
+            <div class="box-header with-border">
+                @notification()
+                <a href="@routes.MemberController.create()" class="btn btn-primary pull-right" role="button">@Messages.get("member.form.global.new.title")</a>
             </div>
-        </div>
-    </section>
-
-    <section class="component-index">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>@Messages.get("member.list.table.name")</th>
-                            <th>@Messages.get("member.list.table.phone")</th>
-                            <th>@Messages.get("member.list.table.city")</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="box-body">
+            @if(!members.isEmpty) {
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>@Messages.get("member.list.table.name")</th>
+                        <th>@Messages.get("member.list.table.phone")</th>
+                        <th>@Messages.get("member.list.table.email")</th>
+                        <th>&nbsp;</th>
+                    </tr>
                     @for( member <- members) {
                         <tr>
                             <th class="item-id">@member.getMemberId</th>
-                            <td class="item-title">@member.getLastName(), @member.getName()</td>
-                            <td class="item-info">@member.getPhone()</td>
-                            <td class="item-info">@member.getCity() (@member.getState())</td>
+                            <td class="item-title">@member.getLastName, @member.getName</td>
+                            <td class="item-info">@member.getPhone</td>
+                            <td class="item-info">@member.getEmail</td>
                             <td>
                                 <div class="toolbar">
-                                    <a href="@routes.MemberController.remove(member.getToken())" class="fa fa-trash-o">&nbsp</a>
-                                    <a href="@routes.MemberController.makePayment(member.getToken())" class="fa fa-money">&nbsp;</a>
-                                    <a href="@routes.MemberController.edit(member.getToken())" class="fa fa-pencil-square-o">&nbsp</a>
-                                    <a href="@routes.MemberController.show(member.getToken())" class="fa fa-folder-open-o">&nbsp;</a>
+                                    <a href="@routes.MemberController.remove(member.getToken)" role="button" class="btn btn-danger fa fa-trash-o"></a>
+                                    <a href="@routes.MemberController.makePayment(member.getToken)" role="button" class="btn btn-success fa fa-money"></a>
+                                    <a href="@routes.MemberController.edit(member.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
+                                    <a href="@routes.MemberController.show(member.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
                                 </div>
                             </td>
                         </tr>
 
                     }
-                    </tbody>
                 </table>
+            } else {
+                <div class="callout callout-info">
+                    <h4>@Messages.get("member.list.empty.title")</h4>
+                    <p>@Messages.get("member.list.empty.text") <a href="@routes.MemberController.create()">@Messages.get("member.list.empty.link")</a></p>
+                </div>
+            }
+            </div>
+            <div class="box-footer clearfix">
+            @if(!members.isEmpty) {
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            }
             </div>
         </div>
-    </section>
-}
+    }

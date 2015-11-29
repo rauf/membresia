@@ -1,5 +1,10 @@
 package services;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import play.api.libs.mailer.MailerClient;
+import play.i18n.Messages;
+import play.libs.mailer.Email;
 import models.Member;
 import play.data.Form;
 import services.contract.MemberServiceInterface;
@@ -41,4 +46,21 @@ public class MemberService implements MemberServiceInterface {
     private Member getModel() {
         return new Member();
     }
+
+    public void sendNewAccountMail(MailerClient mailer, Member member) {
+        Config conf = ConfigFactory.load();
+        String sendFromEmail = conf.getString("play.mailer.user");
+        String sendFromName = Messages.get("app.global.title");
+        String subject = sendFromName + ": " + Messages.get("adminUser.mail.subject.newAccount");
+
+        Email email = new Email();
+        email.setSubject(subject);
+        email.setFrom(sendFromName + "<" + sendFromEmail + ">");
+        email.addTo(member.toString() + "<" + member.getEmail() + ">");
+        String body = views.html.member.newMemberMail.render(subject, member).body();
+        email.setBodyHtml(body);
+
+        mailer.send(email);
+    }
 }
+

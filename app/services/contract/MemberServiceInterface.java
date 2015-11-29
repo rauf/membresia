@@ -2,6 +2,7 @@ package services.contract;
 
 import models.Member;
 import play.data.Form;
+import services.AdminUserFormData;
 import services.MemberFormData;
 
 import java.util.List;

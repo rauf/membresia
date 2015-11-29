@@ -1,5 +1,6 @@
 package controllers;
 
+import play.api.libs.mailer.MailerClient;
 import play.mvc.*;
 import play.data.Form;
 import play.i18n.Messages;
@@ -10,6 +11,8 @@ import services.MemberFormData;
 import models.Member;
 import models.Subscription;
 import services.MemberService;
+
+import javax.inject.Inject;
 
 /**
  * Controller for MemberController component
@@ -22,6 +25,13 @@ public class MemberController extends Controller {
 
     private Form<MemberFormData> formData;
 
+    private final MailerClient mailer;
+
+    @Inject
+    public MemberController(MailerClient mailer) {
+        this.mailer = mailer;
+    }
+
 
     /**
      * Show all members list
@@ -30,10 +40,7 @@ public class MemberController extends Controller {
      */
     public Result index() {
         List<Member> members = memberService.getMemberList();
-        return ok(views.html.member.index.render(
-                members,
-                Messages.get("member.list.global.title")
-        ));
+        return ok(views.html.member.index.render(members, Messages.get("member.list.global.title")));
     }
 
     /**
@@ -44,12 +51,9 @@ public class MemberController extends Controller {
     public Result create() {
         memberData = new MemberFormData();
         formData = memberService.setFormData(memberData);
+        memberData.setMode(0);
 
-        return ok(views.html.member.form.render(
-                Messages.get("member.form.global.new.title"),
-                formData,
-                Subscription.makeSubscriptionMap(memberData)
-        ));
+        return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, Subscription.makeSubscriptionMap(memberData)));
     }
 
     /**
@@ -62,12 +66,9 @@ public class MemberController extends Controller {
         memberData = new MemberFormData();
         memberData = memberService.setMemberData(token);
         formData = memberService.setFormData(memberData);
+        memberData.setMode(1);
 
-        return ok(views.html.member.form.render(
-                Messages.get("member.form.global.new.title"),
-                formData,
-                Subscription.makeSubscriptionMap(memberData)
-        ));
+        return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, Subscription.makeSubscriptionMap(memberData)));
     }
 
     /**
@@ -82,20 +83,16 @@ public class MemberController extends Controller {
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
 
-            return badRequest(views.html.member.form.render(
-                    Messages.get("member.form.global.new.title"),
-                    formData,
-                    Subscription.makeSubscriptionMap(null)
-            ));
+            return badRequest(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, Subscription.makeSubscriptionMap(null)));
         } else {
             Member member = memberService.save(formData);
+            if (formData.get().getMode() == 0)
+                memberService.sendNewAccountMail(mailer, member);
+
             flash("success", Messages.get("member.form.save.message.notification", member));
             List<models.Member> members = memberService.getMemberList();
 
-            return ok(views.html.member.index.render(
-                    members,
-                    Messages.get("member.list.global.title")
-            ));
+            return ok(views.html.member.index.render(members, Messages.get("member.list.global.title")));
         }
     }
 
@@ -125,10 +122,7 @@ public class MemberController extends Controller {
         }
         List<models.Member> members = memberService.getMemberList();
 
-        return ok(views.html.member.index.render(
-                members,
-                Messages.get("member.list.global.title")
-        ));
+        return ok(views.html.member.index.render(members, Messages.get("member.list.global.title")));
     }
 
     /**
