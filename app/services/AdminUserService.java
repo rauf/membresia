@@ -36,6 +36,14 @@ public class AdminUserService implements AdminUserServiceInterface {
         return adminUser;
     }
 
+
+    public boolean isAdminUserEmailUsed(String email, String token) {
+        if (getModel().getAdminUserEmailUseCount(email, token) > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean remove(String token) {
         return getModel().remove(token);
     }
@@ -52,7 +60,7 @@ public class AdminUserService implements AdminUserServiceInterface {
         Config conf = ConfigFactory.load();
         String sendFromEmail = conf.getString("play.mailer.user");
         String sendFromName = Messages.get("app.global.title");
-        String subject = sendFromName + ": "+ Messages.get("adminUser.mail.subject.newAccount");
+        String subject = sendFromName + ": " + Messages.get("adminUser.mail.subject.newAccount");
 
         Email email = new Email();
         email.setSubject(subject);

@@ -30,14 +30,33 @@
                             <td class="item-info">@member.getEmail</td>
                             <td>
                                 <div class="toolbar">
-                                    <a href="@routes.MemberController.remove(member.getToken)" role="button" class="btn btn-danger fa fa-trash-o"></a>
+                                    <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-member-modal-@member.getToken"></button>
+                                    @*<a href="@routes.MemberController.remove(member.getToken)" role="button" class="btn btn-danger fa fa-trash-o"></a>*@
                                     <a href="@routes.MemberController.makePayment(member.getToken)" role="button" class="btn btn-success fa fa-money"></a>
                                     <a href="@routes.MemberController.edit(member.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
                                     <a href="@routes.MemberController.show(member.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
                                 </div>
+                                <div class="modal modal-danger remove-member-modal-@member.getToken">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span></button>
+                                                <h4 class="modal-title">Irreversible Member Deletion</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Do you really wish to remove <strong>@member.getName @member.getLastName</strong>
+                                                    and all its installement information?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                                                <a role="button" href="@routes.MemberController.remove(member.getToken)" class="btn btn-outline">Delete member</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
-
                     }
                 </table>
             } else {

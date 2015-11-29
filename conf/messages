@@ -56,6 +56,7 @@ member.form.validation.name = No name was given.
 member.form.validation.lastName  = No last name was given.
 member.form.validation.nif = No nif was given.
 member.form.validation.email = No email was given or format is invalid.
+member.form.validation.emailUsed = There is already a member with this email address.
 member.form.validation.address = No address was given.
 member.form.validation.city = No city was given.
 member.form.validation.state = No state/province was given.
@@ -152,6 +153,8 @@ adminUser.form.validation.lastName  = No last name was given.
 adminUser.form.validation.password = No password was given.
 adminUser.form.validation.password.length = Given password is less than five characters.
 adminUser.form.validation.email = No email was given or format is invalid.
+adminUser.form.validation.emailUsed = There is already a user with this email address.
+
 
 # Messages
 adminUser.form.save.message.notification = The user "{0}" has been created/updated correctly.

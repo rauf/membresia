@@ -128,6 +128,16 @@ public class Member extends Model {
         return Ebean.find(Member.class).where().eq("id", id).findUnique();
     }
 
+    /**
+     * Gets Member object from member email address
+     *
+     * @param email member email
+     * @return member
+     */
+    public Integer getMemberAdminUsrEmailUseCount(String email, String token) {
+        return Ebean.find(Member.class).where().eq("email", email).ne("token", token).findRowCount();
+    }
+
     public void save(MemberFormData formData) {
         Ebean.save(this);
     }

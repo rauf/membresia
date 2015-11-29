@@ -9,6 +9,7 @@ import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.format.*;
 import play.data.validation.*;
 import services.AdminUserFormData;
@@ -66,6 +67,16 @@ public class AdminUser extends Model {
      */
     public AdminUser getAdminUserByToken(String token) {
         return Ebean.find(AdminUser.class).where().eq("token", token).findUnique();
+    }
+
+    /**
+     * Gets AdminUser object from email
+     *
+     * @param email Unique AdminUser identifier hash
+     * @return Integer
+     */
+    public Integer getAdminUserEmailUseCount(String email, String token) {
+        return Ebean.find(AdminUser.class).where().eq("email", email).ne("token", token).findRowCount();
     }
 
     /**

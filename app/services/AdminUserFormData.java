@@ -20,7 +20,9 @@ public class AdminUserFormData {
     protected String token;
     protected Integer mode;
 
-    public AdminUser adminUser = new AdminUser();
+    protected AdminUser adminUser = new AdminUser();
+
+    protected AdminUserService adminUserService = new AdminUserService();
 
     /**
      * Creates a new AdminUserFormData instance for admin user create action
@@ -62,6 +64,10 @@ public class AdminUserFormData {
 
         if (email == null || email.length() == 0) {
             errors.add(new ValidationError("email", Messages.get("adminUser.form.validation.email")));
+        }
+
+        if (adminUserService.isAdminUserEmailUsed(email, token)) {
+            errors.add(new ValidationError("email", Messages.get("adminUser.form.validation.emailUsed")));
         }
 
         if (errors.size() > 0)

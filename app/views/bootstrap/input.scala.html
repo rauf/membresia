@@ -23,15 +23,16 @@
             @if(placeholder) {
                 placeholder="@placeholder"
             }
-            @if(required != "") {
+            @if(required) {
                 required="required"
                 oninvalid="this.setCustomValidity('@error')"
                 onchange="this.setCustomValidity('')"
-        }
-        />
+            }/>
         <p class="help-block">@help</p>
-        <span class="error-block">@{
-            field.error.map { error => error.message }
-        }</span>
+        @if(!field.error.isEmpty) {
+            <span class="error-block fa fa-info-circle text-red">@{
+                field.error.map { error => error.message }
+            }</span>
+        }
     </div>
 </div>

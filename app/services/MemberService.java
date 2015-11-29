@@ -43,6 +43,13 @@ public class MemberService implements MemberServiceInterface {
         return getModel().getMemberByToken(token);
     }
 
+    public boolean isMemberEmailUsed(String email, String token) {
+        if (getModel().getMemberAdminUsrEmailUseCount(email, token) > 0) {
+            return true;
+        }
+        return false;
+    }
+
     private Member getModel() {
         return new Member();
     }

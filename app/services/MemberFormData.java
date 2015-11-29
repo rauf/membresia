@@ -29,7 +29,9 @@ public class MemberFormData {
     protected List<String> subscriptions = new ArrayList<>();
     protected Integer mode;
 
-    public Member member = new Member();
+    protected Member member = new Member();
+    protected MemberService memberService = new MemberService();
+
 
     /**
      * Creates a new MemberFormData instance for member create action
@@ -82,6 +84,10 @@ public class MemberFormData {
 
         if (email == null || email.length() == 0) {
             errors.add(new ValidationError("email", Messages.get("member.form.validation.email")));
+        }
+
+        if (memberService.isMemberEmailUsed(email, token)) {
+            errors.add(new ValidationError("email", Messages.get("member.form.validation.emailUsed")));
         }
 
         if (address == null || address.length() == 0) {
