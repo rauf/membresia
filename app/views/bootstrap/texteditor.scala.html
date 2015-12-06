@@ -1,0 +1,42 @@
+@(
+        field: Field,
+        label: String = "",
+        placeholder: String = "",
+        help: String = "",
+        error: String = "",
+        required: Boolean = false
+)
+
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <label class="control-label">@label @if(required) {(*)}</label>
+    <div class="control-item">
+        <textarea
+        class="textarea"
+            @if(placeholder) {
+                placeholder="@placeholder"
+            }
+            @if(required) {
+                required="required"
+                oninvalid="this.setCustomValidity('@error')"
+                onchange="this.setCustomValidity('')"
+            }
+        id="@field.id"
+        name="@field.name"
+        style="
+        width: 100% ;
+        height: 200px ;
+        font-size: 14px ;
+        line-height: 18px ;
+        border: 1px solid #dddddd ;
+        padding: 10px ;
+        ">
+        @field.value.getOrElse("")
+        </textarea>
+        <p class="help-block">@help</p>
+        @if(!field.error.isEmpty) {
+            <span class="error-block fa fa-info-circle text-red">@{
+                field.error.map { error => error.message }
+            }</span>
+        }
+    </div>
+</div>

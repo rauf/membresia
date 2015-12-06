@@ -28,20 +28,20 @@
             <span>@Messages.get("app.menu.subscription.title")</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.list")</a></li>
-            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.create")</a></li>
+            <li><a href="@routes.SubscriptionController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.list")</a></li>
+            <li><a href="@routes.SubscriptionController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.create")</a></li>
         </ul>
     </li>
 
     <li class="treeview">
         <a href="#">
             <i class="fa fa-files-o"></i>
-            <span>@Messages.get("app.menu.message.title")</span>
+            <span>@Messages.get("app.menu.mailMessage.title")</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.message.send")</a></li>
-            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.list")</a></li>
-            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.create")</a></li>
+            <li><a href="@routes.MailMessageController.sendMailForm()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.mailMessage.send")</a></li>
+            <li><a href="@routes.MessageTemplateController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.list")</a></li>
+            <li><a href="@routes.MessageTemplateController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.create")</a></li>
         </ul>
     </li>
 

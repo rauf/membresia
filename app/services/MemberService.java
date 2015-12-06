@@ -8,6 +8,7 @@ import play.libs.mailer.Email;
 import models.Member;
 import play.data.Form;
 import services.contract.MemberServiceInterface;
+import services.formData.MemberFormData;
 
 import java.util.List;
 
@@ -16,45 +17,81 @@ import java.util.List;
  */
 public class MemberService implements MemberServiceInterface {
 
-    public Form<MemberFormData> setFormData(MemberFormData memberData) {
-        return Form.form(MemberFormData.class).fill(memberData);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public MemberFormData setMemberData(String token) {
+
         return new MemberFormData(getModel().getMemberByToken(token));
     }
 
-    public List<Member> getMemberList() {
-        return getModel().getMemberList();
+    /**
+     * {@inheritDoc}
+     */
+    public Form<MemberFormData> setFormData(MemberFormData memberData) {
+
+        return Form.form(MemberFormData.class).fill(memberData);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public List<Member> getMemberList(Pager pager) {
+
+        return getModel().getMemberList(pager);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public Member save(Form<MemberFormData> formData) {
+
         Member member = (formData.get().getId() != null) ? getModel().getMemberById(formData.get().getId()) : getModel();
+        member.getSubscriptions().clear();
         member.setData(formData.get());
         member.save();
         return member;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean remove(String token) {
+
         return getModel().remove(token);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Member getMember(String token) {
+
         return getModel().getMemberByToken(token);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isMemberEmailUsed(String email, String token) {
-        if (getModel().getMemberAdminUsrEmailUseCount(email, token) > 0) {
-            return true;
-        }
-        return false;
+
+        return getModel().getUserEmailCount(email, token) > 0;
     }
 
+    /**
+     * Creates Member model object
+     *
+     * @return Member
+     */
     private Member getModel() {
+
         return new Member();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void sendNewAccountMail(MailerClient mailer, Member member) {
+
         Config conf = ConfigFactory.load();
         String sendFromEmail = conf.getString("play.mailer.user");
         String sendFromName = Messages.get("app.global.title");
@@ -70,4 +107,3 @@ public class MemberService implements MemberServiceInterface {
         mailer.send(email);
     }
 }
-

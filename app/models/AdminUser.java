@@ -1,51 +1,21 @@
 package models;
 
+import play.data.validation.*;
+import services.formData.AdminUserFormData;
+import services.Pager;
+import com.avaje.ebean.Ebean;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.*;
 import javax.persistence.*;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.CreatedTimestamp;
-import com.avaje.ebean.annotation.UpdatedTimestamp;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.mindrot.jbcrypt.BCrypt;
-import play.Logger;
-import play.data.format.*;
-import play.data.validation.*;
-import services.AdminUserFormData;
-import services.MD5;
-
 @Entity
-@Table(name = "adminUser")
-public class AdminUser extends Model {
-
-    @Id
-    private Long id;
-
-    @Constraints.Required
-    @Column(unique = true)
-    protected String email;
+@DiscriminatorValue("admin")
+public class AdminUser extends User {
 
     @Constraints.Required
     protected String password;
-
-    @Constraints.Required
-    protected String name;
-
-    @Constraints.Required
-    protected String lastName;
-
-    @Constraints.Required
-    @Column(unique = true)
-    protected String token;
-
-    @CreatedTimestamp
-    @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
-    protected Date created_at = new Date();
-
-    @UpdatedTimestamp
-    @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
-    protected Date updated_at = new Date();
 
     protected String passwordRaw;
 
@@ -60,47 +30,47 @@ public class AdminUser extends Model {
     }
 
     /**
-     * Gets AdminUser object from hash token
-     *
-     * @param token Unique AdminUser identifier hash
-     * @return AdminUser
-     */
-    public AdminUser getAdminUserByToken(String token) {
-        return Ebean.find(AdminUser.class).where().eq("token", token).findUnique();
-    }
-
-    /**
-     * Gets AdminUser object from email
-     *
-     * @param email Unique AdminUser identifier hash
-     * @return Integer
-     */
-    public Integer getAdminUserEmailUseCount(String email, String token) {
-        return Ebean.find(AdminUser.class).where().eq("email", email).ne("token", token).findRowCount();
-    }
-
-    /**
      * Gets AdminUser object from primary key
      *
      * @param id primary key
      * @return AdminUser
      */
     public AdminUser getAdminUserById(Long id) {
+
         return Ebean.find(AdminUser.class).where().eq("id", id).findUnique();
     }
 
-    public void save(AdminUserFormData formData) {
-        Ebean.save(this);
+    /**
+     * Gets AdminUser object from hash token
+     *
+     * @param token Unique AdminUser identifier hash
+     * @return AdminUser
+     */
+    public AdminUser getAdminUserByToken(String token) {
+
+        return Ebean.find(AdminUser.class).where().eq("token", token).findUnique();
     }
 
     /**
      * Get a list of current admin users
      *
-     * @return List<AdminUser>
+     * @param pager indicates query paging parameter
+     * @return List
      */
-    public List<AdminUser> getAdminUserList() {
-        return Ebean.find(AdminUser.class).findList();
+    public List<AdminUser> getAdminUserList(Pager pager) {
+        pager.setRecordCount(Ebean.find(AdminUser.class).findRowCount());
+        pager.resolvePager();
+        return Ebean.find(AdminUser.class).setFirstRow(pager.getOffset()).setMaxRows(pager.getRows()).findList();
     }
+
+    /**
+     * Saves current object into persistence database
+     */
+    public void save() {
+
+        Ebean.save(this);
+    }
+
 
     /**
      * Removes admin user from DB
@@ -109,85 +79,33 @@ public class AdminUser extends Model {
      * @return boolean
      */
     public boolean remove(String token) {
+
         AdminUser adminUser = Ebean.find(AdminUser.class).where().eq("token", token).findUnique();
         if (adminUser != null) {
             Ebean.delete(adminUser);
             return true;
         }
+
         return false;
     }
 
-    /**
-     * Create admin user string
-     *
-     * @return
-     */
-    public String toString() {
-        return this.getName() + " " + this.getLastName();
-    }
-
-    /**
-     * Generates unique admin user token
-     *
-     * @return String
-     */
-    public String generateToken() {
-        return MD5.getMD5((new Date()).toString());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPassword() {
+
         return password;
     }
 
     public void setPassword(String password) {
+
         this.password = password;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getPasswordRaw() {
+
         return passwordRaw;
     }
 
     public void setPasswordRaw(String passwordRaw) {
+
         this.passwordRaw = passwordRaw;
     }
 }

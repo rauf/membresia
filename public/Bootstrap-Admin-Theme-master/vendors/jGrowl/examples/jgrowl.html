@@ -32,7 +32,7 @@
 				border-color: 			#5ab500;
 			}
 
-			div.jGrowl div.flora div.message {
+			div.jGrowl div.flora div.mailMessage {
 				padding: 				5px;
 				color: 					#000;
 			}
@@ -70,7 +70,7 @@
 				padding-right: 			20px;
 			}
 
-			div.jGrowl div.iphone div.message {
+			div.jGrowl div.iphone div.mailMessage {
 				padding-top: 			0px;
 				padding-bottom: 		7px;
 				padding-left: 			15px;
@@ -155,7 +155,7 @@
 				});
 				
 
-				$.jGrowl("This message will not open because we have a callback that returns false.", {
+				$.jGrowl("This mailMessage will not open because we have a callback that returns false.", {
 					beforeOpen: function() {
 						console.log("Going to open a notification, but not really...");
 					},
@@ -164,7 +164,7 @@
 					}
 				});
 				
-				$.jGrowl("This message will not close because we have a callback that returns false.", {
+				$.jGrowl("This mailMessage will not close because we have a callback that returns false.", {
 					beforeClose: function() {
 						return false;
 					}
@@ -212,7 +212,7 @@
 	<body>
 		<h1>jGrowl Tests</h1>
 
-		<p><a href="javascript:void(0);" onclick="$.jGrowl('One more message...');">Click here to create a message on demand in the #jGrowl container in the top-right corner of the screen.</a></p>
+		<p><a href="javascript:void(0);" onclick="$.jGrowl('One more mailMessage...');">Click here to create a mailMessage on demand in the #jGrowl container in the top-right corner of the screen.</a></p>
 		
 		<p><a href="javascript:void(0);" onclick="$('#test1').jGrowl('shutdown');">Shutdown jGrowl for the #test1 container in the top-left corner of the screen.</a></p>
 		

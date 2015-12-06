@@ -1,6 +1,6 @@
-@import services.MemberFormData
+@import services.formData.MemberFormData
 
-@(title: String, memberForm: play.data.Form[MemberFormData], subscriptions: Map[String, Boolean])
+@(title: String, memberForm: play.data.Form[MemberFormData], subscriptions: Map[SelectOptionItem, Boolean])
 
 @import play.i18n.Messages;
 @import views.html.common.parts._;

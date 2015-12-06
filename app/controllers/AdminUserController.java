@@ -6,8 +6,9 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.api.libs.mailer.MailerClient;
 import models.AdminUser;
-import services.AdminUserFormData;
+import services.formData.AdminUserFormData;
 import services.AdminUserService;
+import services.Pager;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,6 +24,10 @@ public class AdminUserController extends Controller {
 
     private Form<AdminUserFormData> formData;
 
+    private Pager pager;
+
+    private Integer currentPage = 1;
+
     private final MailerClient mailer;
 
     @Inject
@@ -36,10 +41,12 @@ public class AdminUserController extends Controller {
      *
      * @return Result
      */
-    public Result index() {
-        List<AdminUser> adminUsers = adminUserService.getAdminUserList();
+    public Result index(Integer currentPage) {
+        this.currentPage = currentPage;
+        pager = new Pager(this.currentPage);
+        List<AdminUser> adminUsers = adminUserService.getAdminUserList(pager);
 
-        return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), adminUsers));
+        return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), adminUsers, pager));
     }
 
     /**
@@ -90,9 +97,10 @@ public class AdminUserController extends Controller {
                 adminUserService.sendNewAccountMail(mailer, user);
 
             flash("success", Messages.get("adminUser.form.save.message.notification", user));
-            List<AdminUser> users = adminUserService.getAdminUserList();
+            pager = new Pager(this.currentPage);
+            List<AdminUser> users = adminUserService.getAdminUserList(pager);
 
-            return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), users));
+            return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), users, pager));
         }
     }
 
@@ -120,8 +128,9 @@ public class AdminUserController extends Controller {
         } else {
             flash("error", Messages.get("member.form.remove.message.error"));
         }
-        List<AdminUser> members = adminUserService.getAdminUserList();
+        pager = new Pager(1);
+        List<AdminUser> members = adminUserService.getAdminUserList(pager);
 
-        return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), members));
+        return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), members, pager));
     }
 }

@@ -3,22 +3,43 @@
 # ~~~~
 
 # Home page
-GET         /                                 controllers.MemberController.index()
+GET         /                                          controllers.MemberController.index(currentPage: Integer ?= 1)
 
-GET         /all-members                      controllers.MemberController.index()
-GET         /create-member                    controllers.MemberController.create()
-GET         /edit-member                      controllers.MemberController.edit(token: String)
-POST        /save-member                      controllers.MemberController.save()
-GET         /show-member/:token               controllers.MemberController.show(token: String)
-GET         /delete-member/:token             controllers.MemberController.remove(token: String)
-GET         /make-payment                     controllers.MemberController.makePayment(token: String)
+GET         /all-members                               controllers.MemberController.index(currentPage: Integer ?= 1)
+GET         /create-member                             controllers.MemberController.create()
+GET         /edit-member                               controllers.MemberController.edit(token: String)
+POST        /save-member                               controllers.MemberController.save()
+GET         /show-member/:token                        controllers.MemberController.show(token: String)
+GET         /delete-member/:token                      controllers.MemberController.remove(token: String)
+GET         /make-payment                              controllers.MemberController.makePayment(token: String)
 
-GET         /all-admin-users                  controllers.AdminUserController.index()
-GET         /create-admin-users               controllers.AdminUserController.create()
-GET         /edit-admin-users                 controllers.AdminUserController.edit(token: String)
-POST        /save-admin-users                 controllers.AdminUserController.save()
-GET         /show-admin-users/:token          controllers.AdminUserController.show(token: String)
-GET         /delete-admin-users/:token        controllers.AdminUserController.remove(token: String)
+GET         /all-admin-users                           controllers.AdminUserController.index(currentPage: Integer ?= 1)
+GET         /create-admin-users                        controllers.AdminUserController.create()
+GET         /edit-admin-users                          controllers.AdminUserController.edit(token: String)
+POST        /save-admin-users                          controllers.AdminUserController.save()
+GET         /show-admin-users/:token                   controllers.AdminUserController.show(token: String)
+GET         /delete-admin-users/:token                 controllers.AdminUserController.remove(token: String)
+
+GET         /all-subscriptions                         controllers.SubscriptionController.index(currentPage: Integer ?= 1)
+GET         /create-subscription                       controllers.SubscriptionController.create()
+GET         /edit-subscription                         controllers.SubscriptionController.edit(token: String)
+POST        /save-subscription                         controllers.SubscriptionController.save()
+GET         /show-subscription/:token                  controllers.SubscriptionController.show(token: String)
+GET         /delete-subscription/:token                controllers.SubscriptionController.remove(token: String)
+
+GET         /all-mailMessage-templates                 controllers.MessageTemplateController.index(currentPage: Integer ?= 1)
+GET         /create-mailMessage-template               controllers.MessageTemplateController.create()
+GET         /edit-mailMessage-template                 controllers.MessageTemplateController.edit(token: String)
+POST        /save-mailMessage-template                 controllers.MessageTemplateController.save()
+GET         /show-mailMessage-template/:token          controllers.MessageTemplateController.show(token: String)
+GET         /delete-mailMessage-template/:token        controllers.MessageTemplateController.remove(token: String)
+
+GET         /send-mail-user                            controllers.MailMessageController.sendMailForm(token: String ?= null)
+GET         /send-mail-template                        controllers.MailMessageController.sendMailFormTemplate(token: String ?= null)
+
+GET         /send-mail                                 controllers.MailMessageController.sendMail()
+
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                              controllers.Assets.versioned(path="/public", file: Asset)

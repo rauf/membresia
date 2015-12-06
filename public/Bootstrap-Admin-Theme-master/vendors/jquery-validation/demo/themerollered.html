@@ -124,7 +124,7 @@ $.validator.setDefaults({
 		}
 		this.currentElements.removeAttr("title").removeClass("ui-state-highlight");
 		$.each(list, function(index, error) {
-			$(error.element).attr("title", error.message).addClass("ui-state-highlight");
+			$(error.element).attr("title", error.mailMessage).addClass("ui-state-highlight");
 		});
 		if (focussed && $(focussed).is("input, textarea")) {
 			$(this.currentForm).tooltip("open", { target: focussed });

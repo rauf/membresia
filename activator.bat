@@ -20,7 +20,7 @@ if defined var1 (
     echo ui                 Start the Activator UI
     echo new [name] [template-id]  Create a new project with [name] using template [template-id]
     echo list-templates     Print all available template names
-    echo help               Print this message
+    echo help               Print this mailMessage
     echo.
     echo Options:
     echo -jvm-debug [port]  Turn on JVM debugging, open at the given port.  Defaults to 9999 if no port given.
@@ -120,7 +120,7 @@ if "%JAVAOK%"=="false" (
   echo   http://www.oracle.com/technetwork/java/javase/downloads/index.html
   echo and download a valid Java JDK and install before running Activator.
   echo.
-  echo If you think this message is in error, please check
+  echo If you think this mailMessage is in error, please check
   echo your environment variables to see if "java.exe" and "javac.exe" are
   echo available via JAVA_HOME or PATH.
   echo.

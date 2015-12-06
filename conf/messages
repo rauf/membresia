@@ -25,11 +25,15 @@ app.menu.message.send = Compose new message
 app.menu.messageTemplate.list = List all message templates
 app.menu.messageTemplate.create = Create a message template
 
+
 ##### Global form #####
 app.global.validation.message = Please correct errors above.
 app.global.form.submit = Save
+app.global.form.send = Send
 app.global.form.cancel = Cancel
 app.common.form.select.default = Please select a value
+app.common.form.select.unselect = No selected value
+
 
 ##### Form members #####
 
@@ -63,7 +67,8 @@ member.form.validation.state = No state/province was given.
 member.form.validation.country = No country was given.
 member.form.validation.cp = No postal code was given.
 member.form.validation.phone = No phone was given.
-member.form.validation.subscription = Unknown subscription: {0}
+member.form.validation.subscriptions =
+
 
 # Validation
 member.form.label.name = Name
@@ -168,3 +173,132 @@ adminUser.mail.body.line3a = You username is
 adminUser.mail.body.line3b = and your current password is
 adminUser.mail.body.line4 = Please remember that you may want to change your username/email address at password at any time from you user profile.
 adminUser.mail.body.line5 = Thanks, have a lovely day.
+
+
+##### MailMessage templates #####
+
+# List
+messageTemplate.list.global.title = Message Templates
+messageTemplate.list.table.title = Title
+messageTemplate.list.empty.link = Click here to create a new template
+messageTemplate.list.empty.text = There are no templates available to be shown.
+messageTemplate.list.empty.title =  No templates available
+
+# Titles
+messageTemplate.form.global.new.title = Create a new template
+messageTemplate.form.global.edit.title = Edit template
+
+# Labels
+messageTemplate.form.label.title = Title
+messageTemplate.form.label.body = Body
+
+# Helpers
+messageTemplate.form.helper.title = Please enter the template title
+messageTemplate.form.helper.body = Please enter the template body
+
+# Placeholder
+messageTemplate.form.placeholder.title =
+messageTemplate.form.placeholder.body =
+
+# Validation
+messageTemplate.form.validation.title = No title was given.
+messageTemplate.form.validation.body  = No body was given.
+
+# Messages
+messageTemplate.form.save.message.notification = The template "{0}" has been created/updated correctly.
+messageTemplate.form.remove.message.success = The selected template has been removed.
+messageTemplate.form.remove.message.error = The selected template could not me removed.
+
+##### Subscriptions #####
+
+# List
+subscription.list.global.title = Subscription's List
+subscription.list.table.id = ID
+subscription.list.table.title = Title
+subscription.list.table.amount = Installment
+subscription.list.table.periodicity = Periodicity
+subscription.list.empty.link = Click here to create a new subscription
+subscription.list.empty.text = There are no subscriptions available to be shown.
+subscription.list.empty.title =  No subscriptions available
+subscription.list.table.subscribers = Subscribers
+
+
+# Titles
+subscription.form.global.new.title = Create a new subscription
+subscription.form.global.edit.title = Edit subscription
+
+# Labels
+subscription.form.label.title = Title
+subscription.form.label.description = Description
+subscription.form.label.amount= Installment amount
+subscription.form.label.periodicity= Periodicity
+subscription.form.label.dueDatePeriod= Subscription start date
+
+# Helpers
+subscription.form.helper.title = Please enter the subscription title
+subscription.form.helper.description = Please enter the subscription description
+subscription.form.helper.amount = Please enter the subscription installment amount
+subscription.form.helper.periodicity = Please enter the subscription installment period
+subscription.form.helper.dueDatePeriod = Please enter the subscription start date
+
+# Placeholder
+subscription.form.placeholder.title =
+subscription.form.placeholder.description =
+subscription.form.placeholder.amount =
+subscription.form.placeholder.periodicity =
+subscription.form.placeholder.dueDatePeriod =
+
+# Validation
+subscription.form.validation.title = No title was given.
+subscription.form.validation.description  = No description was given.
+subscription.form.validation.amount = No installment amount was defined.
+subscription.form.validation.periodicity = No installment period was introduced.
+subscription.form.validation.dueDatePeriod = No subscription start date was entered.
+
+# Messages
+subscription.form.save.message.notification = The subscription "{0}" has been created/updated correctly.
+subscription.form.remove.message.success = The selected subscription has been removed.
+subscription.form.remove.message.error = The selected subscription could not me removed.
+
+subscription.mail.subject.update = subscription update
+subscription.mail.body.line1 = Hi there.
+subscription.mail.body.line2 = There are been changed to the "{0}" subscription. The subscription billing information is a follow:
+subscription.mail.body.line3 = Thanks, have a lovely day.
+
+model.periodicity.unique.title = One timer
+model.periodicity.week.title = Weekly
+model.periodicity.month.title = Monthly
+model.periodicity.bimonth.title  = Bimonthly
+model.periodicity.trimester.title = Trimestral
+model.periodicity.semester.title = Semestral
+model.periodicity.year.title = Yearly
+
+
+##### MailMessage ####
+
+# Titles
+mailMessage.form.send.title = Compose message
+
+# Labels
+mailMessage.form.label.subject = Subject
+mailMessage.form.label.body = Body
+mailMessage.form.label.recipients = Recipients
+
+# Helpers
+mailMessage.form.helper.subject = Please enter the message subject
+mailMessage.form.helper.body = Please enter the message body
+mailMessage.form.helper.recipients = Please select the messages recipients
+
+
+# Placeholder
+mailMessage.form.placeholder.subject =
+mailMessage.form.placeholder.body =
+mailMessage.form.placeholder.recipients =
+
+# Validation
+mailMessage.form.validation.subject = No subject was given.
+mailMessage.form.validation.body  = No body was given.
+mailMessage.form.validation.recipients  = No recipients were selected.
+
+# Messages
+mailMessage.form.save.message.notification = The message has been sent

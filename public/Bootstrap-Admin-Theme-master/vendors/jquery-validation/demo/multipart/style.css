@@ -648,7 +648,7 @@ div.buttonWrapper {
 	height: 18em;
 }
 
-/* ----- error message for field validation ----- */
+/* ----- error mailMessage for field validation ----- */
 #stepForm label.warning {
 	text-align: left;
 	width: auto;

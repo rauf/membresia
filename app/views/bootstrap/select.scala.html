@@ -2,9 +2,10 @@
 @(
         field: Field,
         label: String,
-        optionMap: util.Map[String, Boolean],
+        optionMap: util.Map[SelectOptionItem, Boolean],
         isMultiple: Boolean,
         help: String,
+        error: String = "",
         required: Boolean = false
 )
     @import play.i18n.Messages;
@@ -16,21 +17,27 @@
         </label>
         <div class="control-item">
             <select
-            class="form-control"
-            id="@field.id"
-            name="@if(isMultiple) {(field.name + '[])} else {field.name}"
+            class="form-control select2"
+            id="@field.id" @if(isMultiple) {multiple="multiple"}
+            name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
+            @if(required) {
+                required
+            }
                 @if(isMultiple) {
                     multiple="multiple"}>
                 @if(!isMultiple) {
                     <option class="blank" value="">@Messages.get("app.common.form.select.default")</option>
                 }
-                @for( (optionName, isSelected) <- optionMap) {
+            @if(!required) {
+                <option class="blank" value="">@Messages.get("app.common.form.select.unselect")</option>
+            }
+                @for( (optionItem, isSelected) <- optionMap) {
                     <option
-                    id="@optionName"
-                    value="@optionName"
+                    id="@optionItem.getValue"
+                    value="@optionItem.getValue"
                         @if(isSelected) {
                             selected="selected"}>
-                    @optionName
+                    @optionItem.getName
                     </option>
                 }
             </select>

@@ -1,9 +1,9 @@
 package services.contract;
 
 import models.AdminUser;
-import models.Member;
 import play.data.Form;
-import services.AdminUserFormData;
+import services.formData.AdminUserFormData;
+import services.Pager;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface AdminUserServiceInterface {
 
     AdminUserFormData setAdminUserData(String token);
 
-    List<AdminUser> getAdminUserList();
+    List<AdminUser> getAdminUserList(Pager pager);
 
     AdminUser getAdminUser(String token);
 

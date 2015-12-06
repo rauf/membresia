@@ -29,7 +29,7 @@
 		// element.  Add a callback so we can display the placeholder size.
 
 		placeholder.resize(function () {
-			$(".message").text("Placeholder is now "
+			$(".mailMessage").text("Placeholder is now "
 				+ $(this).width() + "x" + $(this).height()
 				+ " pixels");
 		});
@@ -60,7 +60,7 @@
 			<div id="placeholder" class="demo-placeholder"></div>
 		</div>
 
-		<p class="message"></p>
+		<p class="mailMessage"></p>
 
 		<p>Sometimes it makes more sense to just let the plot take up the available space. In that case, we need to redraw the plot each time the placeholder changes its size. If you include the resize plugin, this is handled automatically.</p>
 

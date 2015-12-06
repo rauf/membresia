@@ -11,6 +11,7 @@ import services.contract.AdminUserServiceInterface;
 import java.util.List;
 
 import play.libs.mailer.Email;
+import services.formData.AdminUserFormData;
 
 /**
  * Middleware class for controller model interaction and other adminUser related business logic
@@ -25,8 +26,8 @@ public class AdminUserService implements AdminUserServiceInterface {
         return new AdminUserFormData(getModel().getAdminUserByToken(token));
     }
 
-    public List<AdminUser> getAdminUserList() {
-        return getModel().getAdminUserList();
+    public List<AdminUser> getAdminUserList(Pager pager) {
+        return getModel().getAdminUserList(pager);
     }
 
     public AdminUser save(Form<AdminUserFormData> formData) {
@@ -38,10 +39,7 @@ public class AdminUserService implements AdminUserServiceInterface {
 
 
     public boolean isAdminUserEmailUsed(String email, String token) {
-        if (getModel().getAdminUserEmailUseCount(email, token) > 0) {
-            return true;
-        }
-        return false;
+        return getModel().getUserEmailCount(email, token) > 0;
     }
 
     public boolean remove(String token) {
@@ -70,6 +68,5 @@ public class AdminUserService implements AdminUserServiceInterface {
         email.setBodyHtml(body);
 
         mailer.send(email);
-
     }
 }

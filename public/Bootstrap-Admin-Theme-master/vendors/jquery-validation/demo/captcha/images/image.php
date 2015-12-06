@@ -3,7 +3,7 @@
 // Begin the session
 session_start();
 
-// If the session is not present, set the variable to an error message
+// If the session is not present, set the variable to an error mailMessage
 if(!isset($_SESSION['captcha_id']))
 	$str = 'ERROR!';
 // Else if it is present, set the variable to the session contents

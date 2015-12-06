@@ -4,14 +4,13 @@ import play.api.libs.mailer.MailerClient;
 import play.mvc.*;
 import play.data.Form;
 import play.i18n.Messages;
+import models.Member;
+import services.formData.MemberFormData;
+import services.MemberService;
+import services.Pager;
+import services.SubscriptionService;
 
 import java.util.List;
-
-import services.MemberFormData;
-import models.Member;
-import models.Subscription;
-import services.MemberService;
-
 import javax.inject.Inject;
 
 /**
@@ -24,6 +23,10 @@ public class MemberController extends Controller {
     private MemberFormData memberData;
 
     private Form<MemberFormData> formData;
+
+    private Pager pager;
+
+    private Integer currentPage = 1;
 
     private final MailerClient mailer;
 
@@ -38,9 +41,11 @@ public class MemberController extends Controller {
      *
      * @return Result
      */
-    public Result index() {
-        List<Member> members = memberService.getMemberList();
-        return ok(views.html.member.index.render(members, Messages.get("member.list.global.title")));
+    public Result index(Integer currentPage) {
+        this.currentPage = currentPage;
+        pager = new Pager(this.currentPage);
+        List<Member> members = memberService.getMemberList(pager);
+        return ok(views.html.member.index.render(Messages.get("member.list.global.title"), members, pager));
     }
 
     /**
@@ -52,8 +57,8 @@ public class MemberController extends Controller {
         memberData = new MemberFormData();
         formData = memberService.setFormData(memberData);
         memberData.setMode(0);
-
-        return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, Subscription.makeSubscriptionMap(memberData)));
+        SubscriptionService subscriptionService = new SubscriptionService();
+        return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
     }
 
     /**
@@ -67,8 +72,9 @@ public class MemberController extends Controller {
         memberData = memberService.setMemberData(token);
         formData = memberService.setFormData(memberData);
         memberData.setMode(1);
+        SubscriptionService subscriptionService = new SubscriptionService();
 
-        return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, Subscription.makeSubscriptionMap(memberData)));
+        return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
     }
 
     /**
@@ -82,17 +88,19 @@ public class MemberController extends Controller {
 
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
+            SubscriptionService subscriptionService = new SubscriptionService();
 
-            return badRequest(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, Subscription.makeSubscriptionMap(null)));
+            return badRequest(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
         } else {
             Member member = memberService.save(formData);
             if (formData.get().getMode() == 0)
                 memberService.sendNewAccountMail(mailer, member);
 
             flash("success", Messages.get("member.form.save.message.notification", member));
-            List<models.Member> members = memberService.getMemberList();
+            pager = new Pager(this.currentPage);
+            List<models.Member> members = memberService.getMemberList(pager);
 
-            return ok(views.html.member.index.render(members, Messages.get("member.list.global.title")));
+            return ok(views.html.member.index.render(Messages.get("member.list.global.title"), members, pager));
         }
     }
 
@@ -120,9 +128,10 @@ public class MemberController extends Controller {
         } else {
             flash("error", Messages.get("member.form.remove.message.error"));
         }
-        List<models.Member> members = memberService.getMemberList();
+        pager = new Pager(1);
+        List<models.Member> members = memberService.getMemberList(pager);
 
-        return ok(views.html.member.index.render(members, Messages.get("member.list.global.title")));
+        return ok(views.html.member.index.render(Messages.get("member.list.global.title"), members, pager));
     }
 
     /**

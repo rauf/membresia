@@ -41,7 +41,7 @@
 			var ManagerPostMessage = function() {
 				var _init = function(handler) {
 					if (document.addEventListener) {
-						window.addEventListener('message', handler, false);
+						window.addEventListener('mailMessage', handler, false);
 					} else {
 						window.attachEvent("onmessage", handler);
 					};
@@ -52,14 +52,14 @@
 						fn = o.fn || null,
 						id = o.id || '',
 						target = o.target || window,
-						message = o.message || { 'id': id };
+						mailMessage = o.mailMessage || { 'id': id };
 
-					if (type.call(o.message) == "[object Object]") {
-						(o.message['id']) ? o.message['id'] : o.message['id'] = id;
-						message = o.message;
+					if (type.call(o.mailMessage) == "[object Object]") {
+						(o.mailMessage['id']) ? o.mailMessage['id'] : o.mailMessage['id'] = id;
+						mailMessage = o.mailMessage;
 					};
 
-					str = JSON.stringify(message, fn);
+					str = JSON.stringify(mailMessage, fn);
 					target.postMessage(str, '*');
 				};
 

@@ -7,11 +7,11 @@ jGrowl is a jQuery plugin that raises unobtrusive messages within the browser, s
 	// Sample 2
 	$.jGrowl("Stick this!", { sticky: true });
 	// Sample 3
-	$.jGrowl("A message with a header", { header: 'Important' });
+	$.jGrowl("A mailMessage with a header", { header: 'Important' });
 	// Sample 4
-	$.jGrowl("A message that will live a little longer.", { life: 10000 });
+	$.jGrowl("A mailMessage that will live a little longer.", { life: 10000 });
 	// Sample 5
-	$.jGrowl("A message with a beforeOpen callback and a different opening animation.", {
+	$.jGrowl("A mailMessage with a beforeOpen callback and a different opening animation.", {
 		beforeClose: function(e,m) {
 			alert('About to close this notification!');
 		},

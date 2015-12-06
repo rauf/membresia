@@ -184,7 +184,7 @@
 # From Joseph S. Myers (1999-09-02):
 # ... some military cables (WO 219/4100 - this is a copy from the
 # main SHAEF archives held in the US National Archives, SHAEF/5252/8/516)
-# agree that the usage is BDST (this appears in a message dated 17 Feb 1945).
+# agree that the usage is BDST (this appears in a mailMessage dated 17 Feb 1945).
 
 # From Joseph S. Myers (2000-10-03):
 # On 18th April 1941, Sir Stephen Tallents of the BBC wrote to Sir
@@ -2492,7 +2492,7 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # From Alois Treindl (2008-12-17):
 # I have researched the DST usage in Switzerland during the 1940ies.
 #
-# As I wrote in an earlier message, I suspected the current tzdata values
+# As I wrote in an earlier mailMessage, I suspected the current tzdata values
 # to be wrong. This is now verified.
 #
 # I have found copies of the original ruling by the Swiss Federal

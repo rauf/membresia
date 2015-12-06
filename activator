@@ -253,7 +253,7 @@ Usage: $script_name <command> [options]
   ui                 Start the Activator UI
   new [name] [template-id]  Create a new project with [name] using template [template-id]
   list-templates     Print all available template names
-  -h | -help         Print this message
+  -h | -help         Print this mailMessage
 
   Options:
   -v | -verbose      Make this runner chattier

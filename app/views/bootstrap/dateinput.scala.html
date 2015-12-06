@@ -1,0 +1,39 @@
+@(
+        field: Field,
+        label: String = "",
+        help: String = "",
+        error: String = "",
+        required: Boolean = false,
+        showValue: Boolean = true
+)
+
+
+<!-- Date dd/mm/yyyy -->
+<div class="form-group @if(field.hasErrors) {has-error}">
+    <label class="control-label">@label @if(required) {(*)}</label>
+    <div class="input-group">
+        <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+        </div>
+        <input
+        type="text"
+        id="@field.id"
+        name="@field.name"
+            @if(showValue) {
+                value="@field.value.getOrElse("")"
+            }
+            @if(required) {
+                required="required"
+                oninvalid="this.setCustomValidity('@error')"
+                onchange="this.setCustomValidity('')"
+            }
+        class="form-control datefield"
+        data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+    </div>
+    <p class="help-block">@help</p>
+    @if(field.error.isDefined) {
+        <span class="error-block fa fa-info-circle text-red">@{
+            field.error.map { error => error.message }
+        }</span>
+    }
+</div>

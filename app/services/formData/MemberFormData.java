@@ -1,4 +1,4 @@
-package services;
+package services.formData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import models.Member;
 import models.Subscription;
+import services.MemberService;
 
 /**
  * Class that handles Members form submission and validation and relates submitted data to the model
@@ -26,8 +27,8 @@ public class MemberFormData {
     protected String phone;
     protected String nif;
     protected String token;
-    protected List<String> subscriptions = new ArrayList<>();
     protected Integer mode;
+    protected List<String> subscriptions = new ArrayList<>();
 
     protected Member member = new Member();
     protected MemberService memberService = new MemberService();
@@ -61,7 +62,7 @@ public class MemberFormData {
         this.nif = member.getNif();
         this.token = member.getToken();
         for (Subscription subscription : member.getSubscriptions()) {
-            this.subscriptions.add(subscription.getTitle());
+            this.subscriptions.add(subscription.getToken());
         }
     }
 
@@ -116,6 +117,10 @@ public class MemberFormData {
 
         if (nif == null || nif.length() == 0) {
             errors.add(new ValidationError("name", Messages.get("member.form.validation.nif")));
+        }
+
+        if (subscriptions == null || subscriptions.size() == 0) {
+            errors.add(new ValidationError("subscriptions", Messages.get("member.form.validation.subscriptions")));
         }
 
         if (errors.size() > 0)
