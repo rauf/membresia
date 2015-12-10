@@ -35,7 +35,7 @@
                             <td>
                                 <div class="toolbar">
                                     <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-member-modal-@member.getToken"></button>
-                                    <a href="@routes.MemberController.makePayment(member.getToken)" role="button" class="btn btn-success fa fa-money"></a>
+                                    <a href="@routes.PaymentController.makePayment(member.getToken)" role="button" class="btn btn-success fa fa-money"></a>
                                     <a href="@routes.MailMessageController.sendMailForm(member.getToken)" role="button" class="btn btn-primary fa fa-envelope-o"></a>
                                     <a href="@routes.MemberController.edit(member.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
                                     <a href="@routes.MemberController.show(member.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>

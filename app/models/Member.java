@@ -1,5 +1,8 @@
 package models;
 
+import com.timgroup.jgravatar.Gravatar;
+import com.timgroup.jgravatar.GravatarDefaultImage;
+import com.timgroup.jgravatar.GravatarRating;
 import play.data.validation.*;
 import services.formData.MemberFormData;
 import services.Pager;
@@ -43,9 +46,9 @@ public class Member extends User {
     protected String phone;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    protected List<Payment> payments = new ArrayList<Payment>();
+    protected List<MemberInstallment> memberInstallments = new ArrayList<MemberInstallment>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     protected List<Subscription> subscriptions = new ArrayList<Subscription>();
 
     /**
@@ -176,6 +179,14 @@ public class Member extends User {
         this.subscriptions.add(subscription);
     }
 
+    public String getGravatar() {
+        Gravatar gravatar = new Gravatar();
+        gravatar.setSize(50);
+        gravatar.setRating(GravatarRating.GENERAL_AUDIENCES);
+        gravatar.setDefaultImage(GravatarDefaultImage.IDENTICON);
+        return gravatar.getUrl(this.getEmail());
+    }
+
     public String getMemberId() {
 
         return memberId;
@@ -189,6 +200,10 @@ public class Member extends User {
     public String getAddress() {
 
         return address;
+    }
+
+    public String addressToString() {
+        return address + ", " + city + " " + state + " " + cp + ". " + country;
     }
 
     public void setAddress(String address) {
@@ -256,14 +271,12 @@ public class Member extends User {
         this.phone = phone;
     }
 
-    public List<Payment> getPayments() {
-
-        return payments;
+    public List<MemberInstallment> getMemberInstallments() {
+        return memberInstallments;
     }
 
-    public void setPayments(List<Payment> payments) {
-
-        this.payments = payments;
+    public void setMemberInstallments(List<MemberInstallment> memberInstallments) {
+        this.memberInstallments = memberInstallments;
     }
 
     public List<Subscription> getSubscriptions() {

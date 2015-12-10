@@ -1,9 +1,67 @@
-@(member: Member)
+@(member: Member, title: String)
 
     @import play.i18n._;
     @import views.html.common.parts._;
     @import views.html.common.templates.main;
 
-    @main(Messages.get("app.global.title") + " - " + member) {
+    @main(title) {
 
+        <div class="row">
+            <div class="col-md-3">
+
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="@member.getGravatar" alt="User profile picture">
+                        <h3 class="profile-username text-center">@member.toString</h3>
+                        <p class="text-muted text-center">@member.getEmail</p>
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>@Messages.get("member.form.label.phone")</b> <a class="pull-right">@member.getPhone</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("member.form.label.address")</b> <a class="pull-right">@member.getAddress</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("member.form.label.city")</b> <a class="pull-right">@member.getCity
+                                (@member.getState)</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("member.form.label.cp")</b> <a class="pull-right">@member.getCp</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("member.form.label.country")</b> <a class="pull-right">@member.getCountry</a>
+                            </li>
+                        </ul>
+
+                        <a href="@routes.MemberController.edit(member.getToken)" class="btn btn-primary btn-block"><b>@Messages.get("member.form.global.edit.title")</b></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-9">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Messages.get("member.show.payment.history")</h3>
+                        <a href="@routes.PaymentController.makePayment(member.getToken)" class="btn btn-primary pull-right"><b>@Messages.get("member.show.payment.action")</b></a>
+
+                    </div>
+                    <div class="box-body">
+                        @if(!member.getMemberInstallments.isEmpty) {
+                            <ul>
+                            @for(memberInstallments <- member.getMemberInstallments) {
+                                <li>@memberInstallments.toString</li>
+                            }
+                            </ul>
+                        } else {
+                            <div class="callout callout-info">
+                                <h4>@Messages.get("member.show.payment.empty")</h4>
+                                <p>@Messages.get("member.show.payment.text") <a href="@routes.PaymentController.makePayment(member.getToken)">@Messages.get("member.show.payments.link")</a></p>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
     }

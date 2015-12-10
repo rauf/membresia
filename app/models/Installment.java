@@ -1,12 +1,12 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.persistence.*;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.*;
 import com.avaje.ebean.Model;
-import models.Subscription;
 import play.data.format.*;
 import play.data.validation.Constraints;
 import services.MD5;
@@ -22,7 +22,7 @@ public class Installment extends Model {
     public Date dueDate = new Date();
 
     @Constraints.Required
-    @Column(columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(columnDefinition = "Decimal(10,2) default '0.00'")
     public Double amount;
 
     @Constraints.Required
@@ -40,8 +40,16 @@ public class Installment extends Model {
     @OneToMany(mappedBy = "installment", cascade = CascadeType.ALL)
     public List<Payment> payments = new ArrayList<Payment>();
 
+    @OneToMany(mappedBy = "installment", cascade = CascadeType.ALL)
+    public List<MemberInstallment> memberInstallments = new ArrayList<MemberInstallment>();
+
     @ManyToOne(cascade = CascadeType.ALL)
     public Subscription subscription;
+
+    public Installment(Subscription subscription) {
+        this.setSubscription(subscription);
+        this.setToken(generateToken());
+    }
 
     public Installment(Date dueDate, Double amount, Subscription subscription) {
         this.setDueDate(dueDate);
@@ -101,8 +109,18 @@ public class Installment extends Model {
      * @return String
      */
     public String toString() {
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+        String formatted = format1.format(this.getDueDate().getTime());
 
-        return this.getSubscription().toString() + " - " + this.getDueDate().toString();
+        return this.getSubscription().toString() + " - " + formatted;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getDueDate() {
@@ -113,20 +131,12 @@ public class Installment extends Model {
         this.dueDate = dueDate;
     }
 
-    public Subscription getSubscription() {
-        return subscription;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setSubscription(Subscription subscription) {
-        this.subscription = subscription;
-    }
-
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getToken() {
@@ -137,11 +147,43 @@ public class Installment extends Model {
         this.token = token;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Date getCreated_at() {
+        return created_at;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public List<MemberInstallment> getMemberInstallments() {
+        return memberInstallments;
+    }
+
+    public void setMemberInstallments(List<MemberInstallment> memberInstallments) {
+        this.memberInstallments = memberInstallments;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
     }
 }

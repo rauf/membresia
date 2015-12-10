@@ -33,7 +33,7 @@ public class Subscription extends Model {
     public String description;
 
     @Constraints.Required
-    @Column(columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(columnDefinition = "Decimal(10,2) default '0.00'")
     public Double amount;
 
     @Constraints.Required
@@ -46,6 +46,12 @@ public class Subscription extends Model {
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     public Date dueDatePeriod;
 
+//    @Formats.DateTime(pattern = "dd/MM/yyyy")
+//    public Date endDate = null;
+
+    protected Boolean isPaid = false;
+
+
     @CreatedTimestamp
     @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
     public Date created_at = new Date();
@@ -55,10 +61,10 @@ public class Subscription extends Model {
     public Date updated_at = new Date();
 
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)
-    public List<Installment> installments = new ArrayList<Installment>();
+    public List<Installment> installments;
 
     @ManyToMany(mappedBy = "subscriptions", cascade = CascadeType.ALL)
-    public List<Member> members = new ArrayList<Member>();
+    public List<Member> members;
 
     /**
      * Generic constructor
@@ -80,10 +86,8 @@ public class Subscription extends Model {
         this.setAmount(formData.getAmount());
         this.setPeriodicity(formData.getPeriodicity());
         this.setDueDatePeriod(formData.getDueDatePeriod());
+        //this.setEndDate(formData.getEndDate());
         this.setToken(formData.getToken());
-//        for (String member : formData.getMembers()) {
-//            this.members.add(Member.findByToken(member));
-//        }
     }
 
     /**
@@ -269,6 +273,14 @@ public class Subscription extends Model {
         this.dueDatePeriod = dueDatePeriod;
     }
 
+//    public Date getEndDate() {
+//        return endDate;
+//    }
+//
+//    public void setEndDate(Date endDate) {
+//        this.endDate = endDate;
+//    }
+
     public Date getCreated_at() {
         return created_at;
     }
@@ -289,7 +301,7 @@ public class Subscription extends Model {
         return installments;
     }
 
-    public void setInstallments(List<Installment> installments) {
+    public void setInstallments(LinkedList<Installment> installments) {
         this.installments = installments;
     }
 

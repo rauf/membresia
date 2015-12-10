@@ -15,6 +15,16 @@ create table installment (
   constraint pk_installment primary key (id))
 ;
 
+create table member_installment (
+  id                        bigint auto_increment not null,
+  is_paid                   tinyint(1) default 0,
+  token                     varchar(255),
+  member_id                 bigint,
+  installment_id            bigint,
+  constraint uq_member_installment_token unique (token),
+  constraint pk_member_installment primary key (id))
+;
+
 create table messageTemplate (
   id                        bigint auto_increment not null,
   title                     varchar(255),
@@ -28,11 +38,13 @@ create table messageTemplate (
 
 create table payment (
   id                        bigint auto_increment not null,
-  amount                    float,
+  amount                    double,
+  token                     varchar(255),
   status                    integer,
   installment_id            bigint,
-  member_id                 bigint,
+  member_installment_id     bigint,
   created_at                datetime(6) not null,
+  constraint uq_payment_token unique (token),
   constraint pk_payment primary key (id))
 ;
 
@@ -45,6 +57,7 @@ create table subscrition (
   periodicity               varchar(255),
   token                     varchar(255),
   due_date_period           datetime(6),
+  is_paid                   tinyint(1) default 0,
   created_at                datetime(6) not null,
   updated_at                datetime(6) not null,
   constraint uq_subscrition_subscription_id unique (subscription_id),
@@ -84,10 +97,14 @@ create table user_subscrition (
 ;
 alter table installment add constraint fk_installment_subscription_1 foreign key (subscription_id) references subscrition (id) on delete restrict on update restrict;
 create index ix_installment_subscription_1 on installment (subscription_id);
-alter table payment add constraint fk_payment_installment_2 foreign key (installment_id) references installment (id) on delete restrict on update restrict;
-create index ix_payment_installment_2 on payment (installment_id);
-alter table payment add constraint fk_payment_member_3 foreign key (member_id) references user (id) on delete restrict on update restrict;
-create index ix_payment_member_3 on payment (member_id);
+alter table member_installment add constraint fk_member_installment_member_2 foreign key (member_id) references user (id) on delete restrict on update restrict;
+create index ix_member_installment_member_2 on member_installment (member_id);
+alter table member_installment add constraint fk_member_installment_installment_3 foreign key (installment_id) references installment (id) on delete restrict on update restrict;
+create index ix_member_installment_installment_3 on member_installment (installment_id);
+alter table payment add constraint fk_payment_installment_4 foreign key (installment_id) references installment (id) on delete restrict on update restrict;
+create index ix_payment_installment_4 on payment (installment_id);
+alter table payment add constraint fk_payment_memberInstallment_5 foreign key (member_installment_id) references member_installment (id) on delete restrict on update restrict;
+create index ix_payment_memberInstallment_5 on payment (member_installment_id);
 
 
 
@@ -100,6 +117,8 @@ alter table user_subscrition add constraint fk_user_subscrition_subscrition_02 f
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table installment;
+
+drop table member_installment;
 
 drop table messageTemplate;
 

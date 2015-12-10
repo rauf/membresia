@@ -25,6 +25,8 @@
                         <th>@Messages.get("subscription.list.table.amount")</th>
                         <th>@Messages.get("subscription.list.table.periodicity")</th>
                         <th>@Messages.get("subscription.list.table.subscribers")</th>
+                        <th>@Messages.get("subscription.list.table.installments")</th>
+
                         <th>&nbsp;</th>
                     </tr>
                     @for( subscription <- subscriptions) {
@@ -34,6 +36,8 @@
                             <td class="item-info">@("%.2f".format(subscription.getAmount)) &euro;</td>
                             <td class="item-info">@subscription.getPeriodicity</td>
                             <td class="item-info">@subscription.getMembers.size()</td>
+                            <td class="item-info">@subscription.getInstallments.size()</td>
+
                             <td>
                                 <div class="toolbar">
                                     @if(subscription.getMembers.isEmpty){

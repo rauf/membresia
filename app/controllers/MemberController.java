@@ -93,6 +93,7 @@ public class MemberController extends Controller {
             return badRequest(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
         } else {
             Member member = memberService.save(formData);
+            memberService.updateMemberInstallments(member);
             if (formData.get().getMode() == 0)
                 memberService.sendNewAccountMail(mailer, member);
 
@@ -113,7 +114,7 @@ public class MemberController extends Controller {
     public Result show(String token) {
         Member member = memberService.getMember(token);
 
-        return ok(views.html.member.show.render(member));
+        return ok(views.html.member.show.render(member, Messages.get("member.list.show.title")));
     }
 
     /**
@@ -134,14 +135,5 @@ public class MemberController extends Controller {
         return ok(views.html.member.index.render(Messages.get("member.list.global.title"), members, pager));
     }
 
-    /**
-     * Displays member's payment view
-     *
-     * @param token Unique member token identifier
-     * @return
-     */
-    public Result makePayment(String token) {
 
-        return redirect("/");
-    }
 }

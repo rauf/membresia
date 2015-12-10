@@ -1,0 +1,88 @@
+@import java.util
+
+@import services.formData.PaymentFormData
+@(title: String, member: Member, formData: play.data.Form[PaymentFormData], memberInstallmentMap: util.Map[SelectOptionItem, Boolean])
+
+@import play.i18n.Messages;
+@import views.html.common.parts._;
+@import views.html.common.templates.main;
+@import views.html.bootstrap._
+
+@main(title) {
+    <div class="row">
+
+        <div class="col-md-3">
+
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="@member.getGravatar" alt="User profile picture">
+                    <h3 class="profile-username text-center">@member.toString</h3>
+                    <p class="text-muted text-center">@member.getEmail</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>@Messages.get("member.form.label.phone")</b> <a class="pull-right">@member.getPhone</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>@Messages.get("member.form.label.address")</b> <a class="pull-right">@member.getAddress</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>@Messages.get("member.form.label.city")</b> <a class="pull-right">@member.getCity
+                            (@member.getState)</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>@Messages.get("member.form.label.cp")</b> <a class="pull-right">@member.getCp</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>@Messages.get("member.form.label.country")</b> <a class="pull-right">@member.getCountry</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                @notification()
+                </div>
+                <div class="box-body">
+                @helper.form(action = routes.PaymentController.registerPayment()) {
+                    <p>@Messages.get("payment.form.instructions.installment")</p>
+                    <div class="row">
+                        <div class="col-md-8">
+                        @select(formData("memberInstallmentToken"),
+                            label = Messages.get("payment.form.label.installment"),
+                            optionMap = memberInstallmentMap,
+                            isMultiple = false,
+                            help = Messages.get("payment.form.helper.installment"),
+                            error = Messages.get("payment.form.validation.installment"),
+                            required = true
+                        )
+                        </div>
+                        <div class="col-md-4">
+                        @input(formData("amount"),
+                            label = Messages.get("payment.form.label.amount"),
+                            placeholder = Messages.get("payment.form.placeholder.amount"),
+                            help = Messages.get("payment.form.helper.amount"),
+                            error = Messages.get("payment.form.validation.amount"),
+                            required = false
+                        )
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            @hidden(formData("memberToken"))
+            @hidden(formData("token"))
+
+            <div class="box-footer">
+                <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.pay")</button>
+                <a id="cancel" href="@routes.MemberController.index()" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
+            </div>
+            }
+        </div>
+    </div>
+}

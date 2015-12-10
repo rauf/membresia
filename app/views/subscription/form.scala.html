@@ -72,9 +72,16 @@
                                 label = Messages.get("subscription.form.label.dueDatePeriod"),
                                 help = Messages.get("subscription.form.helper.dueDatePeriod"),
                                 error = Messages.get("subscription.form.validation.dueDatePeriod"),
-                                required = true
+                                required = true,
+                                disabled = if(subscriptionForm.get().getMode == 1) {
+                                    true
+                                } else {
+                                    false
+                                }
                             )
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>
@@ -86,7 +93,9 @@
             @hidden(subscriptionForm("token"))
             @hidden(subscriptionForm("subscriptionId"))
             @hidden(subscriptionForm("mode"))
-
+            @if(subscriptionForm.get().getMode == 1) {
+                @hidden(subscriptionForm("dueDatePeriod"))
+            }
         </div>
 
     <div class="box-footer">

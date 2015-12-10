@@ -1,16 +1,19 @@
 package services;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import models.*;
 import play.api.libs.mailer.MailerClient;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
-import models.Member;
 import play.data.Form;
 import services.contract.MemberServiceInterface;
 import services.formData.MemberFormData;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Middleware class for controller model interaction and other member related business logic
@@ -75,6 +78,33 @@ public class MemberService implements MemberServiceInterface {
     public boolean isMemberEmailUsed(String email, String token) {
 
         return getModel().getUserEmailCount(email, token) > 0;
+    }
+
+    public void updateMemberInstallments(Member member) {
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+        SubscriptionService subscriptionService = new SubscriptionService();
+
+        for (Subscription subscription : member.getSubscriptions()) {
+            if (subscription != null) {
+                Installment lastInstallment = subscriptionService.getLastInstallment(subscription);
+                boolean isInstallmentAssigned = false;
+                for (MemberInstallment memberInstallment : member.getMemberInstallments()) {
+                    isInstallmentAssigned = (memberInstallment.getInstallment().equals(lastInstallment)) || isInstallmentAssigned;
+                }
+                if (!isInstallmentAssigned) memberInstallmentService.createMemberInstallment(member, lastInstallment);
+            }
+        }
+    }
+
+    public Map<SelectOptionItem, Boolean> makeMemberInstallmentMap(Member member) {
+        Map<SelectOptionItem, Boolean> memberInstallmentMap = new HashMap<SelectOptionItem, Boolean>();
+        for (MemberInstallment memberInstallment : member.getMemberInstallments()) {
+            if (!memberInstallment.getPaid()) {
+                SelectOptionItem selectOptionItem = new SelectOptionItem(memberInstallment.getInstallment().toString(), memberInstallment.getToken());
+                memberInstallmentMap.put(selectOptionItem, false);
+            }
+        }
+        return memberInstallmentMap;
     }
 
     /**

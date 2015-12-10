@@ -4,7 +4,8 @@
         help: String = "",
         error: String = "",
         required: Boolean = false,
-        showValue: Boolean = true
+        showValue: Boolean = true,
+        disabled: Boolean = false
 )
 
 
@@ -26,6 +27,9 @@
                 required="required"
                 oninvalid="this.setCustomValidity('@error')"
                 onchange="this.setCustomValidity('')"
+            }
+            @if(disabled) {
+                disabled="disabled"
             }
         class="form-control datefield"
         data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>

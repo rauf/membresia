@@ -7,4 +7,5 @@ public interface InstallmentServiceInterface {
 
     Installment createInstallment(Subscription subscription);
 
+    void updateInstallments(Subscription subscription);
 }

@@ -92,6 +92,7 @@ public class SubscriptionController extends Controller {
         subscriptionData = new SubscriptionFormData();
         formData = Form.form(SubscriptionFormData.class).bindFromRequest();
 
+
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
             Map<SelectOptionItem, Boolean> periodicityMap = subscriptionService.makePeriodicityMap(subscriptionData);
@@ -99,7 +100,12 @@ public class SubscriptionController extends Controller {
             return badRequest(views.html.subscription.form.render(Messages.get("subscription.form.global.new.title"), formData, periodicityMap));
         } else {
             Subscription subscription = subscriptionService.save(formData);
-            installmentService.createInstallment(subscription);
+
+            if (formData.get().getMode() == 0)
+                installmentService.createInstallment(subscription);
+            else
+                installmentService.updateInstallments(subscription);
+
 
             flash("success", Messages.get("subscription.form.save.message.notification", subscription));
             pager = new Pager(this.currentPage);
@@ -107,6 +113,11 @@ public class SubscriptionController extends Controller {
 
             return ok(views.html.subscription.index.render(Messages.get("subscription.list.global.title"), subscriptions, pager));
         }
+    }
+
+    public Result createInstallments() {
+        subscriptionService.createInstallments();
+        return ok();
     }
 
     /**

@@ -20,8 +20,8 @@ app.menu.subscription.title = Subscriptions
 app.menu.subscription.list = List all subscriptions
 app.menu.subscription.create = Create a new subscription
 
-app.menu.message.title = Messaging
-app.menu.message.send = Compose new message
+app.menu.mailMessage.title = Messaging
+app.menu.mailMessage.send = Compose new message
 app.menu.messageTemplate.list = List all message templates
 app.menu.messageTemplate.create = Create a message template
 
@@ -30,6 +30,7 @@ app.menu.messageTemplate.create = Create a message template
 app.global.validation.message = Please correct errors above.
 app.global.form.submit = Save
 app.global.form.send = Send
+app.global.form.pay = Pay
 app.global.form.cancel = Cancel
 app.common.form.select.default = Please select a value
 app.common.form.select.unselect = No selected value
@@ -54,7 +55,7 @@ member.list.empty.title =  No members available
 # Titles
 member.form.global.new.title = Create a new member
 member.form.global.edit.title = Edit member
-
+member.list.show.title = Member Profile
 # Validation
 member.form.validation.name = No name was given.
 member.form.validation.lastName  = No last name was given.
@@ -119,6 +120,16 @@ member.mail.body.line1 = Hi there.
 member.mail.body.line2 = You have been register as a member at Membresia.
 member.mail.body.line3 = You will be receiving periodical mails with instructions on how to make your installment payments online.
 member.mail.body.line4 = Thanks, have a lovely day.
+
+# Show
+member.show.payment.action = Make payment
+member.show.payment.history = Payment History
+member.show.payment.empty = No registered payments found
+member.show.payment.text = There are no registrered payments for this member.
+member.show.payments.link = Click here to make a payment.
+
+# Pay
+member.pay.global.title = Make Payment
 
 ##### Form admin users
 
@@ -221,6 +232,7 @@ subscription.list.empty.link = Click here to create a new subscription
 subscription.list.empty.text = There are no subscriptions available to be shown.
 subscription.list.empty.title =  No subscriptions available
 subscription.list.table.subscribers = Subscribers
+subscription.list.table.installments = Installments
 
 
 # Titles
@@ -232,14 +244,16 @@ subscription.form.label.title = Title
 subscription.form.label.description = Description
 subscription.form.label.amount= Installment amount
 subscription.form.label.periodicity= Periodicity
-subscription.form.label.dueDatePeriod= Subscription start date
+subscription.form.label.dueDatePeriod= Subscription next due date
+subscription.form.label.endDate= Subscription last installment date
 
 # Helpers
 subscription.form.helper.title = Please enter the subscription title
 subscription.form.helper.description = Please enter the subscription description
 subscription.form.helper.amount = Please enter the subscription installment amount
 subscription.form.helper.periodicity = Please enter the subscription installment period
-subscription.form.helper.dueDatePeriod = Please enter the subscription start date
+subscription.form.helper.dueDatePeriod = Please enter the subscription next due date
+subscription.form.helper.endDate = Please enter subscription last installment date
 
 # Placeholder
 subscription.form.placeholder.title =
@@ -247,13 +261,18 @@ subscription.form.placeholder.description =
 subscription.form.placeholder.amount =
 subscription.form.placeholder.periodicity =
 subscription.form.placeholder.dueDatePeriod =
+subscription.form.placeholder.endDate =
+
 
 # Validation
 subscription.form.validation.title = No title was given.
 subscription.form.validation.description  = No description was given.
 subscription.form.validation.amount = No installment amount was defined.
 subscription.form.validation.periodicity = No installment period was introduced.
-subscription.form.validation.dueDatePeriod = No subscription start date was entered.
+subscription.form.validation.dueDatePeriod = No subscription due date was entered.
+subscription.form.validation.endDate = No subscription last installment date was entered.
+subscription.form.validation.dueDatePeriod.before = Due date must be greater that today''s date
+subscription.form.validation.endDate.before = Last instalment date must be greater that today''s date and initial due date.
 
 # Messages
 subscription.form.save.message.notification = The subscription "{0}" has been created/updated correctly.
@@ -302,3 +321,20 @@ mailMessage.form.validation.recipients  = No recipients were selected.
 
 # Messages
 mailMessage.form.save.message.notification = The message has been sent
+
+##### Payment ####
+
+payment.form.instructions.installment = Please select an active installment and enter your payment amount.
+
+payment.form.label.installment = Installment to pay
+payment.form.helper.installment = Select the installment to make the payment to.
+payment.form.label.amount = Amount to pay
+payment.form.helper.amount = Enter the amount you wish pay for selected installment
+
+payment.form.placeholder.amount =
+payment.form.placeholder.installment =
+
+payment.form.validation.memberInstallmentToken = Select a installment to pay
+payment.form.validation.amount = Provide the amount to pay
+
+payment.form.save.message.notification = Your payment has been registered.

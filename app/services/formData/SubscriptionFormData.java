@@ -7,6 +7,7 @@ import play.i18n.Messages;
 import services.SubscriptionService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class SubscriptionFormData {
     protected Double amount;
     protected String periodicity;
     protected Date dueDatePeriod;
+//    protected Date endDate;
     protected String token;
     protected List<String> members = new ArrayList<>();
     protected Integer mode;
@@ -51,6 +53,7 @@ public class SubscriptionFormData {
         this.amount = subscription.getAmount();
         this.periodicity = subscription.getPeriodicity();
         this.dueDatePeriod = subscription.getDueDatePeriod();
+//        this.endDate = subscription.getEndDate();
         this.token = subscription.getToken();
         for (Member member : subscription.getMembers()) {
             this.members.add(member.toString());
@@ -66,6 +69,14 @@ public class SubscriptionFormData {
 
         List<ValidationError> errors = new ArrayList<>();
 
+        Calendar dueDatePeriodCal = Calendar.getInstance();
+        dueDatePeriodCal.setTime(dueDatePeriod);
+
+//        Calendar endDateCal = Calendar.getInstance();
+//        endDateCal.setTime(endDate);
+
+        Calendar today = Calendar.getInstance();
+
         if (title == null) {
             errors.add(new ValidationError("title", Messages.get("subscription.form.validation.title")));
         }
@@ -80,7 +91,16 @@ public class SubscriptionFormData {
 
         if (dueDatePeriod == null) {
             errors.add(new ValidationError("dueDatePeriod", Messages.get("subscription.form.validation.dueDatePeriod")));
+        } else {
+            if (dueDatePeriodCal.before(today)) {
+                errors.add(new ValidationError("dueDatePeriod", Messages.get("subscription.form.validation.dueDatePeriod.before")));
+            }
+
         }
+//
+//        if (endDateCal.before(today) || endDateCal.before(dueDatePeriod)) {
+//            errors.add(new ValidationError("endDate", Messages.get("subscription.form.validation.endDate.before")));
+//        }
 
         if (errors.size() > 0)
 
@@ -144,6 +164,14 @@ public class SubscriptionFormData {
     public void setDueDatePeriod(Date dueDatePeriod) {
         this.dueDatePeriod = dueDatePeriod;
     }
+
+//    public Date getEndDate() {
+//        return endDate;
+//    }
+//
+//    public void setEndDate(Date endDate) {
+//        this.endDate = endDate;
+//    }
 
     public String getToken() {
         return token;

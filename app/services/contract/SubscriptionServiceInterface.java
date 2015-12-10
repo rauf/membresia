@@ -5,6 +5,7 @@ import play.data.Form;
 import services.formData.SubscriptionFormData;
 import services.Pager;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,4 +61,7 @@ public interface SubscriptionServiceInterface {
      * @return boolean
      */
     boolean remove(String token);
+
+    Date getLastInstallmentDueDate(Subscription subscription);
+
 }

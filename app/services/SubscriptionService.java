@@ -1,8 +1,7 @@
 package services;
 
-import models.Periodicity;
-import models.SelectOptionItem;
-import models.Subscription;
+import models.*;
+import play.Logger;
 import play.data.Form;
 import services.contract.SubscriptionServiceInterface;
 import services.formData.MemberFormData;
@@ -49,7 +48,7 @@ public class SubscriptionService implements SubscriptionServiceInterface {
         Map<SelectOptionItem, Boolean> subscriptionMap = new HashMap<SelectOptionItem, Boolean>();
         for (Subscription subscription : allSubscriptions) {
             SelectOptionItem selectOptionItem = new SelectOptionItem(subscription.toString(), subscription.getToken());
-            subscriptionMap.put(selectOptionItem, (memberFormData != null && memberFormData.getSubscriptions().contains(subscription.getTitle())));
+            subscriptionMap.put(selectOptionItem, (memberFormData != null && memberFormData.getSubscriptions().contains(subscription.getToken())));
         }
         return subscriptionMap;
     }
@@ -59,7 +58,7 @@ public class SubscriptionService implements SubscriptionServiceInterface {
         Map<SelectOptionItem, Boolean> periodicityMap = new HashMap<SelectOptionItem, Boolean>();
         for (Periodicity period : periods) {
             SelectOptionItem selectOptionItem = new SelectOptionItem(period.toString(), period.name());
-            periodicityMap.put(selectOptionItem, (subscriptionFormData == null) ? false : (subscriptionFormData.getPeriodicity() != null) && subscriptionFormData.getPeriodicity().equals(period.toString()));
+            periodicityMap.put(selectOptionItem, (subscriptionFormData == null) ? false : (subscriptionFormData.getPeriodicity() != null) && subscriptionFormData.getPeriodicity().equals(period.name()));
         }
         return periodicityMap;
     }
@@ -90,6 +89,47 @@ public class SubscriptionService implements SubscriptionServiceInterface {
 
         return getModel().getSubscriptionByToken(token);
     }
+
+    public Date getLastInstallmentDueDate(Subscription subscription) {
+        Date dueDate = subscription.getDueDatePeriod();
+        if (!subscription.getInstallments().isEmpty())
+            dueDate = subscription.getInstallments().get(subscription.getInstallments().size() - 1).getDueDate();
+
+        return dueDate;
+    }
+
+    public Date getPreviousToLastInstallmentDueDate(Subscription subscription) {
+        Date dueDate = subscription.getDueDatePeriod();
+        if (subscription.getInstallments().size() > 1)
+            dueDate = subscription.getInstallments().get(subscription.getInstallments().size() - 2).getDueDate();
+
+        return dueDate;
+    }
+
+    public Installment getLastInstallment(Subscription subscription) {
+        return (subscription.getInstallments().isEmpty()) ? new Installment(subscription) : subscription.getInstallments().get(subscription.getInstallments().size() - 1);
+    }
+
+    public void createInstallments() {
+        InstallmentService installmentService = new InstallmentService();
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+
+        List<Subscription> subscriptions = getModel().getSubscriptionRawList();
+        for (Subscription subscription : subscriptions) {
+            Installment lastInstallment = getLastInstallment(subscription);
+            Calendar installmentDate = Calendar.getInstance();
+            installmentDate.setTime(lastInstallment.getDueDate());
+
+            if (installmentDate.before(Calendar.getInstance())) {
+                Installment installment = installmentService.createInstallment(subscription);
+                for (Member member : subscription.getMembers()) {
+                    memberInstallmentService.createMemberInstallment(member, installment);
+                }
+            }
+        }
+    }
+
+
 
     /**
      * Creates Subscription model object
