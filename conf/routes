@@ -3,7 +3,13 @@
 # ~~~~
 
 # Home page
-GET         /                                          controllers.MemberController.index(currentPage: Integer ?= 1)
+GET         /                                          controllers.UserController.login()
+GET         /user-login                                controllers.UserController.login()
+GET         /user-authenticate                         controllers.UserController.authenticate()
+GET         /password-recovery                         controllers.UserController.passwordRecovery()
+GET         /logout                                    controllers.UserController.logout()
+GET         /change-password                           controllers.UserController.changePassword()
+
 
 GET         /all-members                               controllers.MemberController.index(currentPage: Integer ?= 1)
 GET         /create-member                             controllers.MemberController.create()

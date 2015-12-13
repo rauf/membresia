@@ -27,7 +27,7 @@
                         placeholder = Messages.get("adminUser.form.placeholder.name"),
                         help = Messages.get("adminUser.form.helper.name"),
                         error = Messages.get("adminUser.form.validation.name"),
-                        required = false
+                        required = true
                     )
                     </div>
 
@@ -37,21 +37,33 @@
                         placeholder = Messages.get("adminUser.form.placeholder.lastName"),
                         help = Messages.get("adminUser.form.helper.lastName"),
                         error = Messages.get("adminUser.form.validation.lastName"),
-                        required = false
+                        required = true
                     )
                     </div>
 
 
                     <div class="col-md-5">
-                    @input(adminUserForm("Email"),
+                    @input(adminUserForm("email"),
                         label = Messages.get("adminUser.form.label.email"),
                         placeholder = Messages.get("adminUser.form.placeholder.email"),
                         help = Messages.get("adminUser.form.helper.email"),
                         error = Messages.get("adminUser.form.validation.email"),
-                        required = false,
+                        required = true,
                         fieldType = "email"
                     )
                     </div>
+                    @if(adminUserForm.get().getMode == 1) {
+                        <div class="col-md-4">
+                        @input(adminUserForm("password"),
+                            label = Messages.get("adminUser.form.label.password"),
+                            placeholder = Messages.get("adminUser.form.placeholder.password"),
+                            help = Messages.get("adminUser.form.helper.password"),
+                            error = Messages.get("adminUser.form.validation.password"),
+                            required = false,
+                            showValue = false
+                        )
+                        </div>
+                    }
 
                 </div>
 
