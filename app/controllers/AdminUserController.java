@@ -6,6 +6,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.api.libs.mailer.MailerClient;
 import models.AdminUser;
+import play.mvc.With;
 import services.formData.AdminUserFormData;
 import services.AdminUserService;
 import services.Pager;
@@ -16,6 +17,8 @@ import java.util.List;
 /**
  * Controller for MemberController component
  */
+
+@With(SecuredAction.class)
 public class AdminUserController extends Controller {
 
     private AdminUserService adminUserService = new AdminUserService();

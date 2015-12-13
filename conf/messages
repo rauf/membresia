@@ -338,3 +338,46 @@ payment.form.validation.memberInstallmentToken = Select a installment to pay
 payment.form.validation.amount = Provide the amount to pay
 
 payment.form.save.message.notification = Your payment has been registered.
+
+##### Login ####
+
+login.form.label.email = Email
+login.form.placeholder.email =
+login.form.helper.email = Please enter your email
+login.form.validation.email = Provide a valid email address
+
+login.form.label.password = Password
+login.form.placeholder.password =
+login.form.helper.password = Please entre your password
+login.form.validation.password = Enter your password
+
+login.form.password.link = I forgot my password
+login.form.header.title = Sign in to start your session
+login.form.auth.error = Invalid credentials
+user.general.logout.label = Logout
+user.general.profile.edit = Edit profile
+user.general.profile.show = Profile
+user.login.passwordRecovery.title = Password Recovery
+login.form.submit.label = Sign in
+login.form.recovery.label = Recover
+
+login.form.passwordRecovery.title = Enter your email address to recover your password
+login.form.login.link = Sign in
+login.form.recovery.error = Invalid email account.
+
+login.mail.subject.recovery = Password Recovery
+recovery.mail.body.line1 = Hi there.
+recovery.mail.body.line2 =Your password has been reinitialized.
+recovery.mail.body.line3a = You username is
+recovery.mail.body.line3b = and your new password is
+recovery.mail.body.line4 = Please remember that you may want to change your username/email address at password at any time from you user profile.
+recovery.mail.body.line5 = Thanks, have a lovely day.
+
+##### memberInstallment ####
+
+memberInstallment.mail.body.line1 = Installment Notice
+memberInstallment.mail.body.line2 = A new installment for the has been released for the ''{0}'' subscription.
+memberInstallment.mail.body.line3 = The total amount due for this installment is of {0}€. Please click on the following link to proceed with your payment.
+memberInstallment.mail.body.line4 = Click here to pay now.
+memberInstallment.mail.body.line5 =  This new installment is due on the {0}.
+memberInstallment.mail.body.line6 = Thanks, have a lovely day.

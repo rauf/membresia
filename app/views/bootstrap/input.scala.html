@@ -6,33 +6,40 @@
         error: String = "",
         required: Boolean = false,
         fieldType: String = "input",
-        showValue: Boolean = true
+        showValue: Boolean = true,
+        glypho: String = null
 )
 
-<div class="form-group @if(field.hasErrors) {has-error}">
+<div class="form-group @if(field.hasErrors) {has-error} @if(glypho != null) {has-feedback}">
     <label class="control-label">@label @if(required) {(*)}</label>
-    <div class="control-item">
-        <input
-        type="@fieldType"
-        class="form-control"
-        id="@field.id"
-        name="@field.name"
-            @if(showValue) {
-                value="@field.value.getOrElse("")"
-            }
-            @if(placeholder) {
-                placeholder="@placeholder"
-            }
-            @if(required) {
-                required="required"
-                oninvalid="this.setCustomValidity('@error')"
-                onchange="this.setCustomValidity('')"
-            }/>
-        <p class="help-block">@help</p>
-        @if(!field.error.isEmpty) {
-            <span class="error-block fa fa-info-circle text-red">@{
-                field.error.map { error => error.message }
-            }</span>
+    @if(glypho == null) {
+        <div class="control-item">}
+    <input
+    type="@fieldType"
+    class="form-control"
+    id="@field.id"
+    name="@field.name"
+        @if(showValue) {
+            value="@field.value.getOrElse("")"
         }
-    </div>
+        @if(placeholder) {
+            placeholder="@placeholder"
+        }
+        @if(required) {
+            required="required"
+            oninvalid="this.setCustomValidity('@error')"
+            onchange="this.setCustomValidity('')"
+    }/>
+    @if(glypho != null) {
+        <span class="glyphicon @glypho form-control-feedback"></span>
+    }
+
+    <p class="help-block">@help</p>
+    @if(!field.error.isEmpty) {
+        <span class="error-block fa fa-info-circle text-red">@{
+            field.error.map { error => error.message }
+        }</span>
+    }
+    @if(glypho == null) {</div>}
+
 </div>

@@ -7,6 +7,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import services.InstallmentService;
 import services.formData.SubscriptionFormData;
 import services.SubscriptionService;
@@ -19,6 +20,9 @@ import java.util.Map;
 /**
  * Controller for SubscriptionController component
  */
+
+@With(SecuredAction.class)
+
 public class SubscriptionController extends Controller {
 
     private SubscriptionService subscriptionService = new SubscriptionService();

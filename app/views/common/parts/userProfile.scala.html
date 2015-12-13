@@ -1,24 +1,29 @@
 @()
+    @import play.i18n._;
+
+
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    <img src="@routes.Assets.versioned("AdminLTE-2.3.0/dist/img/user2-160x160.jpg")" class="user-image" alt="User Image">
-    <span class="hidden-xs">Alexander Pierce</span>
+    <img src="@session.get("gravatar")" class="user-image" alt="User Image">
+    <span class="hidden-xs">@session.get("name")</span>
 </a>
 <ul class="dropdown-menu">
         <!-- User image -->
     <li class="user-header">
-        <img src="@routes.Assets.versioned("AdminLTE-2.3.0/dist/img/user2-160x160.jpg")" class="img-circle" alt="User Image">
+        <img src="@session.get("gravatar")" class="img-circle" alt="User Image">
         <p>
-            Alexander Pierce - Web Developer
-            <small>Member since Nov. 2012</small>
+            @session.get("name")
         </p>
     </li>
         <!-- Menu Footer-->
     <li class="user-footer">
         <div class="pull-left">
-            <a href="#" class="btn btn-default btn-flat">Profile</a>
+            <a href="@routes.AdminUserController.show(session.get("token"))" class="btn btn-default btn-flat">@Messages.get("user.general.profile.show")</a>
+        </div>
+        <div class="pull-left">
+            <a href="@routes.AdminUserController.edit(session.get("token"))" class="btn btn-default btn-flat">@Messages.get("user.general.profile.edit")</a>
         </div>
         <div class="pull-right">
-            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+            <a href="@routes.UserController.logout()" class="btn btn-default btn-flat">@Messages.get("user.general.logout.label")</a>
         </div>
     </li>
 </ul>

@@ -14,6 +14,8 @@ import javax.inject.Inject;
 /**
  * Controller for MemberController component
  */
+
+@With(SecuredAction.class)
 public class MailMessageController extends Controller {
 
     private MailMessageService messageService = new MailMessageService();

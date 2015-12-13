@@ -13,7 +13,7 @@
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-user"></i>
             <span>@Messages.get("app.menu.member.title")</span>
         </a>
         <ul class="treeview-menu">
@@ -24,7 +24,7 @@
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-cubes"></i>
             <span>@Messages.get("app.menu.subscription.title")</span>
         </a>
         <ul class="treeview-menu">
@@ -35,7 +35,7 @@
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa  fa-envelope"></i>
             <span>@Messages.get("app.menu.mailMessage.title")</span>
         </a>
         <ul class="treeview-menu">
@@ -47,7 +47,7 @@
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-cogs"></i>
             <span>@Messages.get("app.menu.adminUser.title")</span>
         </a>
         <ul class="treeview-menu">
@@ -55,4 +55,7 @@
             <li><a href="@routes.AdminUserController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.create")</a></li>
         </ul>
     </li>
+    <li><a href="@routes.UserController.logout()"><i class="fa  fa-sign-out"></i> <span>@Messages.get("user.general.logout.label")</span></a></li>
+
+
 </ul>

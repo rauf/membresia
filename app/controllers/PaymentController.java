@@ -8,6 +8,7 @@ import play.mvc.Result;
 import models.Member;
 import models.Payment;
 import models.SelectOptionItem;
+import play.mvc.With;
 import services.MemberService;
 import services.formData.PaymentFormData;
 
@@ -23,6 +24,7 @@ public class PaymentController extends Controller {
      * @param token Unique member token identifier
      * @return
      */
+    @With(SecuredAction.class)
     public Result makePayment(String token) {
         PaymentFormData paymentFormData = new PaymentFormData();
         Form<PaymentFormData> formData = Form.form(PaymentFormData.class).fill(paymentFormData);
@@ -34,6 +36,7 @@ public class PaymentController extends Controller {
         return ok(views.html.payment.makePayment.render(Messages.get("member.pay.global.title"), member, formData, memberInstallmentMap));
     }
 
+    @With(SecuredAction.class)
     public Result registerPayment() {
         Form<PaymentFormData> formData = Form.form(PaymentFormData.class).bindFromRequest();
 

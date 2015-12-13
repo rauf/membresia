@@ -6,6 +6,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import services.MessageTemplateService;
 import services.Pager;
 import services.formData.MessageTemplateFormData;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Controller for MessageTemplateController component
  */
+@With(SecuredAction.class)
 public class MessageTemplateController extends Controller {
 
     private MessageTemplateService messageTemplateService = new MessageTemplateService();

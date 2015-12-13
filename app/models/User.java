@@ -4,6 +4,11 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
+import com.timgroup.jgravatar.Gravatar;
+import com.timgroup.jgravatar.GravatarDefaultImage;
+import com.timgroup.jgravatar.GravatarRating;
+import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import services.MD5;
@@ -25,6 +30,12 @@ public class User extends Model {
     @Constraints.Email
     @Column(unique = true)
     protected String email;
+
+    @Constraints.Required
+    protected String password;
+
+    @Transient
+    protected String passwordRaw;
 
     @Constraints.Required
     protected String name;
@@ -59,6 +70,11 @@ public class User extends Model {
         return Ebean.find(User.class).where().eq("token", token).findUnique();
     }
 
+    public User get(String key, String value) {
+
+        return Ebean.find(User.class).where().eq(key, value).findUnique();
+    }
+
     /**
      * Gets email use count
      *
@@ -68,6 +84,16 @@ public class User extends Model {
     public Integer getUserEmailCount(String email, String token) {
 
         return Ebean.find(User.class).where().eq("email", email).ne("token", token).findRowCount();
+    }
+
+    public String getGravatar() {
+        Gravatar gravatar = new Gravatar();
+        gravatar.setSize(50);
+        gravatar.setRating(GravatarRating.GENERAL_AUDIENCES);
+        gravatar.setDefaultImage(GravatarDefaultImage.IDENTICON);
+        String imageUrl = gravatar.getUrl(this.getEmail());
+        imageUrl = imageUrl.replace("?d=404", "");
+        return imageUrl;
     }
 
     /**
@@ -139,4 +165,25 @@ public class User extends Model {
 
         this.lastName = lastName;
     }
+
+    public String getPassword() {
+
+        return password;
+    }
+
+    public void setPassword(String password) {
+
+        this.password = password;
+    }
+
+    public String getPasswordRaw() {
+
+        return passwordRaw;
+    }
+
+    public void setPasswordRaw(String passwordRaw) {
+
+        this.passwordRaw = passwordRaw;
+    }
+
 }

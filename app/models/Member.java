@@ -4,6 +4,7 @@ import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
 import play.data.validation.*;
+import services.UserService;
 import services.formData.MemberFormData;
 import services.Pager;
 import com.avaje.ebean.Ebean;
@@ -77,6 +78,10 @@ public class Member extends User {
         this.setNif(formData.getNif());
         this.setPhone(formData.getPhone());
         this.setToken(formData.getToken());
+
+        UserService userService = new UserService();
+        this.setPasswordRaw(userService.generatePassword());
+        this.setPassword(userService.cryptPassword(getPasswordRaw()));
 
         Subscription subscription = new Subscription();
         for (String subscriptionToken : formData.getSubscriptions()) {
@@ -179,13 +184,7 @@ public class Member extends User {
         this.subscriptions.add(subscription);
     }
 
-    public String getGravatar() {
-        Gravatar gravatar = new Gravatar();
-        gravatar.setSize(50);
-        gravatar.setRating(GravatarRating.GENERAL_AUDIENCES);
-        gravatar.setDefaultImage(GravatarDefaultImage.IDENTICON);
-        return gravatar.getUrl(this.getEmail());
-    }
+
 
     public String getMemberId() {
 

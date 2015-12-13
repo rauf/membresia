@@ -1,6 +1,8 @@
 package models;
 
+import play.Logger;
 import play.data.validation.*;
+import services.UserService;
 import services.formData.AdminUserFormData;
 import services.Pager;
 import com.avaje.ebean.Ebean;
@@ -14,18 +16,22 @@ import javax.persistence.*;
 @DiscriminatorValue("admin")
 public class AdminUser extends User {
 
-    @Constraints.Required
-    protected String password;
-
-    protected String passwordRaw;
-
     public void setData(AdminUserFormData formData) {
         this.setId(formData.getId());
         this.setName(formData.getName());
         this.setLastName(formData.getLastName());
         this.setEmail(formData.getEmail());
-        this.setPasswordRaw(RandomStringUtils.randomAscii(8));
-        this.setPassword(BCrypt.hashpw(getPassword(), BCrypt.gensalt()));
+
+        UserService userService = new UserService();
+
+        setPasswordRaw(null);
+        if (formData.getMode() == 0)
+            this.setPasswordRaw(userService.generatePassword());
+        if (!formData.getPassword().isEmpty())
+            this.setPasswordRaw(formData.getPassword());
+        if (getPasswordRaw() != null)
+            this.setPassword(userService.cryptPassword(getPasswordRaw()));
+
         this.setToken(formData.getToken());
     }
 
@@ -87,25 +93,5 @@ public class AdminUser extends User {
         }
 
         return false;
-    }
-
-    public String getPassword() {
-
-        return password;
-    }
-
-    public void setPassword(String password) {
-
-        this.password = password;
-    }
-
-    public String getPasswordRaw() {
-
-        return passwordRaw;
-    }
-
-    public void setPasswordRaw(String passwordRaw) {
-
-        this.passwordRaw = passwordRaw;
     }
 }

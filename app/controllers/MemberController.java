@@ -16,6 +16,8 @@ import javax.inject.Inject;
 /**
  * Controller for MemberController component
  */
+
+@With(SecuredAction.class)
 public class MemberController extends Controller {
 
     private MemberService memberService = new MemberService();
