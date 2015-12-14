@@ -88,14 +88,16 @@ public class PaymentController extends Controller {
 
         }
 
-        flash("success", Messages.get("payment.form.save.message.notification"));
-        Payment payment = new Payment();
-        payment.setData(formData.get());
-        payment.save();
-        return redirect(routes.PaymentController.paymentComplete());
+        boolean paymentStatus = true;
+        if (paymentStatus) {
+            Payment payment = new Payment();
+            payment.setData(formData.get());
+            payment.save();
+        }
+        return redirect(routes.PaymentController.paymentComplete(paymentStatus));
     }
 
-    public Result paymentComplete() {
-        return ok(views.html.payment.paymentComplete.render(Messages.get("member.pay.global.title")));
+    public Result paymentComplete(boolean paymentStatus) {
+        return ok(views.html.payment.paymentComplete.render(Messages.get("member.pay.global.title"), paymentStatus));
     }
 }

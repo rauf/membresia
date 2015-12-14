@@ -389,3 +389,7 @@ memberInstallment.mail.body.line6 = Thanks, have a lovely day.
 paymentPublic.form.header.title = Please enter the amount you with to pay to the selected installment.
 paymentPublic.form.payed.title = This subscription installment has been already paid in full.
 paymentPublic.form.amount.due = Amount due
+paymentPublic.message.pay.success = Your payment has been successfully registered.
+paymentPublic.message.pay.fail = Your payment could not be processed.
+paymentPublic.message.pay.thankyou = Thank you
+paymentPublic.message.pay.sorry = Sorry

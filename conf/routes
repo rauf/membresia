@@ -47,7 +47,7 @@ GET         /send-mail                                 controllers.MailMessageCo
 GET         /pay                                       controllers.PaymentController.makePublicPayment(token: String)
 GET         /pay-process                               controllers.PaymentController.registerPublicPayment()
 
-GET         /pay-complete                              controllers.PaymentController.paymentComplete()
+GET         /pay-complete                              controllers.PaymentController.paymentComplete(paymentStatus: Boolean)
 GET         /make-payment                              controllers.PaymentController.makePayment(token: String)
 GET         /register-payment                          controllers.PaymentController.registerPayment()
 
