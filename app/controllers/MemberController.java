@@ -5,10 +5,8 @@ import play.mvc.*;
 import play.data.Form;
 import play.i18n.Messages;
 import models.Member;
+import services.*;
 import services.formData.MemberFormData;
-import services.MemberService;
-import services.Pager;
-import services.SubscriptionService;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -20,6 +18,15 @@ import javax.inject.Inject;
 @With(SecuredAction.class)
 public class MemberController extends Controller {
 
+    @Inject
+    private SubscriptionService subscriptionService;
+
+    @Inject
+    private MemberInstallmentService memberInstalmentService;
+
+    @Inject
+    private MailerClient mailer;
+
     private MemberService memberService = new MemberService();
 
     private MemberFormData memberData;
@@ -29,13 +36,6 @@ public class MemberController extends Controller {
     private Pager pager;
 
     private Integer currentPage = 1;
-
-    private final MailerClient mailer;
-
-    @Inject
-    public MemberController(MailerClient mailer) {
-        this.mailer = mailer;
-    }
 
 
     /**
@@ -59,7 +59,6 @@ public class MemberController extends Controller {
         memberData = new MemberFormData();
         formData = memberService.setFormData(memberData);
         memberData.setMode(0);
-        SubscriptionService subscriptionService = new SubscriptionService();
         return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
     }
 
@@ -74,7 +73,6 @@ public class MemberController extends Controller {
         memberData = memberService.setMemberData(token);
         formData = memberService.setFormData(memberData);
         memberData.setMode(1);
-        SubscriptionService subscriptionService = new SubscriptionService();
 
         return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
     }
@@ -90,12 +88,12 @@ public class MemberController extends Controller {
 
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
-            SubscriptionService subscriptionService = new SubscriptionService();
 
             return badRequest(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionService.makeSubscriptionMap(memberData)));
         } else {
             Member member = memberService.save(formData);
-            memberService.updateMemberInstallments(member);
+            memberInstalmentService.setMemberInstallments(member);
+
             if (formData.get().getMode() == 0)
                 memberService.sendNewAccountMail(mailer, member);
 
@@ -136,6 +134,4 @@ public class MemberController extends Controller {
 
         return ok(views.html.member.index.render(Messages.get("member.list.global.title"), members, pager));
     }
-
-
 }

@@ -8,9 +8,12 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.*;
 import com.avaje.ebean.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.persistence.*;
 
+import services.MemberInstallmentService;
+import services.MoneyFormat;
 import services.formData.PaymentFormData;
 
 @Entity
@@ -63,13 +66,35 @@ public class Payment extends Model {
         MemberInstallment memberInstallment = new MemberInstallment();
         this.setMemberInstallment(memberInstallment.get("token", memberInstallmentToken));
         this.setInstallment(this.memberInstallment.getInstallment());
+
+    }
+
+    public String toString() {
+        return getFormattedPaymentDate() + " (" + getFormattedAmount() + ")";
+    }
+
+    public String getFormattedPaymentDate() {
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+        String formatted = format1.format(this.getCreated_at().getTime());
+
+        return formatted;
+    }
+
+    public String getFormattedAmount() {
+
+        return MoneyFormat.setMoney(getAmount());
     }
 
     /**
      * Saves current object into persistence database
      */
     public void save() {
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+
         Ebean.save(this);
+        if (memberInstallmentService.getAmountDue(getToken()) == 0.0) {
+            memberInstallmentService.setPaid(getMemberInstallment());
+        }
     }
 
     public Long getId() {

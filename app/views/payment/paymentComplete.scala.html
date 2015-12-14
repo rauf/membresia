@@ -1,0 +1,26 @@
+@import services.formData.PaymentFormData
+
+@(title: String)
+
+@import play.i18n.Messages;
+@import views.html.common.parts._;
+@import views.html.common.templates.clean;
+@import views.html.bootstrap._
+
+@clean(title) {
+    <div class="login-box">
+
+        <div class="login-logo">
+            <b>@Messages.get("app.global.title")</b>
+        </div>
+        <div class="box box-solid">
+            @notification()
+            <div class="box-header with-border">
+
+            </div>
+            <div class="box-body">
+            Completed
+            </div>
+        </div>
+    </div>
+}

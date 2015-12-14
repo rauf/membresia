@@ -79,27 +79,15 @@ public class MemberService implements MemberServiceInterface {
         return getModel().getUserEmailCount(email, token) > 0;
     }
 
-    public void updateMemberInstallments(Member member) {
-        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
-        SubscriptionService subscriptionService = new SubscriptionService();
-
-        for (Subscription subscription : member.getSubscriptions()) {
-            if (subscription != null) {
-                Installment lastInstallment = subscriptionService.getLastInstallment(subscription);
-                boolean isInstallmentAssigned = false;
-                for (MemberInstallment memberInstallment : member.getMemberInstallments()) {
-                    isInstallmentAssigned = (memberInstallment.getInstallment().equals(lastInstallment)) || isInstallmentAssigned;
-                }
-                if (!isInstallmentAssigned) memberInstallmentService.createMemberInstallment(member, lastInstallment);
-            }
-        }
-    }
-
     public Map<SelectOptionItem, Boolean> makeMemberInstallmentMap(Member member) {
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
         Map<SelectOptionItem, Boolean> memberInstallmentMap = new HashMap<SelectOptionItem, Boolean>();
         for (MemberInstallment memberInstallment : member.getMemberInstallments()) {
             if (!memberInstallment.getPaid()) {
-                SelectOptionItem selectOptionItem = new SelectOptionItem(memberInstallment.getInstallment().toString(), memberInstallment.getToken());
+                Double amountDue = memberInstallmentService.getAmountDue(memberInstallment.getToken());
+                String due = MoneyFormat.setMoney(amountDue);
+
+                SelectOptionItem selectOptionItem = new SelectOptionItem(memberInstallment.getInstallment().toString() + " | " + due, memberInstallment.getToken());
                 memberInstallmentMap.put(selectOptionItem, false);
             }
         }

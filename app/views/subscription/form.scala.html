@@ -81,13 +81,17 @@
                             )
                             </div>
 
-                            
+
                         </div>
+                        @if(subscriptionForm.get().getMode == 1) {
+
+                            <p class="text-red">@Messages.get("subscription.form.edit.note")</p>
+                        }
+
                     </div>
                 </div>
 
             </div>
-
 
             @hidden(subscriptionForm("id"))
             @hidden(subscriptionForm("token"))

@@ -43,22 +43,30 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">@Messages.get("member.show.payment.history")</h3>
-                        <a href="@routes.PaymentController.makePayment(member.getToken)" class="btn btn-primary pull-right"><b>@Messages.get("member.show.payment.action")</b></a>
-
+                        @if(!member.getMemberInstallments.isEmpty) {
+                            <a href="@routes.PaymentController.makePayment(member.getToken)" class="btn btn-primary pull-right"><b>@Messages.get("member.show.payment.action")</b></a>
+                        }
                     </div>
                     <div class="box-body">
-                        @if(!member.getMemberInstallments.isEmpty) {
-                            <ul>
-                            @for(memberInstallments <- member.getMemberInstallments) {
-                                <li>@memberInstallments.toString</li>
+                    @if(!member.getMemberInstallments.isEmpty) {
+                        <ul>
+                        @for( memberInstallments <- member.getMemberInstallments) {
+                            <li>@memberInstallments.toString</li>
+                            @if(!memberInstallments.getPayments.isEmpty) {
+                                <ul>
+                                @for( payment <- memberInstallments.getPayments) {
+                                    <li>@payment.toString</li>
+                                }
+                                </ul>
                             }
-                            </ul>
-                        } else {
-                            <div class="callout callout-info">
-                                <h4>@Messages.get("member.show.payment.empty")</h4>
-                                <p>@Messages.get("member.show.payment.text") <a href="@routes.PaymentController.makePayment(member.getToken)">@Messages.get("member.show.payments.link")</a></p>
-                            </div>
                         }
+                        </ul>
+                    } else {
+                        <div class="callout callout-info">
+                            <h4>@Messages.get("member.show.payment.empty")</h4>
+                            <p>@Messages.get("member.show.payment.text") <a href="@routes.PaymentController.makePayment(member.getToken)">@Messages.get("member.show.payments.link")</a></p>
+                        </div>
+                    }
 
                     </div>
                 </div>

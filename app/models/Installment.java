@@ -10,6 +10,7 @@ import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.Constraints;
 import services.MD5;
+import services.MoneyFormat;
 
 @Entity
 @Table(name = "installment")
@@ -109,10 +110,18 @@ public class Installment extends Model {
      * @return String
      */
     public String toString() {
+        return this.getSubscription().toString() + " - " + getFormattedDueDate() + " (" + getFormattedAmount() + ")";
+    }
+
+    public String getFormattedDueDate() {
         SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
         String formatted = format1.format(this.getDueDate().getTime());
 
-        return this.getSubscription().toString() + " - " + formatted;
+        return formatted;
+    }
+
+    public String getFormattedAmount() {
+        return MoneyFormat.setMoney(getAmount());
     }
 
     public Long getId() {

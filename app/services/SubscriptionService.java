@@ -110,26 +110,9 @@ public class SubscriptionService implements SubscriptionServiceInterface {
         return (subscription.getInstallments().isEmpty()) ? new Installment(subscription) : subscription.getInstallments().get(subscription.getInstallments().size() - 1);
     }
 
-    public void createInstallments() {
-        InstallmentService installmentService = new InstallmentService();
-        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
-
-        List<Subscription> subscriptions = getModel().getSubscriptionRawList();
-        for (Subscription subscription : subscriptions) {
-            Installment lastInstallment = getLastInstallment(subscription);
-            Calendar installmentDate = Calendar.getInstance();
-            installmentDate.setTime(lastInstallment.getDueDate());
-
-            if (installmentDate.before(Calendar.getInstance())) {
-                Installment installment = installmentService.createInstallment(subscription);
-                for (Member member : subscription.getMembers()) {
-                    memberInstallmentService.createMemberInstallment(member, installment);
-                }
-            }
-        }
+    public List<Subscription> getActiveSubscriptions(){
+        return getModel().getSubscriptionRawList();
     }
-
-
 
     /**
      * Creates Subscription model object

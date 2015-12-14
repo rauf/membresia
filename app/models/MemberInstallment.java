@@ -2,9 +2,10 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
-import play.Logger;
 import play.data.validation.Constraints;
 import services.MD5;
+import services.MemberInstallmentService;
+import services.MoneyFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -50,6 +51,22 @@ public class MemberInstallment extends Model {
         Ebean.save(this);
     }
 
+    public void setAsPaid() {
+        this.setPaid(true);
+        this.save();
+    }
+
+    public boolean remove(String token) {
+
+        MemberInstallment memberInstallment = Ebean.find(MemberInstallment.class).where().eq("token", token).findUnique();
+        if (memberInstallment != null) {
+            Ebean.delete(memberInstallment);
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Generates unique member  token
      *
@@ -58,6 +75,14 @@ public class MemberInstallment extends Model {
     public String generateToken() {
 
         return MD5.getMD5((new Date()).toString());
+    }
+
+
+
+    public String toString() {
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+        String amountDue = MoneyFormat.setMoney(memberInstallmentService.getAmountDue(getToken()));
+        return this.getInstallment().getSubscription().toString() + " - " + getInstallment().getFormattedDueDate() + " (" + amountDue + ")";
     }
 
 

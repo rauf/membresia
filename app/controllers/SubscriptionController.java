@@ -25,9 +25,11 @@ import java.util.Map;
 
 public class SubscriptionController extends Controller {
 
-    private SubscriptionService subscriptionService = new SubscriptionService();
+    @Inject
+    private SubscriptionService subscriptionService;
 
-    private InstallmentService installmentService = new InstallmentService();
+    @Inject
+    private InstallmentService installmentService;
 
     private SubscriptionFormData subscriptionData;
 
@@ -120,7 +122,7 @@ public class SubscriptionController extends Controller {
     }
 
     public Result createInstallments() {
-        subscriptionService.createInstallments();
+        installmentService.createInstallments();
         return ok();
     }
 

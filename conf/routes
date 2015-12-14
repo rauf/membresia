@@ -44,6 +44,10 @@ GET         /send-mail-user                            controllers.MailMessageCo
 GET         /send-mail-template                        controllers.MailMessageController.sendMailFormTemplate(token: String ?= null)
 GET         /send-mail                                 controllers.MailMessageController.sendMail()
 
+GET         /pay                                       controllers.PaymentController.makePublicPayment(token: String)
+GET         /pay-process                               controllers.PaymentController.registerPublicPayment()
+
+GET         /pay-complete                              controllers.PaymentController.paymentComplete()
 GET         /make-payment                              controllers.PaymentController.makePayment(token: String)
 GET         /register-payment                          controllers.PaymentController.registerPayment()
 

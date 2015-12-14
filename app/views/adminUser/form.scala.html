@@ -70,6 +70,11 @@
                 @hidden(adminUserForm("id"))
                 @hidden(adminUserForm("token"))
                 @hidden(adminUserForm("mode"))
+                @if(adminUserForm.get().getMode == 0) {
+
+                    @hidden(adminUserForm("password"))
+                }
+
             </div>
 
             <div class="box-footer">

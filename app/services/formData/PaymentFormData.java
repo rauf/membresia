@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.Payment;
+import services.MemberInstallmentService;
 
 /**
  * Class that handles Payment form submission and validation and relates submitted data to the model
@@ -48,13 +49,22 @@ public class PaymentFormData {
     public List<ValidationError> validate() {
 
         List<ValidationError> errors = new ArrayList<>();
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+        Double amountDue = memberInstallmentService.getAmountDue(memberInstallmentToken);
+
 
         if (memberInstallmentToken == null) {
             errors.add(new ValidationError("memberInstallmentToken", Messages.get("payment.form.validation.memberInstallmentToken")));
+        } else {
         }
 
         if (amount == null || amount == 0) {
             errors.add(new ValidationError("amount", Messages.get("payment.form.validation.amount")));
+        }
+
+        if (amountDue < amount) {
+            errors.add(new ValidationError("amount", Messages.get("payment.form.validation.excess", amountDue)));
+
         }
 
         if (errors.size() > 0)
