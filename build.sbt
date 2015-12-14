@@ -14,6 +14,8 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.18"
 
+libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+
 libraryDependencies += "org.mindrot" % "jbcrypt" % "0.3m"
 
 libraryDependencies += "com.typesafe.play" %% "play-mailer" % "3.0.1"
