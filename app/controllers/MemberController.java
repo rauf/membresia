@@ -10,6 +10,8 @@ import services.formData.MemberFormData;
 
 import java.util.List;
 import javax.inject.Inject;
+import views.html.*;
+
 
 /**
  * Controller for MemberController component

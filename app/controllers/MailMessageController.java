@@ -8,6 +8,7 @@ import play.i18n.Messages;
 import services.MailMessageService;
 import services.UserService;
 import services.formData.MailMessageFormData;
+import views.html.*;
 
 import javax.inject.Inject;
 

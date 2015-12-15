@@ -11,6 +11,7 @@ import services.UserService;
 import services.formData.PasswordRecoveryFormData;
 
 import javax.inject.Inject;
+import views.html.*;
 
 public class UserController extends Controller {
 
