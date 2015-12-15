@@ -393,3 +393,5 @@ paymentPublic.message.pay.success = Your payment has been successfully registere
 paymentPublic.message.pay.fail = Your payment could not be processed.
 paymentPublic.message.pay.thankyou = Thank you
 paymentPublic.message.pay.sorry = Sorry
+paymentPublic.pay.paypal.title = Paypal Payment
+paymentPublic.pay.complete.title = Payment completed

@@ -1,5 +1,7 @@
 package controllers;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import models.MemberInstallment;
 import play.data.Form;
 import play.i18n.Messages;
@@ -13,6 +15,7 @@ import play.mvc.With;
 import services.MemberInstallmentService;
 import services.MemberService;
 import services.MoneyFormat;
+import services.PaymentService;
 import services.formData.PaymentFormData;
 import views.html.*;
 
@@ -89,16 +92,20 @@ public class PaymentController extends Controller {
 
         }
 
-        boolean paymentStatus = true;
-        if (paymentStatus) {
-            Payment payment = new Payment();
-            payment.setData(formData.get());
-            payment.save();
-        }
-        return redirect(routes.PaymentController.paymentComplete(paymentStatus));
+        Payment payment = new Payment();
+        payment.setData(formData.get());
+        payment.save();
+
+        Config conf = ConfigFactory.load();
+        String business = conf.getString("paypal.business");
+        String url = conf.getString("paypal.url");
+        return ok(views.html.payment.paypalForm.render(Messages.get("paymentPublic.pay.paypal.title"), payment, business, url));
     }
 
-    public Result paymentComplete(boolean paymentStatus) {
-        return ok(views.html.payment.paymentComplete.render(Messages.get("member.pay.global.title"), paymentStatus));
+    public Result paymentComplete(String token) {
+        boolean paymentStatus = true;
+        PaymentService paymentService = new PaymentService();
+        paymentService.acceptPayment(token);
+        return ok(views.html.payment.paymentComplete.render(Messages.get("paymentPublic.pay.complete.title"), paymentStatus));
     }
 }
