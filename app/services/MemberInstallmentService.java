@@ -4,6 +4,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 import models.*;
+import play.Logger;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import play.api.libs.mailer.MailerClient;
@@ -47,7 +48,7 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
             if (memberInstallment != null) {
 
                 for (Payment payment : memberInstallment.getPayments()) {
-                    totalPaid += payment.getAmount();
+                    if (payment.getStatus() == 1) totalPaid += payment.getAmount();
                 }
                 return totalPaid;
             }
@@ -62,7 +63,7 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
             Double totalPaid = 0.0;
             if (memberInstallment != null) {
                 for (Payment payment : memberInstallment.getPayments()) {
-                    totalPaid += payment.getAmount();
+                    if (payment.getStatus() == 1) totalPaid += payment.getAmount();
                 }
                 return memberInstallment.getInstallment().getAmount() - totalPaid;
             }
