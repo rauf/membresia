@@ -16,6 +16,12 @@ public class PaymentService implements PaymentServiceInterface {
         return payment;
     }
 
+    public void acceptPayment(String token) {
+        Payment payment = getModel().get("token", token);
+        payment.setStatus(1);
+        payment.save();
+    }
+
     /**
      * Creates Payment model object
      *

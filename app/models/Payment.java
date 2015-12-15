@@ -69,6 +69,11 @@ public class Payment extends Model {
 
     }
 
+    public Payment get(String key, String value) {
+
+        return Ebean.find(Payment.class).where().eq(key, value).findUnique();
+    }
+
     public String toString() {
         return getFormattedPaymentDate() + " (" + getFormattedAmount() + ")";
     }
@@ -92,7 +97,7 @@ public class Payment extends Model {
         MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
 
         Ebean.save(this);
-        if (memberInstallmentService.getAmountDue(getToken()) == 0.0) {
+        if (memberInstallmentService.getAmountDue(this.getMemberInstallment().getToken()) == 0.0) {
             memberInstallmentService.setPaid(getMemberInstallment());
         }
     }
