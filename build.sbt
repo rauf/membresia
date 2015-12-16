@@ -20,8 +20,6 @@ libraryDependencies += "org.mindrot" % "jbcrypt" % "0.3m"
 
 libraryDependencies += "com.typesafe.play" %% "play-mailer" % "3.0.1"
 
-libraryDependencies += "com.paypal.sdk" % "rest-api-sdk" % "1.2.2"
-
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
