@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/membresia -Dhttp.port=${PORT}
+web: target/universal/stage/bin/membresia -Dhttp.port=${PORT} -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL} -Dplay.evolutions.db.default.autoApplyDowns=true
