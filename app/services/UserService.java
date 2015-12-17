@@ -36,6 +36,12 @@ public class UserService implements UserServiceInterface {
         return getModel().getUserByToken(token);
     }
 
+    public User getUserItem(String key, String value) {
+
+        return getModel().get(key, value);
+    }
+
+
     /**
      * {@inheritDoc}
      */
