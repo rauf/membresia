@@ -64,7 +64,7 @@ create table subscrition (
   constraint pk_subscrition primary key (id))
 ;
 
-create table user (
+create table userPerson (
   user_type                 varchar(31) not null,
   id                        bigserial not null,
   email                     varchar(255),
@@ -82,21 +82,21 @@ create table user (
   country                   varchar(255),
   nif                       varchar(255),
   phone                     varchar(255),
-  constraint uq_user_email unique (email),
-  constraint uq_user_token unique (token),
-  constraint uq_user_member_id unique (member_id),
-  constraint pk_user primary key (id))
+  constraint uq_userPerson_email unique (email),
+  constraint uq_userPerson_token unique (token),
+  constraint uq_userPerson_member_id unique (member_id),
+  constraint pk_userPerson primary key (id))
 ;
 
 
-create table user_subscrition (
-  user_id                        bigint not null,
+create table userPerson_subscrition (
+  userPerson_id                  bigint not null,
   subscrition_id                 bigint not null,
-  constraint pk_user_subscrition primary key (user_id, subscrition_id))
+  constraint pk_userPerson_subscrition primary key (userPerson_id, subscrition_id))
 ;
 alter table installment add constraint fk_installment_subscription_1 foreign key (subscription_id) references subscrition (id);
 create index ix_installment_subscription_1 on installment (subscription_id);
-alter table member_installment add constraint fk_member_installment_member_2 foreign key (member_id) references user (id);
+alter table member_installment add constraint fk_member_installment_member_2 foreign key (member_id) references userPerson (id);
 create index ix_member_installment_member_2 on member_installment (member_id);
 alter table member_installment add constraint fk_member_installment_installm_3 foreign key (installment_id) references installment (id);
 create index ix_member_installment_installm_3 on member_installment (installment_id);
@@ -107,9 +107,9 @@ create index ix_payment_memberInstallment_5 on payment (member_installment_id);
 
 
 
-alter table user_subscrition add constraint fk_user_subscrition_user_01 foreign key (user_id) references user (id);
+alter table userPerson_subscrition add constraint fk_userPerson_subscrition_use_01 foreign key (userPerson_id) references userPerson (id);
 
-alter table user_subscrition add constraint fk_user_subscrition_subscriti_02 foreign key (subscrition_id) references subscrition (id);
+alter table userPerson_subscrition add constraint fk_userPerson_subscrition_sub_02 foreign key (subscrition_id) references subscrition (id);
 
 # --- !Downs
 
@@ -123,7 +123,7 @@ drop table if exists payment cascade;
 
 drop table if exists subscrition cascade;
 
-drop table if exists user_subscrition cascade;
+drop table if exists userPerson_subscrition cascade;
 
-drop table if exists user cascade;
+drop table if exists userPerson cascade;
 
