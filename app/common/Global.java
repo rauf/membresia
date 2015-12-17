@@ -15,11 +15,10 @@ public class Global extends GlobalSettings {
 
     @Override
     public void beforeStart(Application app) {
+        Config conf = ConfigFactory.load();
         UserService userService = new UserService();
-        User user = userService.getUserItem("email", "jfernandez74@uoc.edu");
+        User user = userService.getUserItem("email", conf.getString("adminUser.user.default.email"));
         if (user == null) {
-            Config conf = ConfigFactory.load();
-
             AdminUser adminUser = new AdminUser();
             adminUser.setEmail(conf.getString("adminUser.user.default.email"));
             adminUser.setName(conf.getString("adminUser.user.default.name"));
