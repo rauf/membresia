@@ -13,13 +13,11 @@ public enum Periodicity {
 
     private int value;
 
-    private Periodicity(int value) {
-
+    Periodicity(int value) {
         this.value = value;
     }
 
     public long getValue() {
-
         return this.value;
     }
 

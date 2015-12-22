@@ -33,7 +33,7 @@ public class UserService implements UserServiceInterface {
      */
     public User getUser(String token) {
 
-        return getModel().getUserByToken(token);
+        return getModel().get("token", token);
     }
 
     public User getUserItem(String key, String value) {
@@ -51,7 +51,7 @@ public class UserService implements UserServiceInterface {
     }
 
     public Map<SelectOptionItem, Boolean> makeUserMap(MailMessageFormData messageFormData) {
-        List<User> allUsers = getModel().getUserRawList();
+        List<User> allUsers = getModel().getAll();
         Map<SelectOptionItem, Boolean> userMap = new HashMap<SelectOptionItem, Boolean>();
         for (User user : allUsers) {
             SelectOptionItem selectOptionItem = new SelectOptionItem(user.toString() + " <" + user.getEmail() + ">", user.getToken());

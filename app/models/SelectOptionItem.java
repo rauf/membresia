@@ -1,6 +1,5 @@
 package models;
 
-
 public class SelectOptionItem {
 
     protected String name;

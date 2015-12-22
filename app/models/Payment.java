@@ -1,21 +1,22 @@
 package models;
 
-import play.Logger;
-import play.data.format.*;
-import play.data.validation.*;
-
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.*;
 import com.avaje.ebean.Model;
+import play.data.format.*;
+import play.data.validation.*;
+import services.formData.PaymentFormData;
+import services.MemberInstallmentService;
+import services.MoneyFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.inject.Inject;
 import javax.persistence.*;
 
-import services.MemberInstallmentService;
-import services.MoneyFormat;
-import services.formData.PaymentFormData;
-
+/**
+ * Model class for Payment entity
+ */
 @Entity
 @Table(name = "payment")
 public class Payment extends Model {
@@ -46,11 +47,14 @@ public class Payment extends Model {
     @ManyToOne(cascade = CascadeType.ALL)
     protected MemberInstallment memberInstallment;
 
+    @Inject
+    private MemberInstallmentService memberInstallmentService;
+
     /**
      * Generic constructor
      */
     public Payment() {
-        super();
+
     }
 
     /**
@@ -66,40 +70,51 @@ public class Payment extends Model {
         MemberInstallment memberInstallment = new MemberInstallment();
         this.setMemberInstallment(memberInstallment.get("token", memberInstallmentToken));
         this.setInstallment(this.memberInstallment.getInstallment());
-
     }
 
+    /**
+     * Gets MemberInstallment object by specific key/value pair
+     *
+     * @param key   Field to search in
+     * @param value Value to search for
+     * @return Installment
+     */
     public Payment get(String key, String value) {
-
         return Ebean.find(Payment.class).where().eq(key, value).findUnique();
-    }
-
-    public String toString() {
-        return getFormattedPaymentDate() + " (" + getFormattedAmount() + ")";
-    }
-
-    public String getFormattedPaymentDate() {
-        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-        String formatted = format1.format(this.getCreated_at().getTime());
-
-        return formatted;
-    }
-
-    public String getFormattedAmount() {
-
-        return MoneyFormat.setMoney(getAmount());
     }
 
     /**
      * Saves current object into persistence database
      */
     public void save() {
-        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
-
         Ebean.save(this);
         if (memberInstallmentService.getAmountDue(this.getMemberInstallment().getToken()) == 0.0) {
             memberInstallmentService.setPaid(getMemberInstallment());
         }
+    }
+
+    /**
+     * Returns a string with formatted payment date for printing purposes
+     *
+     * @return String
+     */
+    public String getFormattedPaymentDate() {
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+
+        return format1.format(this.getCreated_at().getTime());
+    }
+
+    /**
+     * Returns a string with formatted amount due for printing purposes
+     *
+     * @return String
+     */
+    public String getFormattedAmount() {
+        return MoneyFormat.setMoney(getAmount());
+    }
+
+    public String toString() {
+        return getFormattedPaymentDate() + " (" + getFormattedAmount() + ")";
     }
 
     public Long getId() {
@@ -120,10 +135,6 @@ public class Payment extends Model {
 
     public Date getCreated_at() {
         return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
     }
 
     public Integer getStatus() {
@@ -156,10 +167,6 @@ public class Payment extends Model {
 
     public void setMemberInstallment(MemberInstallment memberInstallment) {
         this.memberInstallment = memberInstallment;
-    }
-
-    public String getMemberInstallmentToken() {
-        return memberInstallmentToken;
     }
 
     public void setMemberInstallmentToken(String memberInstallmentToken) {

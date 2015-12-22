@@ -1,29 +1,31 @@
 package controllers;
 
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.api.libs.mailer.MailerClient;
 import play.data.Form;
 import play.i18n.Messages;
-import play.api.libs.mailer.MailerClient;
-import models.AdminUser;
+import play.mvc.Controller;
+import play.mvc.Result;
 import play.mvc.With;
-import services.formData.AdminUserFormData;
+
+import models.AdminUser;
 import services.AdminUserService;
+import services.formData.AdminUserFormData;
 import services.Pager;
 
 import javax.inject.Inject;
 import java.util.List;
-import views.html.*;
-
 
 /**
- * Controller for MemberController component
+ * Controller class for AdminUser entity
  */
-
 @With(SecuredAction.class)
 public class AdminUserController extends Controller {
 
-    private AdminUserService adminUserService = new AdminUserService();
+    @Inject
+    private MailerClient mailer;
+
+    @Inject
+    private AdminUserService adminUserService;
 
     private AdminUserFormData adminUserData;
 
@@ -33,16 +35,9 @@ public class AdminUserController extends Controller {
 
     private Integer currentPage = 1;
 
-    private final MailerClient mailer;
-
-    @Inject
-    public AdminUserController(MailerClient mailer) {
-        this.mailer = mailer;
-    }
-
 
     /**
-     * Shows admin user list
+     * Shows all admin users
      *
      * @return Result
      */
@@ -55,7 +50,7 @@ public class AdminUserController extends Controller {
     }
 
     /**
-     * Renders admin user form in creation mode
+     * Renders admin user's form in creation mode
      *
      * @return Result
      */
@@ -68,7 +63,7 @@ public class AdminUserController extends Controller {
     }
 
     /**
-     * Renders admin user form in editing mode by user token
+     * Renders admin user's form in editing mode by user token
      *
      * @param token Unique admin user token identifier
      * @return Result
@@ -83,34 +78,30 @@ public class AdminUserController extends Controller {
     }
 
     /**
-     * Saves admin user form data after create or edit
+     * Saves admin user's form data after create or edit
      *
      * @return Result
      */
     public Result save() {
         adminUserData = new AdminUserFormData();
         formData = Form.form(AdminUserFormData.class).bindFromRequest();
-
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
 
             return badRequest(views.html.adminUser.form.render(Messages.get("adminUser.form.global.new.title"), formData));
-        } else {
-            AdminUser user = adminUserService.save(formData);
-
-            if (formData.get().getMode() == 0)
-                adminUserService.sendNewAccountMail(mailer, user);
-
-            flash("success", Messages.get("adminUser.form.save.message.notification", user));
-            pager = new Pager(this.currentPage);
-            List<AdminUser> users = adminUserService.getAdminUserList(pager);
-
-            return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), users, pager));
         }
+
+        AdminUser user = adminUserService.save(formData);
+        if (formData.get().getMode() == 0) adminUserService.sendNewAccountMail(mailer, user);
+        flash("success", Messages.get("adminUser.form.save.message.notification", user));
+        pager = new Pager(this.currentPage);
+        List<AdminUser> users = adminUserService.getAdminUserList(pager);
+
+        return ok(views.html.adminUser.index.render(Messages.get("adminUser.list.global.title"), users, pager));
     }
 
     /**
-     * Show admin user details by user token
+     * Show admin user's details by user token
      *
      * @param token Unique user token identifier
      * @return Result
@@ -122,7 +113,7 @@ public class AdminUserController extends Controller {
     }
 
     /**
-     * Removes a specific admin user by member token
+     * Removes a specific admin user by token
      *
      * @param token Unique user token identifier
      * @return Result

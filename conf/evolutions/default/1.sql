@@ -48,7 +48,7 @@ create table payment (
   constraint pk_payment primary key (id))
 ;
 
-create table subscrition (
+create table subscription (
   id                        bigserial not null,
   subscription_id           varchar(255),
   title                     varchar(255),
@@ -57,11 +57,10 @@ create table subscrition (
   periodicity               varchar(255),
   token                     varchar(255),
   due_date_period           timestamp,
-  is_paid                   boolean,
   created_at                timestamp not null,
   updated_at                timestamp not null,
-  constraint uq_subscrition_subscription_id unique (subscription_id),
-  constraint pk_subscrition primary key (id))
+  constraint uq_subscription_subscription_id unique (subscription_id),
+  constraint pk_subscription primary key (id))
 ;
 
 create table userPerson (
@@ -89,12 +88,12 @@ create table userPerson (
 ;
 
 
-create table userPerson_subscrition (
+create table userPerson_subscription (
   userPerson_id                  bigint not null,
-  subscrition_id                 bigint not null,
-  constraint pk_userPerson_subscrition primary key (userPerson_id, subscrition_id))
+  subscription_id                bigint not null,
+  constraint pk_userPerson_subscription primary key (userPerson_id, subscription_id))
 ;
-alter table installment add constraint fk_installment_subscription_1 foreign key (subscription_id) references subscrition (id);
+alter table installment add constraint fk_installment_subscription_1 foreign key (subscription_id) references subscription (id);
 create index ix_installment_subscription_1 on installment (subscription_id);
 alter table member_installment add constraint fk_member_installment_member_2 foreign key (member_id) references userPerson (id);
 create index ix_member_installment_member_2 on member_installment (member_id);
@@ -107,9 +106,9 @@ create index ix_payment_memberInstallment_5 on payment (member_installment_id);
 
 
 
-alter table userPerson_subscrition add constraint fk_userPerson_subscrition_use_01 foreign key (userPerson_id) references userPerson (id);
+alter table userPerson_subscription add constraint fk_userPerson_subscription_us_01 foreign key (userPerson_id) references userPerson (id);
 
-alter table userPerson_subscrition add constraint fk_userPerson_subscrition_sub_02 foreign key (subscrition_id) references subscrition (id);
+alter table userPerson_subscription add constraint fk_userPerson_subscription_su_02 foreign key (subscription_id) references subscription (id);
 
 # --- !Downs
 
@@ -121,9 +120,9 @@ drop table if exists messageTemplate cascade;
 
 drop table if exists payment cascade;
 
-drop table if exists subscrition cascade;
+drop table if exists subscription cascade;
 
-drop table if exists userPerson_subscrition cascade;
+drop table if exists userPerson_subscription cascade;
 
 drop table if exists userPerson cascade;
 

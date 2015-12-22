@@ -10,6 +10,7 @@ import play.data.Form;
 import services.contract.MemberServiceInterface;
 import services.formData.MemberFormData;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class MemberService implements MemberServiceInterface {
      */
     public MemberFormData setMemberData(String token) {
 
-        return new MemberFormData(getModel().getMemberByToken(token));
+        return new MemberFormData(getModel().get("token", token));
     }
 
     /**
@@ -48,7 +49,7 @@ public class MemberService implements MemberServiceInterface {
      */
     public Member save(Form<MemberFormData> formData) {
 
-        Member member = (formData.get().getId() != null) ? getModel().getMemberById(formData.get().getId()) : getModel();
+        Member member = (formData.get().getId() != null) ? getModel().getByPk(formData.get().getId()) : getModel();
         member.getSubscriptions().clear();
         member.setData(formData.get());
         member.save();
@@ -68,7 +69,7 @@ public class MemberService implements MemberServiceInterface {
      */
     public Member getMember(String token) {
 
-        return getModel().getMemberByToken(token);
+        return getModel().get("token", token);
     }
 
     /**

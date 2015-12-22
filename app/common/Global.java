@@ -2,17 +2,24 @@ package common;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import models.AdminUser;
-import models.User;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import play.data.Form;
-import services.UserService;
-import services.formData.AdminUserFormData;
 
+import models.AdminUser;
+import models.User;
+import services.UserService;
+
+/**
+ * Global start up class
+ */
 public class Global extends GlobalSettings {
 
+    /**
+     * Executes at application startup and creates a default admin user
+     *
+     * @param app
+     */
     @Override
     public void beforeStart(Application app) {
         Config conf = ConfigFactory.load();

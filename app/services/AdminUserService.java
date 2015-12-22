@@ -23,7 +23,7 @@ public class AdminUserService implements AdminUserServiceInterface {
     }
 
     public AdminUserFormData setAdminUserData(String token) {
-        return new AdminUserFormData(getModel().getAdminUserByToken(token));
+        return new AdminUserFormData(getModel().get("token", token));
     }
 
     public List<AdminUser> getAdminUserList(Pager pager) {
@@ -31,7 +31,7 @@ public class AdminUserService implements AdminUserServiceInterface {
     }
 
     public AdminUser save(Form<AdminUserFormData> formData) {
-        AdminUser adminUser = (formData.get().getId() != null) ? getModel().getAdminUserById(formData.get().getId()) : getModel();
+        AdminUser adminUser = (formData.get().getId() != null) ? getModel().getByPk(formData.get().getId()) : getModel();
         adminUser.setData(formData.get());
         adminUser.save();
         return adminUser;
@@ -47,7 +47,7 @@ public class AdminUserService implements AdminUserServiceInterface {
     }
 
     public AdminUser getAdminUser(String token) {
-        return getModel().getAdminUserByToken(token);
+        return getModel().get("token", token);
     }
 
     private AdminUser getModel() {

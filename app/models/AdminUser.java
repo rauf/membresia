@@ -1,64 +1,67 @@
 package models;
 
-import play.Logger;
-import play.data.validation.*;
-import services.UserService;
+import com.avaje.ebean.Ebean;
 import services.formData.AdminUserFormData;
 import services.Pager;
-import com.avaje.ebean.Ebean;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.*;
 import javax.persistence.*;
 
+/**
+ * Model class for AdminUser entity
+ */
 @Entity
 @DiscriminatorValue("admin")
 public class AdminUser extends User {
 
+    /**
+     * Generic constructor
+     */
+    public AdminUser() {
+        super();
+    }
+
+    /**
+     * Populates an object instance with form data
+     *
+     * @param formData form data from html form
+     */
     public void setData(AdminUserFormData formData) {
         this.setId(formData.getId());
         this.setName(formData.getName());
         this.setLastName(formData.getLastName());
         this.setEmail(formData.getEmail());
-
-        UserService userService = new UserService();
-
-        setPasswordRaw(null);
-        if (formData.getMode() == 0)
-            this.setPasswordRaw(userService.generatePassword());
-        if (!formData.getPassword().isEmpty())
-            this.setPasswordRaw(formData.getPassword());
-        if (getPasswordRaw() != null)
-            this.setPassword(userService.cryptPassword(getPasswordRaw()));
-
         this.setToken(formData.getToken());
+        this.setPasswordRaw(null);
+
+        if (formData.getMode() == 0) this.setPasswordRaw(userService.generatePassword());
+        if (!formData.getPassword().isEmpty()) this.setPasswordRaw(formData.getPassword());
+        if (getPasswordRaw() != null) this.setPassword(userService.cryptPassword(getPasswordRaw()));
     }
 
     /**
-     * Gets AdminUser object from primary key
+     * Gets a User object from primary key
      *
      * @param id primary key
      * @return AdminUser
      */
-    public AdminUser getAdminUserById(Long id) {
-
+    public AdminUser getByPk(Long id) {
         return Ebean.find(AdminUser.class).where().eq("id", id).findUnique();
     }
 
     /**
-     * Gets AdminUser object from hash token
+     * Gets AdminUser object by specific key/value pair
      *
-     * @param token Unique AdminUser identifier hash
+     * @param key   Field to search in
+     * @param value Value to search for
      * @return AdminUser
      */
-    public AdminUser getAdminUserByToken(String token) {
-
-        return Ebean.find(AdminUser.class).where().eq("token", token).findUnique();
+    public AdminUser get(String key, String value) {
+        return Ebean.find(AdminUser.class).where().eq(key, value).findUnique();
     }
 
     /**
-     * Get a list of current admin users
+     * Get a list of current admin users with pager options
      *
      * @param pager indicates query paging parameter
      * @return List
@@ -66,32 +69,7 @@ public class AdminUser extends User {
     public List<AdminUser> getAdminUserList(Pager pager) {
         pager.setRecordCount(Ebean.find(AdminUser.class).findRowCount());
         pager.resolvePager();
+
         return Ebean.find(AdminUser.class).setFirstRow(pager.getOffset()).setMaxRows(pager.getRows()).findList();
-    }
-
-    /**
-     * Saves current object into persistence database
-     */
-    public void save() {
-
-        Ebean.save(this);
-    }
-
-
-    /**
-     * Removes admin user from DB
-     *
-     * @param token Unique admin user token
-     * @return boolean
-     */
-    public boolean remove(String token) {
-
-        AdminUser adminUser = Ebean.find(AdminUser.class).where().eq("token", token).findUnique();
-        if (adminUser != null) {
-            Ebean.delete(adminUser);
-            return true;
-        }
-
-        return false;
     }
 }

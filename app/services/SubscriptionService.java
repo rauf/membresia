@@ -19,7 +19,7 @@ public class SubscriptionService implements SubscriptionServiceInterface {
      */
     public SubscriptionFormData setSubscriptionData(String token) {
 
-        return new SubscriptionFormData(getModel().getSubscriptionByToken(token));
+        return new SubscriptionFormData(getModel().get("token", token));
     }
 
     /**
@@ -40,11 +40,11 @@ public class SubscriptionService implements SubscriptionServiceInterface {
 
     public List<Subscription> getSubscriptionRawList() {
 
-        return getModel().getSubscriptionRawList();
+        return getModel().getList();
     }
 
     public Map<SelectOptionItem, Boolean> makeSubscriptionMap(MemberFormData memberFormData) {
-        List<Subscription> allSubscriptions = getModel().getSubscriptionRawList();
+        List<Subscription> allSubscriptions = getModel().getList();
         Map<SelectOptionItem, Boolean> subscriptionMap = new HashMap<SelectOptionItem, Boolean>();
         for (Subscription subscription : allSubscriptions) {
             SelectOptionItem selectOptionItem = new SelectOptionItem(subscription.toString(), subscription.getToken());
@@ -68,7 +68,7 @@ public class SubscriptionService implements SubscriptionServiceInterface {
      */
     public Subscription save(Form<SubscriptionFormData> formData) {
 
-        Subscription subscription = (formData.get().getId() != null) ? getModel().getSubscriptionById(formData.get().getId()) : getModel();
+        Subscription subscription = (formData.get().getId() != null) ? getModel().getByPk(formData.get().getId()) : getModel();
         subscription.setData(formData.get());
         subscription.save();
         return subscription;
@@ -87,7 +87,7 @@ public class SubscriptionService implements SubscriptionServiceInterface {
      */
     public Subscription getSubscription(String token) {
 
-        return getModel().getSubscriptionByToken(token);
+        return getModel().get("token", token);
     }
 
     public Date getLastInstallmentDueDate(Subscription subscription) {
@@ -110,8 +110,8 @@ public class SubscriptionService implements SubscriptionServiceInterface {
         return (subscription.getInstallments().isEmpty()) ? new Installment(subscription) : subscription.getInstallments().get(subscription.getInstallments().size() - 1);
     }
 
-    public List<Subscription> getActiveSubscriptions(){
-        return getModel().getSubscriptionRawList();
+    public List<Subscription> getActiveSubscriptions() {
+        return getModel().getList();
     }
 
     /**

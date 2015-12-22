@@ -1,29 +1,27 @@
 package controllers;
 
-import models.SelectOptionItem;
-import models.Subscription;
 import play.api.libs.mailer.MailerClient;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
-import services.InstallmentService;
+
+import models.SelectOptionItem;
+import models.Subscription;
 import services.formData.SubscriptionFormData;
-import services.SubscriptionService;
+import services.InstallmentService;
 import services.Pager;
-import views.html.*;
+import services.SubscriptionService;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Controller for SubscriptionController component
+ * Controller for Subscription entity
  */
-
 @With(SecuredAction.class)
-
 public class SubscriptionController extends Controller {
 
     @Inject
@@ -40,16 +38,8 @@ public class SubscriptionController extends Controller {
 
     private Integer currentPage = 1;
 
-    private final MailerClient mailer;
-
-    @Inject
-    public SubscriptionController(MailerClient mailer) {
-        this.mailer = mailer;
-    }
-
-
     /**
-     * Show all subscriptions list
+     * Show all subscriptions
      *
      * @return Result
      */
@@ -57,11 +47,12 @@ public class SubscriptionController extends Controller {
         this.currentPage = currentPage;
         pager = new Pager(this.currentPage);
         List<Subscription> subscriptions = subscriptionService.getSubscriptionList(pager);
+
         return ok(views.html.subscription.index.render(Messages.get("subscription.list.global.title"), subscriptions, pager));
     }
 
     /**
-     * Renders subscription form in creation mode
+     * Renders subscription's form in creation mode
      *
      * @return Result
      */
@@ -75,7 +66,7 @@ public class SubscriptionController extends Controller {
     }
 
     /**
-     * Renders subscription form in editing mode by subscription token
+     * Renders subscription's form in editing mode by subscription token
      *
      * @param token Unique subscription token identifier
      * @return Result
@@ -91,44 +82,43 @@ public class SubscriptionController extends Controller {
     }
 
     /**
-     * Saves subscription form data after create or edit
+     * Saves subscription's form data after create or edit
      *
      * @return Result
      */
     public Result save() {
         subscriptionData = new SubscriptionFormData();
         formData = Form.form(SubscriptionFormData.class).bindFromRequest();
-
-
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
             Map<SelectOptionItem, Boolean> periodicityMap = subscriptionService.makePeriodicityMap(subscriptionData);
 
             return badRequest(views.html.subscription.form.render(Messages.get("subscription.form.global.new.title"), formData, periodicityMap));
-        } else {
-            Subscription subscription = subscriptionService.save(formData);
-
-            if (formData.get().getMode() == 0)
-                installmentService.createInstallment(subscription);
-            else
-                installmentService.updateInstallments(subscription);
-
-
-            flash("success", Messages.get("subscription.form.save.message.notification", subscription));
-            pager = new Pager(this.currentPage);
-            List<Subscription> subscriptions = subscriptionService.getSubscriptionList(pager);
-
-            return ok(views.html.subscription.index.render(Messages.get("subscription.list.global.title"), subscriptions, pager));
         }
+        Subscription subscription = subscriptionService.save(formData);
+        if (formData.get().getMode() == 0)
+            installmentService.createInstallment(subscription);
+        else
+            installmentService.updateInstallments(subscription);
+        flash("success", Messages.get("subscription.form.save.message.notification", subscription));
+        pager = new Pager(this.currentPage);
+        List<Subscription> subscriptions = subscriptionService.getSubscriptionList(pager);
+
+        return ok(views.html.subscription.index.render(Messages.get("subscription.list.global.title"), subscriptions, pager));
     }
 
+    /**
+     * Create new installments and member installment for new subscription cycle.
+     *
+     * @return Result
+     */
     public Result createInstallments() {
         installmentService.createInstallments();
         return ok();
     }
 
     /**
-     * Show subscription details by subscription token
+     * Show subscription's details by token
      *
      * @param token Unique subscription token identifier
      * @return Result
@@ -140,7 +130,7 @@ public class SubscriptionController extends Controller {
     }
 
     /**
-     * Removes a specific subscription by subscription token
+     * Removes a specific subscription by token
      *
      * @param token Unique subscription token identifier
      * @return Result

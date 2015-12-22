@@ -17,7 +17,7 @@ public class MessageTemplateService implements MessageTemplateServiceInterface {
      */
     public MessageTemplateFormData setMessageTemplateData(String token) {
 
-        return new MessageTemplateFormData(getModel().getMessageTemplateByToken(token));
+        return new MessageTemplateFormData(getModel().get("token", token));
     }
 
     /**
@@ -41,7 +41,7 @@ public class MessageTemplateService implements MessageTemplateServiceInterface {
      */
     public MessageTemplate save(Form<MessageTemplateFormData> formData) {
 
-        MessageTemplate messageTemplate = (formData.get().getId() != null) ? getModel().getMessageTemplateById(formData.get().getId()) : getModel();
+        MessageTemplate messageTemplate = (formData.get().getId() != null) ? getModel().getByPk(formData.get().getId()) : getModel();
         messageTemplate.setData(formData.get());
         messageTemplate.save();
         return messageTemplate;
@@ -60,7 +60,7 @@ public class MessageTemplateService implements MessageTemplateServiceInterface {
      */
     public MessageTemplate getMessageTemplate(String token) {
 
-        return getModel().getMessageTemplateByToken(token);
+        return getModel().get("token", token);
     }
 
     /**
