@@ -10,6 +10,7 @@ import models.SelectOptionItem;
 import services.formData.MailMessageFormData;
 import services.MailMessageService;
 import services.UserService;
+import services.formData.UserFormData;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -31,6 +32,8 @@ public class MailMessageController extends Controller {
 
     private Form<MailMessageFormData> formData;
 
+    private UserFormData userFormData = new UserFormData();
+
 
     /**
      * Render mail form with default recipient
@@ -44,7 +47,7 @@ public class MailMessageController extends Controller {
         formData = messageService.setFormData(messageData);
         messageData.setReferrer(request().getHeader("referer"));
         messageService.addRecipient(messageData, token);
-        Map<SelectOptionItem, Boolean> userMap = userService.makeUserMap(messageData);
+        Map<SelectOptionItem, Boolean> userMap = userFormData.makeUserMap(messageData);
 
         return ok(views.html.mailMessage.form.render(Messages.get("mailMessage.form.send.title"), formData, userMap));
     }
@@ -62,7 +65,7 @@ public class MailMessageController extends Controller {
         messageData.setReferrer(request().getHeader("referer"));
         messageService.addRecipient(messageData, token);
         messageService.setMessageFromMessageTemplate(messageData, token);
-        Map<SelectOptionItem, Boolean> userMap = userService.makeUserMap(messageData);
+        Map<SelectOptionItem, Boolean> userMap = userFormData.makeUserMap(messageData);
 
         return ok(views.html.mailMessage.form.render(Messages.get("mailMessage.form.send.title"), formData, userMap));
     }
@@ -77,7 +80,7 @@ public class MailMessageController extends Controller {
         formData = Form.form(MailMessageFormData.class).bindFromRequest();
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
-            Map<SelectOptionItem, Boolean> userMap = userService.makeUserMap(messageData);
+            Map<SelectOptionItem, Boolean> userMap = userFormData.makeUserMap(messageData);
 
             return badRequest(views.html.mailMessage.form.render(Messages.get("mailMessage.form.global.new.title"), formData, userMap));
         }

@@ -22,7 +22,6 @@ public class AdminUserFormData {
     protected Integer mode;
 
     protected AdminUser adminUser = new AdminUser();
-
     protected AdminUserService adminUserService = new AdminUserService();
 
     /**

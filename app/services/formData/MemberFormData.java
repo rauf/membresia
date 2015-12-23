@@ -1,16 +1,23 @@
 package services.formData;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import models.SelectOptionItem;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import models.Member;
 import models.Subscription;
+import services.MemberInstallmentService;
 import services.MemberService;
+import services.MoneyFormat;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class that handles Members form submission and validation and relates submitted data to the model
+ * as well as other form related actions.
  */
 public class MemberFormData {
 
@@ -61,9 +68,7 @@ public class MemberFormData {
         this.phone = member.getPhone();
         this.nif = member.getNif();
         this.token = member.getToken();
-        for (Subscription subscription : member.getSubscriptions()) {
-            this.subscriptions.add(subscription.getToken());
-        }
+        this.subscriptions.addAll(member.getSubscriptions().stream().map(Subscription::getToken).collect(Collectors.toList()));
     }
 
     /**
@@ -130,6 +135,25 @@ public class MemberFormData {
         return null;
     }
 
+    /**
+     * Creates a list of member installments for given installment to use as a pull down menu
+     *
+     * @param member Member to show the installments for
+     * @return
+     */
+    public Map<SelectOptionItem, Boolean> makeMemberInstallmentMap(Member member) {
+        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+        Map<SelectOptionItem, Boolean> memberInstallmentMap = new HashMap<>();
+        member.getMemberInstallments().stream().filter(memberInstallment -> !memberInstallment.getPaid()).forEach(memberInstallment -> {
+            Double amountDue = memberInstallmentService.getAmountDue(memberInstallment.getToken());
+            String due = MoneyFormat.setMoney(amountDue);
+            SelectOptionItem selectOptionItem = new SelectOptionItem(memberInstallment.getInstallment().toString() + " | " + due, memberInstallment.getToken());
+            memberInstallmentMap.put(selectOptionItem, false);
+        });
+
+        return memberInstallmentMap;
+    }
+
     public Long getId() {
         return id;
     }
@@ -154,20 +178,20 @@ public class MemberFormData {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
@@ -210,20 +234,20 @@ public class MemberFormData {
         this.cp = cp;
     }
 
-    public String getNif() {
-        return nif;
-    }
-
-    public void setNif(String nif) {
-        this.nif = nif;
-    }
-
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 
     public String getToken() {
@@ -234,19 +258,19 @@ public class MemberFormData {
         this.token = token;
     }
 
-    public List<String> getSubscriptions() {
-        return subscriptions;
-    }
-
-    public void setSubscriptions(List<String> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-
     public Integer getMode() {
         return mode;
     }
 
     public void setMode(Integer mode) {
         this.mode = mode;
+    }
+
+    public List<String> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<String> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

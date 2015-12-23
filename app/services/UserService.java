@@ -3,7 +3,6 @@ package services;
 import com.google.inject.Inject;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import models.SelectOptionItem;
 import models.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.mindrot.jbcrypt.BCrypt;
@@ -11,17 +10,8 @@ import play.api.libs.mailer.MailerClient;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import services.contract.UserServiceInterface;
-import services.formData.MailMessageFormData;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static play.mvc.Controller.session;
-
-/**
- * Middleware class for controller model interaction and other member related business logic
- */
 
 public class UserService implements UserServiceInterface {
 
@@ -31,60 +21,13 @@ public class UserService implements UserServiceInterface {
     /**
      * {@inheritDoc}
      */
-    public User getUser(String token) {
-
-        return getModel().get("token", token);
-    }
-
-    public User getUserItem(String key, String value) {
-
+    public User getUser(String key, String value) {
         return getModel().get(key, value);
     }
-
 
     /**
      * {@inheritDoc}
      */
-    public boolean isUserEmailUsed(String email, String token) {
-
-        return getModel().getUserEmailCount(email, token) > 0;
-    }
-
-    public Map<SelectOptionItem, Boolean> makeUserMap(MailMessageFormData messageFormData) {
-        List<User> allUsers = getModel().getAll();
-        Map<SelectOptionItem, Boolean> userMap = new HashMap<SelectOptionItem, Boolean>();
-        for (User user : allUsers) {
-            SelectOptionItem selectOptionItem = new SelectOptionItem(user.toString() + " <" + user.getEmail() + ">", user.getToken());
-            userMap.put(selectOptionItem, (messageFormData != null && messageFormData.getRecipients().contains(user.getToken())));
-        }
-        return userMap;
-    }
-
-    public User authenticate(String email, String password) {
-        User user = getModel().get("email", email);
-        if (user != null && checkPassword(password, user.getPassword())) {
-            session().clear();
-            session("email", user.getEmail());
-            session("name", user.toString());
-            session("token", user.getToken());
-            session("X-AUTH-TOKEN", user.getToken());
-            session("gravatar", user.getGravatar());
-            return user;
-        }
-        return null;
-    }
-
-    public User setPassword(String email) {
-        User user = getModel().get("email", email);
-        if (user != null) {
-            user.setPasswordRaw(this.generatePassword());
-            user.setPassword(this.cryptPassword(user.getPasswordRaw()));
-            user.save();
-            return user;
-        }
-        return null;
-    }
-
     public void sendPasswordRecoveryEmail(User user) {
         Config conf = ConfigFactory.load();
         String sendFromEmail = conf.getString("play.mailer.user");
@@ -101,26 +44,64 @@ public class UserService implements UserServiceInterface {
         mailer.send(email);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public User authenticate(String email, String password) {
+        User user = getModel().get("email", email);
+        if (user != null && checkPassword(password, user.getPassword())) {
+            session().clear();
+            session("email", user.getEmail());
+            session("name", user.toString());
+            session("token", user.getToken());
+            session("X-AUTH-TOKEN", user.getToken());
+            session("gravatar", user.getGravatar());
+            return user;
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public User setPassword(String email) {
+        User user = getModel().get("email", email);
+        if (user != null) {
+            user.setPasswordRaw(this.generatePassword());
+            user.setPassword(this.encryptPassword(user.getPasswordRaw()));
+            user.save();
+            return user;
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void logout() {
         session().clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String generatePassword() {
         return RandomStringUtils.randomAlphanumeric(8);
     }
 
-    public String cryptPassword(String clearString) {
+    /**
+     * {@inheritDoc}
+     */
+    public String encryptPassword(String clearString) {
         return BCrypt.hashpw(clearString, BCrypt.gensalt());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean checkPassword(String candidate, String encryptedPassword) {
-        if (candidate == null) {
-            return false;
-        }
-        if (encryptedPassword == null) {
-            return false;
-        }
-        return BCrypt.checkpw(candidate, encryptedPassword);
+        return candidate != null && encryptedPassword != null && BCrypt.checkpw(candidate, encryptedPassword);
     }
 
     /**

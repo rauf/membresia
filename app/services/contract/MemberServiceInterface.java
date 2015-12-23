@@ -1,14 +1,15 @@
 package services.contract;
 
-import play.data.Form;
 import models.Member;
+import play.api.libs.mailer.MailerClient;
+import play.data.Form;
 import services.formData.MemberFormData;
 import services.Pager;
 
 import java.util.List;
 
 /**
- * Middleware interface class for controller model interaction and other member related business logic
+ * Service interface class for controller model interaction and other member related business logic
  */
 public interface MemberServiceInterface {
 
@@ -30,20 +31,20 @@ public interface MemberServiceInterface {
 
 
     /**
-     * Gets member paginated list from DB
-     *
-     * @param pager Pager object for query pagination
-     * @return List
-     */
-    List<Member> getMemberList(Pager pager);
-
-    /**
      * Get a specific member by token
      *
      * @param token Unique member identifier
      * @return Member
      */
     Member getMember(String token);
+
+    /**
+     * Gets member paginated list from DB
+     *
+     * @param pager Pager object for query pagination
+     * @return List
+     */
+    List<Member> getMemberList(Pager pager);
 
     /**
      * Saves form data into persistence object
@@ -69,4 +70,12 @@ public interface MemberServiceInterface {
      * @return boolean
      */
     boolean isMemberEmailUsed(String email, String token);
+
+    /**
+     * Sends new member user account email with login credentials
+     *
+     * @param mailer Mailer object
+     * @param member User to send the mail to
+     */
+    void sendNewAccountMail(MailerClient mailer, Member member);
 }

@@ -7,6 +7,7 @@ import play.i18n.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class that handles Members form submission and validation and relates submitted data to the model
@@ -25,7 +26,6 @@ public class MailMessageFormData {
      */
     public MailMessageFormData() {
 
-        super();
     }
 
     /**
@@ -37,9 +37,7 @@ public class MailMessageFormData {
         this.subject = mailMessage.getSubject();
         this.body = mailMessage.getBody();
         this.referrer = mailMessage.getReferrer();
-        for (User recipient : mailMessage.getRecipients()) {
-            this.recipients.add(recipient.getToken());
-        }
+        this.recipients.addAll(mailMessage.getRecipients().stream().map(User::getToken).collect(Collectors.toList()));
     }
 
     /**
@@ -103,10 +101,5 @@ public class MailMessageFormData {
     public List<String> getRecipients() {
 
         return recipients;
-    }
-
-    public void setRecipients(List<String> recipients) {
-
-        this.recipients = recipients;
     }
 }

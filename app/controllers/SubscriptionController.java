@@ -60,7 +60,7 @@ public class SubscriptionController extends Controller {
         subscriptionData = new SubscriptionFormData();
         formData = subscriptionService.setFormData(subscriptionData);
         subscriptionData.setMode(0);
-        Map<SelectOptionItem, Boolean> periodicityMap = subscriptionService.makePeriodicityMap(subscriptionData);
+        Map<SelectOptionItem, Boolean> periodicityMap = subscriptionData.makePeriodicityMap(subscriptionData);
 
         return ok(views.html.subscription.form.render(Messages.get("subscription.form.global.new.title"), formData, periodicityMap));
     }
@@ -76,7 +76,7 @@ public class SubscriptionController extends Controller {
         subscriptionData = subscriptionService.setSubscriptionData(token);
         formData = subscriptionService.setFormData(subscriptionData);
         subscriptionData.setMode(1);
-        Map<SelectOptionItem, Boolean> periodicityMap = subscriptionService.makePeriodicityMap(subscriptionData);
+        Map<SelectOptionItem, Boolean> periodicityMap = subscriptionData.makePeriodicityMap(subscriptionData);
 
         return ok(views.html.subscription.form.render(Messages.get("subscription.form.global.new.title"), formData, periodicityMap));
     }
@@ -91,7 +91,7 @@ public class SubscriptionController extends Controller {
         formData = Form.form(SubscriptionFormData.class).bindFromRequest();
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
-            Map<SelectOptionItem, Boolean> periodicityMap = subscriptionService.makePeriodicityMap(subscriptionData);
+            Map<SelectOptionItem, Boolean> periodicityMap = subscriptionData.makePeriodicityMap(subscriptionData);
 
             return badRequest(views.html.subscription.form.render(Messages.get("subscription.form.global.new.title"), formData, periodicityMap));
         }
@@ -113,7 +113,7 @@ public class SubscriptionController extends Controller {
      * @return Result
      */
     public Result createInstallments() {
-        installmentService.createInstallments();
+        installmentService.generateInstallments();
         return ok();
     }
 

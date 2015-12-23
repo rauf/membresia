@@ -1,8 +1,8 @@
 @(mailMessage: MailMessage)
 
-@import play.i18n._;
-@import views.html.common.templates.mailTemplate;
+    @import play.i18n._;
+    @import views.html.common.templates.mailTemplate;
 
-@mailTemplate(mailMessage.getSubject: String) {
-    @Html(mailMessage.getBody)
-}
+    @mailTemplate(mailMessage.getSubject: String) {
+        @Html(mailMessage.getBody)
+    }

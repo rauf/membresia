@@ -13,6 +13,7 @@ import models.Member;
 import models.MemberInstallment;
 import models.Payment;
 import models.SelectOptionItem;
+import services.formData.MemberFormData;
 import services.formData.PaymentFormData;
 import services.MemberService;
 import services.MemberInstallmentService;
@@ -32,6 +33,8 @@ public class PaymentController extends Controller {
     @Inject
     private MemberInstallmentService memberInstallmentService;
 
+    private MemberFormData memberFormData = new MemberFormData();
+
     /**
      * Displays member's payment view
      *
@@ -45,7 +48,7 @@ public class PaymentController extends Controller {
 
         paymentFormData.setMemberToken(token);
         Member member = memberService.getMember(token);
-        Map<SelectOptionItem, Boolean> memberInstallmentMap = memberService.makeMemberInstallmentMap(member);
+        Map<SelectOptionItem, Boolean> memberInstallmentMap = memberFormData.makeMemberInstallmentMap(member);
 
         return ok(views.html.payment.makePayment.render(Messages.get("member.pay.global.title"), member, formData, memberInstallmentMap));
     }
@@ -79,7 +82,7 @@ public class PaymentController extends Controller {
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
             Member member = memberService.getMember(formData.field("memberToken").value());
-            Map<SelectOptionItem, Boolean> memberInstallmentMap = memberService.makeMemberInstallmentMap(member);
+            Map<SelectOptionItem, Boolean> memberInstallmentMap = memberFormData.makeMemberInstallmentMap(member);
 
             return ok(views.html.payment.makePayment.render(Messages.get("member.pay.global.title"), member, formData, memberInstallmentMap));
         }

@@ -8,10 +8,8 @@
         disabled: Boolean = false
 )
 
-
-<!-- Date dd/mm/yyyy -->
 <div class="form-group @if(field.hasErrors) {has-error}">
-    <label class="control-label">@label @if(required) {(*)}</label>
+    <label class="control-label" for="@field.id">@label @if(required) {(*)}</label>
     <div class="input-group">
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>

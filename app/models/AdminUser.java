@@ -36,7 +36,7 @@ public class AdminUser extends User {
 
         if (formData.getMode() == 0) this.setPasswordRaw(userService.generatePassword());
         if (!formData.getPassword().isEmpty()) this.setPasswordRaw(formData.getPassword());
-        if (getPasswordRaw() != null) this.setPassword(userService.cryptPassword(getPasswordRaw()));
+        if (getPasswordRaw() != null) this.setPassword(userService.encryptPassword(getPasswordRaw()));
     }
 
     /**

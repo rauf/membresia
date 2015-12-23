@@ -18,20 +18,20 @@ public class Global extends GlobalSettings {
     /**
      * Executes at application startup and creates a default admin user
      *
-     * @param app
+     * @param app Application instance
      */
     @Override
     public void beforeStart(Application app) {
         Config conf = ConfigFactory.load();
         UserService userService = new UserService();
-        User user = userService.getUserItem("email", conf.getString("adminUser.user.default.email"));
+        User user = userService.getUser("email", conf.getString("adminUser.user.default.email"));
         if (user == null) {
             AdminUser adminUser = new AdminUser();
             adminUser.setEmail(conf.getString("adminUser.user.default.email"));
             adminUser.setName(conf.getString("adminUser.user.default.name"));
             adminUser.setLastName(conf.getString("adminUser.user.default.lastName"));
             adminUser.setPasswordRaw(conf.getString("adminUser.user.default.password"));
-            adminUser.setPassword(userService.cryptPassword(adminUser.getPasswordRaw()));
+            adminUser.setPassword(userService.encryptPassword(adminUser.getPasswordRaw()));
             adminUser.setToken(adminUser.generateToken());
             adminUser.save();
             Logger.debug("USERADMIN " + adminUser.toString() + " CREATED");

@@ -8,7 +8,7 @@ import services.Pager;
 import java.util.List;
 
 /**
- * Middleware interface class for controller model interaction and other member related business logic
+ * Service interface class for controller model interaction and other member related business logic
  */
 public interface MessageTemplateServiceInterface {
 
@@ -27,7 +27,6 @@ public interface MessageTemplateServiceInterface {
      * @return Form
      */
     Form<MessageTemplateFormData> setFormData(MessageTemplateFormData messageTemplateData);
-
 
     /**
      * Gets messageTemplate paginated list from DB

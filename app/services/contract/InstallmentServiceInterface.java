@@ -1,12 +1,34 @@
 package services.contract;
 
+import models.Installment;
 import models.Subscription;
 
 public interface InstallmentServiceInterface {
 
+    /**
+     * Add a new installment to a subscription
+     *
+     * @param subscription Subscription to add the installment to
+     */
     void createInstallment(Subscription subscription);
 
+    /**
+     * Update last installment informtion upon subscription due date and amount modification
+     *
+     * @param subscription Subscription to update the installment from
+     */
     void updateInstallments(Subscription subscription);
 
-    void createInstallments();
+    /**
+     * Generate a new installment whenever is needed among all available subscriptions
+     */
+    void generateInstallments();
+
+    /**
+     * Retrieves a subscrition las installment or generate a new one
+     *
+     * @param subscription Subscription to generate installment for
+     * @return Installment
+     */
+    Installment getSubscriptionLastInstallment(Subscription subscription);
 }

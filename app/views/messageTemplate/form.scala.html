@@ -2,54 +2,53 @@
 
 @(title: String, messageTemplateForm: play.data.Form[MessageTemplateFormData])
 
-@import play.i18n.Messages;
-@import views.html.common.parts._;
-@import views.html.common.templates.main;
-@import views.html.bootstrap._
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
+    @import views.html.bootstrap._
 
+    @main(title) {
 
-@main(title) {
+        <div class="box box-primary">
 
-    <div class="box box-primary">
+            <div class="box-header with-border">
+            @notification()
+            </div>
 
-        <div class="box-header with-border">
-        @notification()
-        </div>
+            @helper.form(action = routes.MessageTemplateController.save()) {
 
-        @helper.form(action = routes.MessageTemplateController.save()) {
+                <div class="box-body">
+                    <div class="row">
 
-            <div class="box-body">
-                <div class="row">
+                        <div class="col-md-12">
+                        @input(messageTemplateForm("title"),
+                            label = Messages.get("messageTemplate.form.label.title"),
+                            placeholder = Messages.get("messageTemplate.form.placeholder.title"),
+                            help = Messages.get("messageTemplate.form.helper.title"),
+                            error = Messages.get("messageTemplate.form.validation.title"),
+                            required = true
+                        )
+                        </div>
+                        <div class="col-md-12">
+                        @texteditor(messageTemplateForm("body"),
+                            label = Messages.get("messageTemplate.form.label.body"),
+                            placeholder = Messages.get("messageTemplate.form.placeholder.body"),
+                            help = Messages.get("messageTemplate.form.helper.body")
+                        )
+                        </div>
 
-                    <div class="col-md-12">
-                    @input(messageTemplateForm("title"),
-                        label = Messages.get("messageTemplate.form.label.title"),
-                        placeholder = Messages.get("messageTemplate.form.placeholder.title"),
-                        help = Messages.get("messageTemplate.form.helper.title"),
-                        error = Messages.get("messageTemplate.form.validation.title"),
-                        required = true
-                    )
                     </div>
-                    <div class="col-md-12">
-                    @texteditor(messageTemplateForm("body"),
-                        label = Messages.get("messageTemplate.form.label.body"),
-                        placeholder = Messages.get("messageTemplate.form.placeholder.body"),
-                        help = Messages.get("messageTemplate.form.helper.body")
-                    )
-                    </div>
+
+                    @hidden(messageTemplateForm("id"))
+                    @hidden(messageTemplateForm("token"))
+                    @hidden(messageTemplateForm("mode"))
 
                 </div>
 
-                @hidden(messageTemplateForm("id"))
-                @hidden(messageTemplateForm("token"))
-                @hidden(messageTemplateForm("mode"))
-
-            </div>
-
-            <div class="box-footer">
-                <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.submit")</button>
-                <a id="cancel" href="@routes.MessageTemplateController.index()" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
-            </div>
-        }
-    </div>
-}
+                <div class="box-footer">
+                    <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.submit")</button>
+                    <a id="cancel" href="@routes.MessageTemplateController.index()" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
+                </div>
+            }
+        </div>
+    }

@@ -1,6 +1,5 @@
 package services;
 
-
 import models.Payment;
 import play.data.Form;
 import services.contract.PaymentServiceInterface;
@@ -16,6 +15,9 @@ public class PaymentService implements PaymentServiceInterface {
         return payment;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void acceptPayment(String token) {
         Payment payment = getModel().get("token", token);
         payment.setStatus(1);

@@ -9,6 +9,7 @@ import models.Member;
 import models.SelectOptionItem;
 import services.*;
 import services.formData.MemberFormData;
+import services.formData.SubscriptionFormData;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,8 @@ public class MemberController extends Controller {
 
     @Inject
     private MailerClient mailer;
+
+    private SubscriptionFormData subscriptionFormData = new SubscriptionFormData();
 
     private MemberFormData memberData;
 
@@ -61,7 +64,7 @@ public class MemberController extends Controller {
     public Result create() {
         memberData = new MemberFormData();
         formData = memberService.setFormData(memberData);
-        Map<SelectOptionItem, Boolean> subscriptionMap = subscriptionService.makeSubscriptionMap(memberData);
+        Map<SelectOptionItem, Boolean> subscriptionMap = subscriptionFormData.makeSubscriptionMap(memberData);
         memberData.setMode(0);
 
         return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionMap));
@@ -77,7 +80,7 @@ public class MemberController extends Controller {
         memberData = new MemberFormData();
         memberData = memberService.setMemberData(token);
         formData = memberService.setFormData(memberData);
-        Map<SelectOptionItem, Boolean> subscriptionMap = subscriptionService.makeSubscriptionMap(memberData);
+        Map<SelectOptionItem, Boolean> subscriptionMap = subscriptionFormData.makeSubscriptionMap(memberData);
         memberData.setMode(1);
 
         return ok(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionMap));
@@ -93,7 +96,7 @@ public class MemberController extends Controller {
         formData = Form.form(MemberFormData.class).bindFromRequest();
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
-            Map<SelectOptionItem, Boolean> subscriptionMap = subscriptionService.makeSubscriptionMap(memberData);
+            Map<SelectOptionItem, Boolean> subscriptionMap = subscriptionFormData.makeSubscriptionMap(memberData);
 
             return badRequest(views.html.member.form.render(Messages.get("member.form.global.new.title"), formData, subscriptionMap));
         }

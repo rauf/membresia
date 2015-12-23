@@ -2,13 +2,10 @@ package services;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-
 import models.*;
-import play.Logger;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import play.api.libs.mailer.MailerClient;
-
 import services.contract.MemberInstallmentServiceInterface;
 
 import javax.inject.Inject;
@@ -18,12 +15,22 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
     @Inject
     private MailerClient mailer;
 
+    /**
+     * {@inheritDoc}
+     */
+    public MemberInstallment get(String key, String value) {
+        return getModel().get(key, value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void setMemberInstallments(Member member) {
-        SubscriptionService subscriptionService = new SubscriptionService();
+        InstallmentService installmentService = new InstallmentService();
         for (Subscription subscription : member.getSubscriptions()) {
             if (subscription != null) {
                 boolean isMemberInstallmentSet = false;
-                Installment lastInstallment = subscriptionService.getLastInstallment(subscription);
+                Installment lastInstallment = installmentService.getSubscriptionLastInstallment(subscription);
                 for (MemberInstallment memberInstallment : member.getMemberInstallments()) {
                     isMemberInstallmentSet = (memberInstallment.getInstallment().equals(lastInstallment)) || isMemberInstallmentSet;
                 }
@@ -32,6 +39,9 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void createMemberInstallment(Member member, Installment installment) {
         MemberInstallment memberInstallment = getModel();
         memberInstallment.setMember(member);
@@ -40,22 +50,29 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
         sendMemberInstallmentNotice(memberInstallment);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Double getTotalPaid(String token) {
         if (token != null) {
 
             MemberInstallment memberInstallment = getModel().get("token", token);
             Double totalPaid = 0.0;
             if (memberInstallment != null) {
-
                 for (Payment payment : memberInstallment.getPayments()) {
                     if (payment.getStatus() == 1) totalPaid += payment.getAmount();
                 }
+
                 return totalPaid;
             }
         }
+
         return 0.0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Double getAmountDue(String token) {
         if (token != null) {
             MemberInstallment memberInstallment = getModel().get("token", token);
@@ -65,16 +82,26 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
                 for (Payment payment : memberInstallment.getPayments()) {
                     if (payment.getStatus() == 1) totalPaid += payment.getAmount();
                 }
+
                 return memberInstallment.getInstallment().getAmount() - totalPaid;
             }
         }
+
         return 0.0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void setPaid(MemberInstallment memberInstallment) {
         memberInstallment.setAsPaid();
     }
 
+    /**
+     * Send a member installment to member when a member installment is created
+     *
+     * @param memberInstallment Member installment with information for mail content
+     */
     private void sendMemberInstallmentNotice(MemberInstallment memberInstallment) {
         Config conf = ConfigFactory.load();
         String sendFromEmail = conf.getString("play.mailer.user");
@@ -91,10 +118,11 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
         mailer.send(email);
     }
 
-    public MemberInstallment get(String key, String value) {
-        return getModel().get(key, value);
-    }
-
+    /**
+     * Gets a memberInstallment object instance
+     *
+     * @return MemberInstallment
+     */
     private MemberInstallment getModel() {
         return new MemberInstallment();
     }

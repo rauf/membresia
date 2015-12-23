@@ -78,7 +78,7 @@ public class Member extends User {
         this.setToken(formData.getToken());
 
         this.setPasswordRaw(userService.generatePassword());
-        this.setPassword(userService.cryptPassword(getPasswordRaw()));
+        this.setPassword(userService.encryptPassword(getPasswordRaw()));
 
         Subscription subscription = new Subscription();
         for (String subscriptionToken : formData.getSubscriptions()) {
@@ -211,5 +211,13 @@ public class Member extends User {
 
     public List<Subscription> getSubscriptions() {
         return subscriptions;
+    }
+
+    public void setMemberInstallments(List<MemberInstallment> memberInstallments) {
+        this.memberInstallments = memberInstallments;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

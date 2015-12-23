@@ -3,109 +3,108 @@
 @import services.formData.SubscriptionFormData
 @(title: String, subscriptionForm: play.data.Form[SubscriptionFormData], periodicityMap: util.Map[SelectOptionItem, Boolean])
 
-@import play.i18n.Messages;
-@import views.html.common.parts._;
-@import views.html.common.templates.main;
-@import views.html.bootstrap._
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
+    @import views.html.bootstrap._
 
+    @main(title) {
 
-@main(title) {
+        <div class="box box-primary">
 
-    <div class="box box-primary">
-
-        <div class="box-header with-border">
-        @notification()
-        </div>
-
-        @helper.form(action = routes.SubscriptionController.save()) {
-
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                            @input(subscriptionForm("title"),
-                                label = Messages.get("subscription.form.label.title"),
-                                placeholder = Messages.get("subscription.form.placeholder.title"),
-                                help = Messages.get("subscription.form.helper.title"),
-                                error = Messages.get("subscription.form.validation.title"),
-
-                                required = true
-                            )
-                            </div>
-                            <div class="col-md-12">
-                            @texteditor(subscriptionForm("description"),
-                                label = Messages.get("subscription.form.label.description"),
-                                placeholder = Messages.get("subscription.form.placeholder.description"),
-                                help = Messages.get("subscription.form.helper.description")
-                            )
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                            @input(subscriptionForm("amount"),
-                                label = Messages.get("subscription.form.label.amount"),
-                                placeholder = Messages.get("subscription.form.placeholder.amount"),
-                                help = Messages.get("subscription.form.helper.amount"),
-                                error = Messages.get("subscription.form.validation.amount"),
-                                required = true
-                            )
-                            </div>
-                            <div class="col-md-6">
-                            @select(subscriptionForm("periodicity"),
-                                label = Messages.get("subscription.form.label.periodicity"),
-                                optionMap = periodicityMap,
-                                isMultiple = false,
-                                help = Messages.get("subscription.form.helper.periodicity"),
-                                error = Messages.get("subscription.form.validation.periodicity"),
-                                required = true
-                            )
-                            </div>
-                            <div class="col-md-6">
-                            @dateinput(subscriptionForm("dueDatePeriod"),
-                                label = Messages.get("subscription.form.label.dueDatePeriod"),
-                                help = Messages.get("subscription.form.helper.dueDatePeriod"),
-                                error = Messages.get("subscription.form.validation.dueDatePeriod"),
-                                required = true,
-                                disabled = if(subscriptionForm.get().getMode == 1) {
-                                    true
-                                } else {
-                                    false
-                                }
-                            )
-                            </div>
-
-
-                        </div>
-                        @if(subscriptionForm.get().getMode == 1) {
-
-                            <p class="text-red">@Messages.get("subscription.form.edit.note")</p>
-                        }
-
-                    </div>
-                </div>
-
+            <div class="box-header with-border">
+            @notification()
             </div>
 
-            @hidden(subscriptionForm("id"))
-            @hidden(subscriptionForm("token"))
-            @hidden(subscriptionForm("subscriptionId"))
-            @hidden(subscriptionForm("mode"))
-            @if(subscriptionForm.get().getMode == 1) {
-                @hidden(subscriptionForm("dueDatePeriod"))
-            }
-        </div>
+            @helper.form(action = routes.SubscriptionController.save()) {
 
-    <div class="box-footer">
-        <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.submit")</button>
-        <a id="cancel" href="@routes.SubscriptionController.index()" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
-    </div>
-}
-    </div>
-}
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                @input(subscriptionForm("title"),
+                                    label = Messages.get("subscription.form.label.title"),
+                                    placeholder = Messages.get("subscription.form.placeholder.title"),
+                                    help = Messages.get("subscription.form.helper.title"),
+                                    error = Messages.get("subscription.form.validation.title"),
+
+                                    required = true
+                                )
+                                </div>
+                                <div class="col-md-12">
+                                @texteditor(subscriptionForm("description"),
+                                    label = Messages.get("subscription.form.label.description"),
+                                    placeholder = Messages.get("subscription.form.placeholder.description"),
+                                    help = Messages.get("subscription.form.helper.description")
+                                )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                @input(subscriptionForm("amount"),
+                                    label = Messages.get("subscription.form.label.amount"),
+                                    placeholder = Messages.get("subscription.form.placeholder.amount"),
+                                    help = Messages.get("subscription.form.helper.amount"),
+                                    error = Messages.get("subscription.form.validation.amount"),
+                                    required = true
+                                )
+                                </div>
+                                <div class="col-md-6">
+                                @select(subscriptionForm("periodicity"),
+                                    label = Messages.get("subscription.form.label.periodicity"),
+                                    optionMap = periodicityMap,
+                                    isMultiple = false,
+                                    help = Messages.get("subscription.form.helper.periodicity"),
+                                    error = Messages.get("subscription.form.validation.periodicity"),
+                                    required = true
+                                )
+                                </div>
+                                <div class="col-md-6">
+                                @dateinput(subscriptionForm("dueDatePeriod"),
+                                    label = Messages.get("subscription.form.label.dueDatePeriod"),
+                                    help = Messages.get("subscription.form.helper.dueDatePeriod"),
+                                    error = Messages.get("subscription.form.validation.dueDatePeriod"),
+                                    required = true,
+                                    disabled = if(subscriptionForm.get().getMode == 1) {
+                                        true
+                                    } else {
+                                        false
+                                    }
+                                )
+                                </div>
+
+
+                            </div>
+                            @if(subscriptionForm.get().getMode == 1) {
+
+                                <p class="text-red">@Messages.get("subscription.form.edit.note")</p>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+
+                @hidden(subscriptionForm("id"))
+                @hidden(subscriptionForm("token"))
+                @hidden(subscriptionForm("subscriptionId"))
+                @hidden(subscriptionForm("mode"))
+                @if(subscriptionForm.get().getMode == 1) {
+                    @hidden(subscriptionForm("dueDatePeriod"))
+                }
+            </div>
+
+        <div class="box-footer">
+            <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.submit")</button>
+            <a id="cancel" href="@routes.SubscriptionController.index()" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
+        </div>
+    }
+        </div>
+    }

@@ -78,7 +78,8 @@
                             <li><a href="@routes.MemberController.index(pager.getCurrentPage - 1)">&laquo;</a></li>
                         }
                         @for( index <- TemplateHelpers.createRange(pager.getCurrentPage, pager.getPageSize, pager.getTotalPages)) {
-                            <li @if(pager.getCurrentPage == index){class='active'}><a href="@routes.MemberController.index(index)">@index</a></li>
+                            <li @if(pager.getCurrentPage == index) {
+                                class='active'}><a href="@routes.MemberController.index(index)">@index</a></li>
                         }
                         @if(pager.getCurrentPage < pager.getTotalPages) {
                             <li><a href="@routes.MemberController.index(pager.getCurrentPage + 1)">&raquo;</a></li>
