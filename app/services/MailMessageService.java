@@ -10,7 +10,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import services.contract.MailMessageServiceInterface;
-import services.formData.MailMessageFormData;
+import views.formData.MailMessageFormData;
 
 public class MailMessageService implements MailMessageServiceInterface {
 
@@ -18,7 +18,6 @@ public class MailMessageService implements MailMessageServiceInterface {
      * {@inheritDoc}
      */
     public MailMessageFormData setMessageData() {
-
         return new MailMessageFormData(getModel());
     }
 
@@ -26,7 +25,6 @@ public class MailMessageService implements MailMessageServiceInterface {
      * {@inheritDoc}
      */
     public Form<MailMessageFormData> setFormData(MailMessageFormData messageData) {
-
         return Form.form(MailMessageFormData.class).fill(messageData);
     }
 
@@ -34,14 +32,13 @@ public class MailMessageService implements MailMessageServiceInterface {
      * {@inheritDoc}
      */
     public MailMessage setMessageInstance(Form<MailMessageFormData> formData) {
-
         MailMessage mailMessage = getModel();
         mailMessage.setData(formData.get());
+
         return mailMessage;
     }
 
     public void addRecipient(MailMessageFormData messageData, String token) {
-
         messageData.getRecipients().add(token);
     }
 
@@ -56,7 +53,6 @@ public class MailMessageService implements MailMessageServiceInterface {
      * {@inheritDoc}
      */
     public void sendMessage(MailerClient mailer, MailMessage mailMessage) {
-
         Config conf = ConfigFactory.load();
         String sendFromEmail = conf.getString("play.mailer.user");
         String sendFromName = Messages.get("app.global.title");
@@ -79,8 +75,6 @@ public class MailMessageService implements MailMessageServiceInterface {
      * @return Member
      */
     private MailMessage getModel() {
-
         return new MailMessage();
     }
 }
-

@@ -1,27 +1,27 @@
 package controllers;
 
-import models.MessageTemplate;
-import play.api.libs.mailer.MailerClient;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+
+import models.MessageTemplate;
 import services.MessageTemplateService;
+import views.formData.MessageTemplateFormData;
 import services.Pager;
-import services.formData.MessageTemplateFormData;
 
 import javax.inject.Inject;
 import java.util.List;
-import views.html.*;
 
 /**
- * Controller for MessageTemplateController component
+ * Controller for MessageTemplate entity
  */
 @With(SecuredAction.class)
 public class MessageTemplateController extends Controller {
 
-    private MessageTemplateService messageTemplateService = new MessageTemplateService();
+    @Inject
+    private MessageTemplateService messageTemplateService;
 
     private MessageTemplateFormData messageTemplateData;
 
@@ -31,16 +31,8 @@ public class MessageTemplateController extends Controller {
 
     private Integer currentPage = 1;
 
-    private final MailerClient mailer;
-
-    @Inject
-    public MessageTemplateController(MailerClient mailer) {
-        this.mailer = mailer;
-    }
-
-
     /**
-     * Show all messageTemplates list
+     * Show all messageTemplates
      *
      * @return Result
      */
@@ -48,11 +40,12 @@ public class MessageTemplateController extends Controller {
         this.currentPage = currentPage;
         pager = new Pager(this.currentPage);
         List<MessageTemplate> messageTemplates = messageTemplateService.getMessageTemplateList(pager);
+
         return ok(views.html.messageTemplate.index.render(Messages.get("messageTemplate.list.global.title"), messageTemplates, pager));
     }
 
     /**
-     * Renders messageTemplate form in creation mode
+     * Renders messageTemplate's form in creation mode
      *
      * @return Result
      */
@@ -65,7 +58,7 @@ public class MessageTemplateController extends Controller {
     }
 
     /**
-     * Renders messageTemplate form in editing mode by messageTemplate token
+     * Renders messageTemplate's form in editing mode by messageTemplate token
      *
      * @param token Unique messageTemplate token identifier
      * @return Result
@@ -80,31 +73,29 @@ public class MessageTemplateController extends Controller {
     }
 
     /**
-     * Saves messageTemplate form data after create or edit
+     * Saves messageTemplate's form data after create or edit
      *
      * @return Result
      */
     public Result save() {
         messageTemplateData = new MessageTemplateFormData();
         formData = Form.form(MessageTemplateFormData.class).bindFromRequest();
-
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
 
             return badRequest(views.html.messageTemplate.form.render(Messages.get("messageTemplate.form.global.new.title"), formData));
-        } else {
-            MessageTemplate messageTemplate = messageTemplateService.save(formData);
-
-            flash("success", Messages.get("messageTemplate.form.save.message.notification", messageTemplate));
-            pager = new Pager(this.currentPage);
-            List<MessageTemplate> messageTemplates = messageTemplateService.getMessageTemplateList(pager);
-
-            return ok(views.html.messageTemplate.index.render(Messages.get("messageTemplate.list.global.title"), messageTemplates, pager));
         }
+        MessageTemplate messageTemplate = messageTemplateService.save(formData);
+        flash("success", Messages.get("messageTemplate.form.save.message.notification", messageTemplate));
+        pager = new Pager(this.currentPage);
+        List<MessageTemplate> messageTemplates = messageTemplateService.getMessageTemplateList(pager);
+
+        return ok(views.html.messageTemplate.index.render(Messages.get("messageTemplate.list.global.title"), messageTemplates, pager));
+
     }
 
     /**
-     * Show messageTemplate details by messageTemplate token
+     * Show messageTemplate's details by messageTemplate token
      *
      * @param token Unique messageTemplate token identifier
      * @return Result
@@ -116,7 +107,7 @@ public class MessageTemplateController extends Controller {
     }
 
     /**
-     * Removes a specific messageTemplate by messageTemplate token
+     * Removes a specific messageTemplate by token
      *
      * @param token Unique messageTemplate token identifier
      * @return Result

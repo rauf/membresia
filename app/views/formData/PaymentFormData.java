@@ -1,15 +1,14 @@
-package services.formData;
+package views.formData;
+
 
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import services.MD5;
+import services.MemberInstallmentService;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import models.Payment;
-import services.MemberInstallmentService;
 
 /**
  * Class that handles Payment form submission and validation and relates submitted data to the model
@@ -30,18 +29,6 @@ public class PaymentFormData {
     }
 
     /**
-     * Created a new PaymentFormData instance from a payment edit action
-     *
-     * @param payment Payment model object
-     */
-    public PaymentFormData(Payment payment) {
-        this.amount = payment.getAmount();
-        this.token = payment.getToken();
-        this.memberInstallmentToken = payment.getMemberInstallment().getToken();
-        this.memberToken = payment.getMemberInstallment().getMember().getToken();
-    }
-
-    /**
      * Server side validation method
      *
      * @return List<ValidationError>
@@ -55,7 +42,6 @@ public class PaymentFormData {
 
         if (memberInstallmentToken == null) {
             errors.add(new ValidationError("memberInstallmentToken", Messages.get("payment.form.validation.memberInstallmentToken")));
-        } else {
         }
 
         if (amount == null || amount == 0) {
@@ -105,10 +91,6 @@ public class PaymentFormData {
 
     public void setMemberInstallmentToken(String memberInstallmentToken) {
         this.memberInstallmentToken = memberInstallmentToken;
-    }
-
-    public String getMemberToken() {
-        return memberToken;
     }
 
     public void setMemberToken(String memberToken) {

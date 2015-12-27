@@ -1,15 +1,14 @@
-package services.formData;
+package views.formData;
 
 import models.Member;
+import models.Periodicity;
+import models.SelectOptionItem;
 import models.Subscription;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
-import services.SubscriptionService;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Class that handles Members form submission and validation and relates submitted data to the model
@@ -23,14 +22,11 @@ public class SubscriptionFormData {
     protected Double amount;
     protected String periodicity;
     protected Date dueDatePeriod;
-//    protected Date endDate;
     protected String token;
     protected List<String> members = new ArrayList<>();
     protected Integer mode;
 
     protected Subscription subscription = new Subscription();
-    protected SubscriptionService subscriptionService = new SubscriptionService();
-
 
     /**
      * Creates a new SubscriptionFormData instance for subscription create action
@@ -53,11 +49,8 @@ public class SubscriptionFormData {
         this.amount = subscription.getAmount();
         this.periodicity = subscription.getPeriodicity();
         this.dueDatePeriod = subscription.getDueDatePeriod();
-//        this.endDate = subscription.getEndDate();
         this.token = subscription.getToken();
-        for (Member member : subscription.getMembers()) {
-            this.members.add(member.toString());
-        }
+        this.members.addAll(subscription.getMembers().stream().map(Member::toString).collect(Collectors.toList()));
     }
 
     /**
@@ -72,12 +65,9 @@ public class SubscriptionFormData {
         Calendar dueDatePeriodCal = Calendar.getInstance();
         dueDatePeriodCal.setTime(dueDatePeriod);
 
-//        Calendar endDateCal = Calendar.getInstance();
-//        endDateCal.setTime(endDate);
-
         Calendar today = Calendar.getInstance();
 
-        if (title == null) {
+        if (title == null || title.length() == 0) {
             errors.add(new ValidationError("title", Messages.get("subscription.form.validation.title")));
         }
 
@@ -85,7 +75,7 @@ public class SubscriptionFormData {
             errors.add(new ValidationError("amount", Messages.get("subscription.form.validation.amount")));
         }
 
-        if (periodicity == null) {
+        if (periodicity == null || periodicity.length() == 0) {
             errors.add(new ValidationError("periodicity", Messages.get("subscription.form.validation.periodicity")));
         }
 
@@ -95,18 +85,47 @@ public class SubscriptionFormData {
             if (dueDatePeriodCal.before(today)) {
                 errors.add(new ValidationError("dueDatePeriod", Messages.get("subscription.form.validation.dueDatePeriod.before")));
             }
-
         }
-//
-//        if (endDateCal.before(today) || endDateCal.before(dueDatePeriod)) {
-//            errors.add(new ValidationError("endDate", Messages.get("subscription.form.validation.endDate.before")));
-//        }
 
         if (errors.size() > 0)
 
             return errors;
 
         return null;
+    }
+
+    /**
+     * Generates a list of available subscriptions to subscribe the member to and to use as a pull down menu
+     *
+     * @param memberFormData Member form data to define selected select menu items
+     * @return Map
+     */
+    public Map<SelectOptionItem, Boolean> makeSubscriptionMap(MemberFormData memberFormData) {
+        Subscription subscription = new Subscription();
+        List<Subscription> allSubscriptions = subscription.getList();
+        Map<SelectOptionItem, Boolean> subscriptionMap = new HashMap<>();
+        for (Subscription subscriptionItem : allSubscriptions) {
+            SelectOptionItem selectOptionItem = new SelectOptionItem(subscriptionItem.toString(), subscriptionItem.getToken());
+            subscriptionMap.put(selectOptionItem, (memberFormData != null && memberFormData.getSubscriptions().contains(subscriptionItem.getToken())));
+        }
+
+        return subscriptionMap;
+    }
+
+    /**
+     * Creates a list of available subscription periods to use as a pull down menu options
+     *
+     * @param subscriptionFormData Subscription data used to define selected items on menu
+     * @return Map
+     */
+    public Map<SelectOptionItem, Boolean> makePeriodicityMap(SubscriptionFormData subscriptionFormData) {
+        EnumSet<Periodicity> periods = EnumSet.allOf(Periodicity.class);
+        Map<SelectOptionItem, Boolean> periodicityMap = new HashMap<>();
+        for (Periodicity period : periods) {
+            SelectOptionItem selectOptionItem = new SelectOptionItem(period.toString(), period.name());
+            periodicityMap.put(selectOptionItem, subscriptionFormData != null && ((subscriptionFormData.getPeriodicity() != null) && subscriptionFormData.getPeriodicity().equals(period.name())));
+        }
+        return periodicityMap;
     }
 
     public Long getId() {
@@ -165,20 +184,20 @@ public class SubscriptionFormData {
         this.dueDatePeriod = dueDatePeriod;
     }
 
-//    public Date getEndDate() {
-//        return endDate;
-//    }
-//
-//    public void setEndDate(Date endDate) {
-//        this.endDate = endDate;
-//    }
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<String> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<String> members) {
+        this.members = members;
     }
 
     public Integer getMode() {
@@ -189,11 +208,11 @@ public class SubscriptionFormData {
         this.mode = mode;
     }
 
-    public List<String> getMembers() {
-        return members;
+    public Subscription getSubscription() {
+        return subscription;
     }
 
-    public void setMembers(List<String> members) {
-        this.members = members;
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
     }
 }

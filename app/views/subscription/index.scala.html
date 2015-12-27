@@ -8,7 +8,6 @@
     @import views.html.common.templates.main;
     @import views.common.helpers.TemplateHelpers
 
-
     @main(title) {
 
         <div class="box">
@@ -40,32 +39,34 @@
 
                             <td>
                                 <div class="toolbar">
-                                    @if(subscription.getMembers.isEmpty){
-                                    <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-subscription-modal-@subscription.getToken"></button>
+                                    @if(subscription.getMembers.isEmpty) {
+                                        <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-subscription-modal-@subscription.getToken"></button>
                                     }
                                 <a href="@routes.SubscriptionController.edit(subscription.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
                                 <a href="@routes.SubscriptionController.show(subscription.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
                                 </div>
-                                @if(subscription.getMembers.isEmpty){
-                                <div class="modal modal-danger remove-subscription-modal-@subscription.getToken">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span></button>
-                                            <h4 class="modal-title">Irreversible Subscription Deletion</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Do you really wish to remove <strong>@subscription.toString</strong>
-                                                and all its installement information?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                                            <a role="button" href="@routes.SubscriptionController.remove(subscription.getToken)" class="btn btn-outline">Delete subscription</a>
+                                @if(subscription.getMembers.isEmpty) {
+                                    <div class="modal modal-danger remove-subscription-modal-@subscription.getToken">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title">Irreversible Subscription Deletion</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really wish to remove <strong>@subscription.toString</strong>
+                                                        and all its installement information?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">
+                                                        Close</button>
+                                                    <a role="button" href="@routes.SubscriptionController.remove(subscription.getToken)" class="btn btn-outline">
+                                                        Delete subscription</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
                                 }
                             </td>
                         </tr>

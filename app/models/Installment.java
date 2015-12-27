@@ -1,30 +1,33 @@
 package models;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
-import javax.persistence.*;
-
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.*;
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.Constraints;
 import services.MD5;
 import services.MoneyFormat;
 
+import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * Model class for installment entity
+ */
 @Entity
 @Table(name = "installment")
 public class Installment extends Model {
 
     @Id
-    private Long id;
+    protected Long id;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
-    public Date dueDate = new Date();
+    protected Date dueDate = new Date();
 
     @Constraints.Required
     @Column(columnDefinition = "Decimal(10,2) default '0.00'")
-    public Double amount;
+    protected Double amount;
 
     @Constraints.Required
     @Column(unique = true)
@@ -32,26 +35,38 @@ public class Installment extends Model {
 
     @CreatedTimestamp
     @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
-    public Date created_at = new Date();
+    protected Date created_at = new Date();
 
     @UpdatedTimestamp
     @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
-    public Date updated_at = new Date();
+    protected Date updated_at = new Date();
 
     @OneToMany(mappedBy = "installment", cascade = CascadeType.ALL)
-    public List<Payment> payments = new ArrayList<Payment>();
+    protected List<Payment> payments = new ArrayList<>();
 
     @OneToMany(mappedBy = "installment", cascade = CascadeType.ALL)
-    public List<MemberInstallment> memberInstallments = new ArrayList<MemberInstallment>();
+    protected List<MemberInstallment> memberInstallments = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
-    public Subscription subscription;
+    protected Subscription subscription;
 
+    /**
+     * Constructs an installment from a given subscription
+     *
+     * @param subscription Subscription object to create the installment from
+     */
     public Installment(Subscription subscription) {
         this.setSubscription(subscription);
         this.setToken(generateToken());
     }
 
+    /**
+     * Constructs an installmente from a given subscription, amount and due date
+     *
+     * @param dueDate      Date the installemnt is due
+     * @param amount       Amount due
+     * @param subscription Subscription object to create the installment from
+     */
     public Installment(Date dueDate, Double amount, Subscription subscription) {
         this.setDueDate(dueDate);
         this.setAmount(amount);
@@ -63,19 +78,18 @@ public class Installment extends Model {
      * Saves current object into persistence database
      */
     public void save() {
-
         Ebean.save(this);
     }
 
     /**
-     * Gets Installment object from hash token
+     * Gets Installment object by specific key/value pair
      *
-     * @param token Unique Installment identifier hash
+     * @param key   Field to search in
+     * @param value Value to search for
      * @return Installment
      */
-    public Installment getInstallmentByToken(String token) {
-
-        return Ebean.find(Installment.class).where().eq("token", token).findUnique();
+    public Installment get(String key, String value) {
+        return Ebean.find(Installment.class).where().eq(key, value).findUnique();
     }
 
     /**
@@ -85,12 +99,12 @@ public class Installment extends Model {
      * @return boolean
      */
     public boolean remove(String token) {
-
-        Installment installment = getInstallmentByToken(token);
+        Installment installment = get("token", token);
         if (installment != null) {
             Ebean.delete(installment);
             return true;
         }
+
         return false;
     }
 
@@ -100,28 +114,31 @@ public class Installment extends Model {
      * @return String
      */
     public String generateToken() {
-
         return MD5.getMD5((new Date()).toString());
     }
 
     /**
-     * Create admin user string
+     * Returns a string with formatted due date for printing purposes
      *
      * @return String
      */
-    public String toString() {
-        return this.getSubscription().toString() + " - " + getFormattedDueDate() + " (" + getFormattedAmount() + ")";
-    }
-
     public String getFormattedDueDate() {
         SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-        String formatted = format1.format(this.getDueDate().getTime());
 
-        return formatted;
+        return format1.format(this.getDueDate().getTime());
     }
 
+    /**
+     * Returns a string with formatted amount due for printing purposes
+     *
+     * @return String
+     */
     public String getFormattedAmount() {
         return MoneyFormat.setMoney(getAmount());
+    }
+
+    public String toString() {
+        return this.getSubscription().toString() + " - " + getFormattedDueDate() + " (" + getFormattedAmount() + ")";
     }
 
     public Long getId() {
@@ -156,43 +173,15 @@ public class Installment extends Model {
         this.token = token;
     }
 
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
-    }
-
-    public List<MemberInstallment> getMemberInstallments() {
-        return memberInstallments;
-    }
-
-    public void setMemberInstallments(List<MemberInstallment> memberInstallments) {
-        this.memberInstallments = memberInstallments;
-    }
-
     public Subscription getSubscription() {
         return subscription;
     }
 
     public void setSubscription(Subscription subscription) {
         this.subscription = subscription;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
     }
 }

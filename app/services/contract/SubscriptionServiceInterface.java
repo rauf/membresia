@@ -2,14 +2,13 @@ package services.contract;
 
 import models.Subscription;
 import play.data.Form;
-import services.formData.SubscriptionFormData;
+import views.formData.SubscriptionFormData;
 import services.Pager;
 
-import java.util.Date;
 import java.util.List;
 
 /**
- * Middleware interface class for controller model interaction and other subscription related business logic
+ * Service interface class for controller model interaction and other subscription related business logic
  */
 public interface SubscriptionServiceInterface {
 
@@ -29,7 +28,6 @@ public interface SubscriptionServiceInterface {
      */
     Form<SubscriptionFormData> setFormData(SubscriptionFormData subscriptionData);
 
-
     /**
      * Gets subscription paginated list from DB
      *
@@ -37,6 +35,13 @@ public interface SubscriptionServiceInterface {
      * @return List
      */
     List<Subscription> getSubscriptionList(Pager pager);
+
+    /**
+     * Get a raw list of all subscriptions available
+     *
+     * @return List
+     */
+    List<Subscription> getActiveSubscriptions();
 
     /**
      * Get a specific subscription by token
@@ -61,7 +66,4 @@ public interface SubscriptionServiceInterface {
      * @return boolean
      */
     boolean remove(String token);
-
-    Date getLastInstallmentDueDate(Subscription subscription);
-
 }

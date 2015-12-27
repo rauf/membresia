@@ -1,4 +1,4 @@
-package services.formData;
+package views.formData;
 
 import models.AdminUser;
 import play.data.validation.ValidationError;
@@ -22,7 +22,6 @@ public class AdminUserFormData {
     protected Integer mode;
 
     protected AdminUser adminUser = new AdminUser();
-
     protected AdminUserService adminUserService = new AdminUserService();
 
     /**

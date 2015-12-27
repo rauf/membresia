@@ -4,20 +4,20 @@
 # --- !Ups
 
 create table installment (
-  id                        bigserial not null,
-  due_date                  timestamp,
+  id                        bigint auto_increment not null,
+  due_date                  datetime(6),
   amount                    Decimal(10,2) default '0.00',
   token                     varchar(255),
   subscription_id           bigint,
-  created_at                timestamp not null,
-  updated_at                timestamp not null,
+  created_at                datetime(6) not null,
+  updated_at                datetime(6) not null,
   constraint uq_installment_token unique (token),
   constraint pk_installment primary key (id))
 ;
 
 create table member_installment (
-  id                        bigserial not null,
-  is_paid                   boolean,
+  id                        bigint auto_increment not null,
+  is_paid                   tinyint(1) default 0,
   token                     varchar(255),
   member_id                 bigint,
   installment_id            bigint,
@@ -26,54 +26,53 @@ create table member_installment (
 ;
 
 create table messageTemplate (
-  id                        bigserial not null,
+  id                        bigint auto_increment not null,
   title                     varchar(255),
   body                      TEXT,
   token                     varchar(255),
-  created_at                timestamp not null,
-  updated_at                timestamp not null,
+  created_at                datetime(6) not null,
+  updated_at                datetime(6) not null,
   constraint uq_messageTemplate_token unique (token),
   constraint pk_messageTemplate primary key (id))
 ;
 
 create table payment (
-  id                        bigserial not null,
-  amount                    float,
+  id                        bigint auto_increment not null,
+  amount                    double,
   token                     varchar(255),
   status                    integer,
   installment_id            bigint,
   member_installment_id     bigint,
-  created_at                timestamp not null,
+  created_at                datetime(6) not null,
   constraint uq_payment_token unique (token),
   constraint pk_payment primary key (id))
 ;
 
-create table subscrition (
-  id                        bigserial not null,
+create table subscription (
+  id                        bigint auto_increment not null,
   subscription_id           varchar(255),
   title                     varchar(255),
-  description               varchar(255),
+  description               TEXT,
   amount                    Decimal(10,2) default '0.00',
   periodicity               varchar(255),
   token                     varchar(255),
-  due_date_period           timestamp,
-  is_paid                   boolean,
-  created_at                timestamp not null,
-  updated_at                timestamp not null,
-  constraint uq_subscrition_subscription_id unique (subscription_id),
-  constraint pk_subscrition primary key (id))
+  due_date_period           datetime(6),
+  created_at                datetime(6) not null,
+  updated_at                datetime(6) not null,
+  constraint uq_subscription_subscription_id unique (subscription_id),
+  constraint pk_subscription primary key (id))
 ;
 
 create table userPerson (
   user_type                 varchar(31) not null,
-  id                        bigserial not null,
+  id                        bigint auto_increment not null,
   email                     varchar(255),
   password                  varchar(255),
   name                      varchar(255),
   last_name                 varchar(255),
   token                     varchar(255),
-  created_at                timestamp not null,
-  updated_at                timestamp not null,
+  created_at                datetime(6) not null,
+  updated_at                datetime(6) not null,
   member_id                 varchar(255),
   address                   varchar(255),
   cp                        varchar(255),
@@ -89,41 +88,45 @@ create table userPerson (
 ;
 
 
-create table userPerson_subscrition (
+create table userPerson_subscription (
   userPerson_id                  bigint not null,
-  subscrition_id                 bigint not null,
-  constraint pk_userPerson_subscrition primary key (userPerson_id, subscrition_id))
+  subscription_id                bigint not null,
+  constraint pk_userPerson_subscription primary key (userPerson_id, subscription_id))
 ;
-alter table installment add constraint fk_installment_subscription_1 foreign key (subscription_id) references subscrition (id);
+alter table installment add constraint fk_installment_subscription_1 foreign key (subscription_id) references subscription (id) on delete restrict on update restrict;
 create index ix_installment_subscription_1 on installment (subscription_id);
-alter table member_installment add constraint fk_member_installment_member_2 foreign key (member_id) references userPerson (id);
+alter table member_installment add constraint fk_member_installment_member_2 foreign key (member_id) references userPerson (id) on delete restrict on update restrict;
 create index ix_member_installment_member_2 on member_installment (member_id);
-alter table member_installment add constraint fk_member_installment_installm_3 foreign key (installment_id) references installment (id);
-create index ix_member_installment_installm_3 on member_installment (installment_id);
-alter table payment add constraint fk_payment_installment_4 foreign key (installment_id) references installment (id);
+alter table member_installment add constraint fk_member_installment_installment_3 foreign key (installment_id) references installment (id) on delete restrict on update restrict;
+create index ix_member_installment_installment_3 on member_installment (installment_id);
+alter table payment add constraint fk_payment_installment_4 foreign key (installment_id) references installment (id) on delete restrict on update restrict;
 create index ix_payment_installment_4 on payment (installment_id);
-alter table payment add constraint fk_payment_memberInstallment_5 foreign key (member_installment_id) references member_installment (id);
+alter table payment add constraint fk_payment_memberInstallment_5 foreign key (member_installment_id) references member_installment (id) on delete restrict on update restrict;
 create index ix_payment_memberInstallment_5 on payment (member_installment_id);
 
 
 
-alter table userPerson_subscrition add constraint fk_userPerson_subscrition_use_01 foreign key (userPerson_id) references userPerson (id);
+alter table userPerson_subscription add constraint fk_userPerson_subscription_userPerson_01 foreign key (userPerson_id) references userPerson (id) on delete restrict on update restrict;
 
-alter table userPerson_subscrition add constraint fk_userPerson_subscrition_sub_02 foreign key (subscrition_id) references subscrition (id);
+alter table userPerson_subscription add constraint fk_userPerson_subscription_subscription_02 foreign key (subscription_id) references subscription (id) on delete restrict on update restrict;
 
 # --- !Downs
 
-drop table if exists installment cascade;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists member_installment cascade;
+drop table installment;
 
-drop table if exists messageTemplate cascade;
+drop table member_installment;
 
-drop table if exists payment cascade;
+drop table messageTemplate;
 
-drop table if exists subscrition cascade;
+drop table payment;
 
-drop table if exists userPerson_subscrition cascade;
+drop table subscription;
 
-drop table if exists userPerson cascade;
+drop table userPerson_subscription;
+
+drop table userPerson;
+
+SET FOREIGN_KEY_CHECKS=1;
 

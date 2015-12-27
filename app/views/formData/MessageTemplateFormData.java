@@ -1,9 +1,8 @@
-package services.formData;
+package views.formData;
 
 import models.MessageTemplate;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
-import services.MessageTemplateService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,6 @@ public class MessageTemplateFormData {
     protected Integer mode;
 
     protected MessageTemplate messageTemplate = new MessageTemplate();
-    protected MessageTemplateService messageTemplateService = new MessageTemplateService();
-
 
     /**
      * Creates a new MessageTemplateFormData instance for member create action

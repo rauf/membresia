@@ -1,21 +1,23 @@
-package services.formData;
+package views.formData;
 
 import models.User;
-import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import services.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Class for processing the user login form
+ */
 public class LoginFormData {
 
     public String email;
     public String password;
-    public boolean isLoggedIn = false;
 
+    /**
+     * Checks if a specific user and password combination ir correct
+     *
+     * @return String|null
+     */
     public String validate() {
-
         UserService userService = new UserService();
         User user = userService.authenticate(email, password);
         if (user == null) {

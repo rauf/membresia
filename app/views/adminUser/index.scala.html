@@ -3,84 +3,85 @@
 
 @(title: String, adminUsers: util.List[models.AdminUser], pager: Pager)
 
-@import play.i18n.Messages;
-@import views.html.common.parts._;
-@import views.html.common.templates.main;
-@import views.common.helpers.TemplateHelpers
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
+    @import views.common.helpers.TemplateHelpers
 
-@main(title) {
+    @main(title) {
 
-    <div class="box">
-        <div class="box-header with-border">
-            @notification()
-            <a href="@routes.AdminUserController.create()" class="btn btn-primary pull-right" role="button">@Messages.get("adminUser.form.global.new.title")</a>
-        </div>
-        <div class="box-body">
-            @if(!adminUsers.isEmpty) {
-                <table class="table table-bordered">
-                    <tr>
-                        <th>@Messages.get("adminUser.list.table.name")</th>
-                        <th>@Messages.get("adminUser.list.table.email")</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    @for( adminUser <- adminUsers) {
+        <div class="box">
+            <div class="box-header with-border">
+                @notification()
+                <a href="@routes.AdminUserController.create()" class="btn btn-primary pull-right" role="button">@Messages.get("adminUser.form.global.new.title")</a>
+            </div>
+            <div class="box-body">
+                @if(!adminUsers.isEmpty) {
+                    <table class="table table-bordered">
                         <tr>
-                            <td class="item-title">@adminUser.getLastName, @adminUser.getName</td>
-                            <td class="item-info">@adminUser.getEmail</td>
-                            <td>
-                                <div class="toolbar">
-                                    <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-adminUser-modal-@adminUser.getToken"></button>
-                                    <a href="@routes.MailMessageController.sendMailForm(adminUser.getToken)" role="button" class="btn btn-primary fa fa-envelope-o"></a>
-                                    <a href="@routes.AdminUserController.edit(adminUser.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
-                                    <a href="@routes.AdminUserController.show(adminUser.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
-                                </div>
-                                <div class="modal modal-danger remove-adminUser-modal-@adminUser.getToken">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span></button>
-                                                <h4 class="modal-title">Irreversible Admin User Deletion</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Do you really wish to remove <strong>@adminUser.getName @adminUser.getLastName</strong>
-                                                    ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                                                <a role="button" href="@routes.AdminUserController.remove(adminUser.getToken)" class="btn btn-outline">Delete user</a>
+                            <th>@Messages.get("adminUser.list.table.name")</th>
+                            <th>@Messages.get("adminUser.list.table.email")</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        @for( adminUser <- adminUsers) {
+                            <tr>
+                                <td class="item-title">@adminUser.getLastName, @adminUser.getName</td>
+                                <td class="item-info">@adminUser.getEmail</td>
+                                <td>
+                                    <div class="toolbar">
+                                        <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-adminUser-modal-@adminUser.getToken"></button>
+                                        <a href="@routes.MailMessageController.sendMailForm(adminUser.getToken)" role="button" class="btn btn-primary fa fa-envelope-o"></a>
+                                        <a href="@routes.AdminUserController.edit(adminUser.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
+                                        <a href="@routes.AdminUserController.show(adminUser.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
+                                    </div>
+                                    <div class="modal modal-danger remove-adminUser-modal-@adminUser.getToken">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title">Irreversible Admin User Deletion</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really wish to remove <strong>@adminUser.getName @adminUser.getLastName</strong>
+                                                        ?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                                                    <a role="button" href="@routes.AdminUserController.remove(adminUser.getToken)" class="btn btn-outline">Delete user</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            } else {
-                <div class="callout callout-info">
-                    <h4>@Messages.get("adminUser.list.empty.title")</h4>
-                    <p>@Messages.get("adminUser.list.empty.text") <a href="@routes.AdminUserController.create()">@Messages.get("adminUser.list.empty.link")</a></p>
-                </div>
-            }
-            <div class="box-footer clearfix">
-            @if(!adminUsers.isEmpty) {
-                @if(pager.getTotalPages > 1) {
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        @if(pager.getCurrentPage > 1) {
-                            <li><a href="@routes.AdminUserController.index(pager.getCurrentPage - 1)">&laquo;</a></li>
+                                </td>
+                            </tr>
                         }
-                        @for( index <- TemplateHelpers.createRange(pager.getCurrentPage, pager.getPageSize, pager.getTotalPages)) {
-                            <li @if(pager.getCurrentPage == index){class='active'}><a href="@routes.AdminUserController.index(index)">@index</a></li>
-                        }
-                        @if(pager.getCurrentPage < pager.getTotalPages) {
-                            <li><a href="@routes.AdminUserController.index(pager.getCurrentPage + 1)">&raquo;</a></li>
-                        }
-                    </ul>
+                    </table>
+                } else {
+                    <div class="callout callout-info">
+                        <h4>@Messages.get("adminUser.list.empty.title")</h4>
+                        <p>@Messages.get("adminUser.list.empty.text") <a href="@routes.AdminUserController.create()">@Messages.get("adminUser.list.empty.link")</a></p>
+                    </div>
                 }
-            }
+                <div class="box-footer clearfix">
+                @if(!adminUsers.isEmpty) {
+                    @if(pager.getTotalPages > 1) {
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            @if(pager.getCurrentPage > 1) {
+                                <li><a href="@routes.AdminUserController.index(pager.getCurrentPage - 1)">&laquo;</a></li>
+                            }
+                            @for( index <- TemplateHelpers.createRange(pager.getCurrentPage, pager.getPageSize, pager.getTotalPages)) {
+                                <li @if(pager.getCurrentPage == index) {
+                                    class='active'}><a href="@routes.AdminUserController.index(index)">@index</a></li>
+                            }
+                            @if(pager.getCurrentPage < pager.getTotalPages) {
+                                <li><a href="@routes.AdminUserController.index(pager.getCurrentPage + 1)">&raquo;</a></li>
+                            }
+                        </ul>
+                    }
+                }
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 

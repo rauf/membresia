@@ -1,11 +1,11 @@
 @(subject: String, member: Member)
 
-@import play.i18n._;
-@import views.html.common.templates.mailTemplate;
+    @import play.i18n._;
+    @import views.html.common.templates.mailTemplate;
 
-@mailTemplate(subject: String) {
-    <h1>@Messages.get("member.mail.body.line1")</h1>
-    <p>@Messages.get("member.mail.body.line2")</p>
-    <p>@Messages.get("member.mail.body.line3")</p>
-    <p>@Messages.get("member.mail.body.line4")</p>
-}
+    @mailTemplate(subject: String) {
+        <h1>@Messages.get("member.mail.body.line1")</h1>
+        <p>@Messages.get("member.mail.body.line2")</p>
+        <p>@Messages.get("member.mail.body.line3")</p>
+        <p>@Messages.get("member.mail.body.line4")</p>
+    }

@@ -1,4 +1,4 @@
-package services.formData;
+package views.formData;
 
 import models.MailMessage;
 import models.User;
@@ -7,6 +7,7 @@ import play.i18n.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class that handles Members form submission and validation and relates submitted data to the model
@@ -15,7 +16,6 @@ public class MailMessageFormData {
 
     protected String subject;
     protected String body;
-    protected String referrer;
     protected List<String> recipients = new ArrayList<>();
 
     protected MailMessage mailMessage = new MailMessage();
@@ -25,7 +25,6 @@ public class MailMessageFormData {
      */
     public MailMessageFormData() {
 
-        super();
     }
 
     /**
@@ -36,10 +35,7 @@ public class MailMessageFormData {
     public MailMessageFormData(MailMessage mailMessage) {
         this.subject = mailMessage.getSubject();
         this.body = mailMessage.getBody();
-        this.referrer = mailMessage.getReferrer();
-        for (User recipient : mailMessage.getRecipients()) {
-            this.recipients.add(recipient.getToken());
-        }
+        this.recipients.addAll(mailMessage.getRecipients().stream().map(User::getToken).collect(Collectors.toList()));
     }
 
     /**
@@ -90,23 +86,8 @@ public class MailMessageFormData {
         this.body = body;
     }
 
-    public String getReferrer() {
-
-        return referrer;
-    }
-
-    public void setReferrer(String referrer) {
-
-        this.referrer = referrer;
-    }
-
     public List<String> getRecipients() {
 
         return recipients;
-    }
-
-    public void setRecipients(List<String> recipients) {
-
-        this.recipients = recipients;
     }
 }

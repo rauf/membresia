@@ -33,7 +33,7 @@
         @field.value.getOrElse("")
         </textarea>
         <p class="help-block">@help</p>
-        @if(!field.error.isEmpty) {
+        @if(field.error.isDefined) {
             <span class="error-block fa fa-info-circle text-red">@{
                 field.error.map { error => error.message }
             }</span>

@@ -2,22 +2,27 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
+import play.Logger;
 import play.data.validation.Constraints;
 import services.MD5;
 import services.MemberInstallmentService;
 import services.MoneyFormat;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Model class for MemberInstallment entity
+ */
 @Entity
 @Table(name = "member_installment")
 public class MemberInstallment extends Model {
 
     @Id
-    private Long id;
+    protected Long id;
 
     protected Boolean isPaid = false;
 
@@ -26,19 +31,30 @@ public class MemberInstallment extends Model {
     protected String token;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    public Member member;
+    protected Member member;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    public Installment installment;
+    protected Installment installment;
 
     @OneToMany(mappedBy = "memberInstallment", cascade = CascadeType.ALL)
-    public List<Payment> payments = new ArrayList<Payment>();
+    protected List<Payment> payments = new ArrayList<>();
 
+    private MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
+
+    /**
+     * Standard constructor
+     */
     public MemberInstallment() {
-        super();
         this.setToken(generateToken());
     }
 
+    /**
+     * Gets MemberInstallment object by specific key/value pair
+     *
+     * @param key   Field to search in
+     * @param value Value to search for
+     * @return Installment
+     */
     public MemberInstallment get(String key, String value) {
         return Ebean.find(MemberInstallment.class).where().eq(key, value).findUnique();
     }
@@ -47,17 +63,24 @@ public class MemberInstallment extends Model {
      * Saves current object into persistence database
      */
     public void save() {
-
         Ebean.save(this);
     }
 
+    /**
+     * Sets current member's installment as paid
+     */
     public void setAsPaid() {
         this.setPaid(true);
         this.save();
     }
 
+    /**
+     * Removes member installment from DB
+     *
+     * @param token Unique member installment token
+     * @return boolean
+     */
     public boolean remove(String token) {
-
         MemberInstallment memberInstallment = Ebean.find(MemberInstallment.class).where().eq("token", token).findUnique();
         if (memberInstallment != null) {
             Ebean.delete(memberInstallment);
@@ -68,19 +91,15 @@ public class MemberInstallment extends Model {
     }
 
     /**
-     * Generates unique member  token
+     * Generates unique member installment token
      *
      * @return String
      */
     public String generateToken() {
-
         return MD5.getMD5((new Date()).toString());
     }
 
-
-
     public String toString() {
-        MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
         String amountDue = MoneyFormat.setMoney(memberInstallmentService.getAmountDue(getToken()));
         return this.getInstallment().getSubscription().toString() + " - " + getInstallment().getFormattedDueDate() + " (" + amountDue + ")";
     }
@@ -120,10 +139,6 @@ public class MemberInstallment extends Model {
 
     public List<Payment> getPayments() {
         return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
     }
 
     public String getToken() {
