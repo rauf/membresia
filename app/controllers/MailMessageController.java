@@ -7,10 +7,10 @@ import play.mvc.*;
 
 import models.MailMessage;
 import models.SelectOptionItem;
-import services.formData.MailMessageFormData;
+import views.formData.MailMessageFormData;
 import services.MailMessageService;
 import services.UserService;
-import services.formData.UserFormData;
+import views.formData.UserFormData;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -45,7 +45,6 @@ public class MailMessageController extends Controller {
         messageData = new MailMessageFormData();
         messageData = messageService.setMessageData();
         formData = messageService.setFormData(messageData);
-        messageData.setReferrer(request().getHeader("referer"));
         messageService.addRecipient(messageData, token);
         Map<SelectOptionItem, Boolean> userMap = userFormData.makeUserMap(messageData);
 
@@ -62,7 +61,6 @@ public class MailMessageController extends Controller {
         messageData = new MailMessageFormData();
         messageData = messageService.setMessageData();
         formData = messageService.setFormData(messageData);
-        messageData.setReferrer(request().getHeader("referer"));
         messageService.addRecipient(messageData, token);
         messageService.setMessageFromMessageTemplate(messageData, token);
         Map<SelectOptionItem, Boolean> userMap = userFormData.makeUserMap(messageData);
@@ -87,8 +85,8 @@ public class MailMessageController extends Controller {
 
         MailMessage mailMessage = messageService.setMessageInstance(formData);
         messageService.sendMessage(mailer, mailMessage);
-        flash("success", Messages.get("mailMessage.form.save.message.notification", mailMessage.toString()));
+        flash("success", Messages.get("mailMessage.form.save.message.notification.message", mailMessage.toString()));
 
-        return redirect(mailMessage.getReferrer());
+        return ok(views.html.mailMessage.confirm.render(Messages.get("mailMessage.form.save.message.notification")));
     }
 }

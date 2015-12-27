@@ -1,6 +1,5 @@
 package controllers;
 
-import play.api.libs.mailer.MailerClient;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -9,7 +8,7 @@ import play.mvc.With;
 
 import models.SelectOptionItem;
 import models.Subscription;
-import services.formData.SubscriptionFormData;
+import views.formData.SubscriptionFormData;
 import services.InstallmentService;
 import services.Pager;
 import services.SubscriptionService;

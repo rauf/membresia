@@ -1,4 +1,5 @@
-@import services.formData.LoginFormData
+@import views.formData.LoginFormData
+
 @(title: String, formData: play.data.Form[LoginFormData])
 
 @import play.i18n.Messages;
@@ -39,7 +40,7 @@
 
                 <div class="row">
                     <div class="col-md-offset-8 col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block btn-flat">
                         @Messages.get("login.form.submit.label")
                         </button>
                     </div>

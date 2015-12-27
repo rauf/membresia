@@ -5,7 +5,7 @@ import com.avaje.ebean.annotation.*;
 import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.*;
-import services.formData.PaymentFormData;
+import views.formData.PaymentFormData;
 import services.MemberInstallmentService;
 import services.MoneyFormat;
 
@@ -47,8 +47,7 @@ public class Payment extends Model {
     @ManyToOne(cascade = CascadeType.ALL)
     protected MemberInstallment memberInstallment;
 
-    @Inject
-    private MemberInstallmentService memberInstallmentService;
+    private MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
 
     /**
      * Generic constructor

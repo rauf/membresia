@@ -2,7 +2,7 @@ package services.contract;
 
 import models.Subscription;
 import play.data.Form;
-import services.formData.SubscriptionFormData;
+import views.formData.SubscriptionFormData;
 import services.Pager;
 
 import java.util.List;

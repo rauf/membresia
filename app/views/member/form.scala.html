@@ -1,5 +1,4 @@
-@import services.formData.MemberFormData
-
+@import views.formData.MemberFormData
 @(title: String, memberForm: play.data.Form[MemberFormData], subscriptions: Map[SelectOptionItem, Boolean])
 
     @import play.i18n.Messages;
@@ -53,7 +52,7 @@
                         </div>
 
                         <div class="col-md-5">
-                        @input(memberForm("Email"),
+                        @input(memberForm("email"),
                             label = Messages.get("member.form.label.email"),
                             placeholder = Messages.get("member.form.placeholder.email"),
                             help = Messages.get("member.form.helper.email"),

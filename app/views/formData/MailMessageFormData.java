@@ -1,4 +1,4 @@
-package services.formData;
+package views.formData;
 
 import models.MailMessage;
 import models.User;
@@ -16,7 +16,6 @@ public class MailMessageFormData {
 
     protected String subject;
     protected String body;
-    protected String referrer;
     protected List<String> recipients = new ArrayList<>();
 
     protected MailMessage mailMessage = new MailMessage();
@@ -36,7 +35,6 @@ public class MailMessageFormData {
     public MailMessageFormData(MailMessage mailMessage) {
         this.subject = mailMessage.getSubject();
         this.body = mailMessage.getBody();
-        this.referrer = mailMessage.getReferrer();
         this.recipients.addAll(mailMessage.getRecipients().stream().map(User::getToken).collect(Collectors.toList()));
     }
 
@@ -86,16 +84,6 @@ public class MailMessageFormData {
     public void setBody(String body) {
 
         this.body = body;
-    }
-
-    public String getReferrer() {
-
-        return referrer;
-    }
-
-    public void setReferrer(String referrer) {
-
-        this.referrer = referrer;
     }
 
     public List<String> getRecipients() {

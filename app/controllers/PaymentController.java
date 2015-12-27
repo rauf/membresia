@@ -13,8 +13,8 @@ import models.Member;
 import models.MemberInstallment;
 import models.Payment;
 import models.SelectOptionItem;
-import services.formData.MemberFormData;
-import services.formData.PaymentFormData;
+import views.formData.MemberFormData;
+import views.formData.PaymentFormData;
 import services.MemberService;
 import services.MemberInstallmentService;
 import services.MoneyFormat;
@@ -32,6 +32,9 @@ public class PaymentController extends Controller {
 
     @Inject
     private MemberInstallmentService memberInstallmentService;
+
+    @Inject
+    private PaymentService paymentService;
 
     private MemberFormData memberFormData = new MemberFormData();
 
@@ -88,9 +91,8 @@ public class PaymentController extends Controller {
         }
 
         flash("success", Messages.get("payment.form.save.message.notification"));
-        Payment payment = new Payment();
-        payment.setData(formData.get());
-        payment.save();
+        Payment payment = paymentService.save(formData);
+        paymentService.acceptPayment(payment.getToken());
         Integer page = 1;
 
         return redirect(routes.MemberController.index(page));
@@ -113,10 +115,7 @@ public class PaymentController extends Controller {
             return ok(views.html.payment.makePublicPayment.render(Messages.get("member.pay.global.title"), formData, memberInstallment, amountDue));
 
         }
-
-        Payment payment = new Payment();
-        payment.setData(formData.get());
-        payment.save();
+        Payment payment = paymentService.save(formData);
         Config conf = ConfigFactory.load();
         String business = conf.getString("paypal.business");
         String url = conf.getString("paypal.url");
@@ -131,7 +130,6 @@ public class PaymentController extends Controller {
      */
     public Result paymentComplete(String token) {
         boolean paymentStatus = true;
-        PaymentService paymentService = new PaymentService();
         paymentService.acceptPayment(token);
         return ok(views.html.payment.paymentComplete.render(Messages.get("paymentPublic.pay.complete.title"), paymentStatus));
     }

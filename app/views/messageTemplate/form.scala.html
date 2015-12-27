@@ -1,4 +1,5 @@
-@import services.formData.MessageTemplateFormData
+@import views.formData.MessageTemplateFormData
+@import views.formData.MessageTemplateFormData
 
 @(title: String, messageTemplateForm: play.data.Form[MessageTemplateFormData])
 
@@ -33,7 +34,8 @@
                         @texteditor(messageTemplateForm("body"),
                             label = Messages.get("messageTemplate.form.label.body"),
                             placeholder = Messages.get("messageTemplate.form.placeholder.body"),
-                            help = Messages.get("messageTemplate.form.helper.body")
+                            help = Messages.get("messageTemplate.form.helper.body"),
+                            required = true
                         )
                         </div>
 

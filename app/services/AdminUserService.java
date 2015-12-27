@@ -8,7 +8,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import services.contract.AdminUserServiceInterface;
-import services.formData.AdminUserFormData;
+import views.formData.AdminUserFormData;
 
 import java.util.List;
 

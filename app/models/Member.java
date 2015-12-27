@@ -2,12 +2,10 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import play.data.validation.*;
-import services.UserService;
-import services.formData.MemberFormData;
+import views.formData.MemberFormData;
 import services.Pager;
 
 import java.util.*;
-import javax.inject.Inject;
 import javax.persistence.*;
 
 /**
@@ -47,7 +45,7 @@ public class Member extends User {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     protected List<MemberInstallment> memberInstallments = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.ALL})
     protected List<Subscription> subscriptions = new ArrayList<>();
 
     /**
@@ -137,7 +135,7 @@ public class Member extends User {
      *
      * @param subscription Subscription to add
      */
-    private void addSubscription(Subscription subscription) {
+    public void addSubscription(Subscription subscription) {
         this.subscriptions.add(subscription);
     }
 

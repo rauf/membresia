@@ -1,6 +1,6 @@
 @import java.util
 
-@import services.formData.SubscriptionFormData
+@import views.formData.SubscriptionFormData
 @(title: String, subscriptionForm: play.data.Form[SubscriptionFormData], periodicityMap: util.Map[SelectOptionItem, Boolean])
 
     @import play.i18n.Messages;
@@ -30,7 +30,7 @@
                                     help = Messages.get("subscription.form.helper.title"),
                                     error = Messages.get("subscription.form.validation.title"),
 
-                                    required = true
+                                    required = false
                                 )
                                 </div>
                                 <div class="col-md-12">
@@ -72,7 +72,7 @@
                                     help = Messages.get("subscription.form.helper.dueDatePeriod"),
                                     error = Messages.get("subscription.form.validation.dueDatePeriod"),
                                     required = true,
-                                    disabled = if(subscriptionForm.get().getMode == 1) {
+                                    disabled = if(subscriptionForm("mode").value.equals(1.toString)) {
                                         true
                                     } else {
                                         false
@@ -82,7 +82,7 @@
 
 
                             </div>
-                            @if(subscriptionForm.get().getMode == 1) {
+                            @if(subscriptionForm("mode").value().equals(1.toString)) {
 
                                 <p class="text-red">@Messages.get("subscription.form.edit.note")</p>
                             }
@@ -96,7 +96,7 @@
                 @hidden(subscriptionForm("token"))
                 @hidden(subscriptionForm("subscriptionId"))
                 @hidden(subscriptionForm("mode"))
-                @if(subscriptionForm.get().getMode == 1) {
+                @if(subscriptionForm("mode").value.equals(1.toString)) {
                     @hidden(subscriptionForm("dueDatePeriod"))
                 }
             </div>

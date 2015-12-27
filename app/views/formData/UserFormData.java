@@ -1,7 +1,8 @@
-package services.formData;
+package views.formData;
 
 import models.SelectOptionItem;
 import models.User;
+import views.formData.MailMessageFormData;
 
 import java.util.HashMap;
 import java.util.List;

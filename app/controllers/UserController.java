@@ -6,9 +6,9 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import models.User;
-import services.formData.LoginFormData;
+import views.formData.LoginFormData;
 import services.UserService;
-import services.formData.PasswordRecoveryFormData;
+import views.formData.PasswordRecoveryFormData;
 
 import javax.inject.Inject;
 

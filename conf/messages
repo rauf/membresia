@@ -26,6 +26,7 @@ app.menu.messageTemplate.list = List all message templates
 app.menu.messageTemplate.create = Create a message template
 
 
+
 ##### Global form #####
 app.global.validation.message = Please correct errors above.
 app.global.form.submit = Save
@@ -117,7 +118,7 @@ member.form.remove.message.error = The selected member could not me removed.
 
 member.mail.subject.newAccount = new account information
 member.mail.body.line1 = Hi there.
-member.mail.body.line2 = You have been register as a member at Membresia.
+member.mail.body.line2 = You have been registered as a member at Membresia.
 member.mail.body.line3 = You will be receiving periodical mails with instructions on how to make your installment payments online.
 member.mail.body.line4 = Thanks, have a lovely day.
 
@@ -179,10 +180,10 @@ adminUser.form.remove.message.error = The selected user could not me removed.
 
 adminUser.mail.subject.newAccount = new account information
 adminUser.mail.body.line1 = Hi there.
-adminUser.mail.body.line2 =You have been register as an administrator user at Membresia.
+adminUser.mail.body.line2 =You have been registered as an administrator user at Membresia.
 adminUser.mail.body.line3a = You username is
 adminUser.mail.body.line3b = and your current password is
-adminUser.mail.body.line4 = Please remember that you may want to change your username/email address at password at any time from you user profile.
+adminUser.mail.body.line4 = Please remember that you can change your username/email address and password at any time from your user profile settings.
 adminUser.mail.body.line5 = Thanks, have a lovely day.
 
 
@@ -322,6 +323,8 @@ mailMessage.form.validation.recipients  = No recipients were selected.
 
 # Messages
 mailMessage.form.save.message.notification = The message has been sent
+mailMessage.form.save.message.notification.message = The message has been sent to all the selected recipients.
+mailMessage.form.global.new.title = Send new message
 
 ##### Payment ####
 

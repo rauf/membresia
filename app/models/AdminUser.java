@@ -1,7 +1,7 @@
 package models;
 
 import com.avaje.ebean.Ebean;
-import services.formData.AdminUserFormData;
+import views.formData.AdminUserFormData;
 import services.Pager;
 
 import java.util.*;

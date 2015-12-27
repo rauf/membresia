@@ -3,7 +3,7 @@ package services;
 import models.Subscription;
 import play.data.Form;
 import services.contract.SubscriptionServiceInterface;
-import services.formData.SubscriptionFormData;
+import views.formData.SubscriptionFormData;
 
 import java.util.*;
 

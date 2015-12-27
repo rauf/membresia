@@ -9,7 +9,7 @@ import play.mvc.With;
 
 import models.AdminUser;
 import services.AdminUserService;
-import services.formData.AdminUserFormData;
+import views.formData.AdminUserFormData;
 import services.Pager;
 
 import javax.inject.Inject;
@@ -87,7 +87,6 @@ public class AdminUserController extends Controller {
         formData = Form.form(AdminUserFormData.class).bindFromRequest();
         if (formData.hasErrors()) {
             flash("error", Messages.get("app.global.validation.message"));
-
             return badRequest(views.html.adminUser.form.render(Messages.get("adminUser.form.global.new.title"), formData));
         }
 

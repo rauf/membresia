@@ -6,7 +6,7 @@ import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.*;
 import services.MD5;
-import services.formData.MessageTemplateFormData;
+import views.formData.MessageTemplateFormData;
 import services.Pager;
 
 import java.util.*;

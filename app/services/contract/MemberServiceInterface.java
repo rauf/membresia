@@ -3,7 +3,7 @@ package services.contract;
 import models.Member;
 import play.api.libs.mailer.MailerClient;
 import play.data.Form;
-import services.formData.MemberFormData;
+import views.formData.MemberFormData;
 import services.Pager;
 
 import java.util.List;

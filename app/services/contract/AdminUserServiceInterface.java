@@ -3,7 +3,7 @@ package services.contract;
 import models.AdminUser;
 import play.api.libs.mailer.MailerClient;
 import play.data.Form;
-import services.formData.AdminUserFormData;
+import views.formData.AdminUserFormData;
 import services.Pager;
 
 import java.util.List;

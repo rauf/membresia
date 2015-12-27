@@ -10,7 +10,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import services.contract.MailMessageServiceInterface;
-import services.formData.MailMessageFormData;
+import views.formData.MailMessageFormData;
 
 public class MailMessageService implements MailMessageServiceInterface {
 

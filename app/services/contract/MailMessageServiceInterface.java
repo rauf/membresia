@@ -3,7 +3,7 @@ package services.contract;
 import models.MailMessage;
 import play.api.libs.mailer.MailerClient;
 import play.data.Form;
-import services.formData.MailMessageFormData;
+import views.formData.MailMessageFormData;
 
 public interface MailMessageServiceInterface {
 

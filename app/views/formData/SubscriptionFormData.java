@@ -1,4 +1,4 @@
-package services.formData;
+package views.formData;
 
 import models.Member;
 import models.Periodicity;
@@ -67,7 +67,7 @@ public class SubscriptionFormData {
 
         Calendar today = Calendar.getInstance();
 
-        if (title == null) {
+        if (title == null || title.length() == 0) {
             errors.add(new ValidationError("title", Messages.get("subscription.form.validation.title")));
         }
 
@@ -75,7 +75,7 @@ public class SubscriptionFormData {
             errors.add(new ValidationError("amount", Messages.get("subscription.form.validation.amount")));
         }
 
-        if (periodicity == null) {
+        if (periodicity == null || periodicity.length() == 0) {
             errors.add(new ValidationError("periodicity", Messages.get("subscription.form.validation.periodicity")));
         }
 

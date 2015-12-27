@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
+import play.Logger;
 import play.data.validation.Constraints;
 import services.MD5;
 import services.MemberInstallmentService;
@@ -38,8 +39,7 @@ public class MemberInstallment extends Model {
     @OneToMany(mappedBy = "memberInstallment", cascade = CascadeType.ALL)
     protected List<Payment> payments = new ArrayList<>();
 
-    @Inject
-    private MemberInstallmentService memberInstallmentService;
+    private MemberInstallmentService memberInstallmentService = new MemberInstallmentService();
 
     /**
      * Standard constructor

@@ -4,12 +4,13 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 import models.Member;
+import models.Subscription;
 import play.api.libs.mailer.MailerClient;
 import play.data.Form;
 import play.i18n.Messages;
 import play.libs.mailer.Email;
 import services.contract.MemberServiceInterface;
-import services.formData.MemberFormData;
+import views.formData.MemberFormData;
 
 import java.util.List;
 
@@ -47,8 +48,8 @@ public class MemberService implements MemberServiceInterface {
      * {@inheritDoc}
      */
     public Member save(Form<MemberFormData> formData) {
+        clearSubscriptions(formData.get().getToken());
         Member member = (formData.get().getId() != null) ? getModel().getByPk(formData.get().getId()) : getModel();
-        member.getSubscriptions().clear();
         member.setData(formData.get());
         member.save();
         return member;
@@ -58,6 +59,7 @@ public class MemberService implements MemberServiceInterface {
      * {@inheritDoc}
      */
     public boolean remove(String token) {
+        clearSubscriptions(token);
         return getModel().remove(token);
     }
 
@@ -85,6 +87,19 @@ public class MemberService implements MemberServiceInterface {
         email.setBodyHtml(body);
 
         mailer.send(email);
+    }
+
+    /**
+     * Removes all subscription relations from member
+     *
+     * @param token Unique member identifier
+     */
+    private void clearSubscriptions(String token) {
+        Member member = getModel().get("token", token);
+        if (member != null) {
+            member.getSubscriptions().clear();
+            member.save();
+        }
     }
 
     /**

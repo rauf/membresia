@@ -1,6 +1,11 @@
-@import services.formData.MailMessageFormData
+@import views.formData.MailMessageFormData
+@import java.util
 
-@(title: String, mailMessageForm: play.data.Form[MailMessageFormData], recipients: Map[SelectOptionItem, Boolean])
+@(
+        title: String,
+        mailMessageForm: play.data.Form[MailMessageFormData],
+        recipients: Map[SelectOptionItem, Boolean]
+)
 
 @import play.i18n.Messages;
 @import views.html.common.parts._;
@@ -55,7 +60,7 @@
 
             <div class="box-footer">
                 <button id="submit" type="submit" value="Submit" class="btn btn-primary">@Messages.get("app.global.form.send")</button>
-                <a id="cancel" href="@mailMessageForm.get().getReferrer" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
+                <a id="cancel" href="@routes.MemberController.index()" role="button" class="btn btn-danger cancel">@Messages.get("app.global.form.cancel")</a>
             </div>
         }
     </div>

@@ -5,7 +5,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.*;
-import services.formData.SubscriptionFormData;
+import views.formData.SubscriptionFormData;
 import services.MD5;
 import services.Pager;
 
@@ -32,6 +32,7 @@ public class Subscription extends Model {
     protected String title;
 
     @Constraints.Required
+    @Column(columnDefinition = "TEXT")
     protected String description;
 
     @Constraints.Required
@@ -56,7 +57,7 @@ public class Subscription extends Model {
     @Formats.DateTime(pattern = "dd/MM/yyyy hh:ii:ss")
     protected Date updated_at = new Date();
 
-    @ManyToMany(mappedBy = "subscriptions", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "subscriptions", cascade = {CascadeType.ALL})
     protected List<Member> members;
 
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)

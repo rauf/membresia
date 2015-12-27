@@ -1,6 +1,5 @@
 package controllers;
 
-import play.api.libs.mailer.MailerClient;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -9,7 +8,7 @@ import play.mvc.With;
 
 import models.MessageTemplate;
 import services.MessageTemplateService;
-import services.formData.MessageTemplateFormData;
+import views.formData.MessageTemplateFormData;
 import services.Pager;
 
 import javax.inject.Inject;

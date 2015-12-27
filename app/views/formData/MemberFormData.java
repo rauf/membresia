@@ -1,4 +1,4 @@
-package services.formData;
+package views.formData;
 
 import models.SelectOptionItem;
 import play.data.validation.ValidationError;
@@ -124,9 +124,9 @@ public class MemberFormData {
             errors.add(new ValidationError("name", Messages.get("member.form.validation.nif")));
         }
 
-        if (subscriptions == null || subscriptions.size() == 0) {
-            errors.add(new ValidationError("subscriptions", Messages.get("member.form.validation.subscriptions")));
-        }
+//        if (subscriptions == null || subscriptions.size() == 0) {
+//            errors.add(new ValidationError("subscriptions", Messages.get("member.form.validation.subscriptions")));
+//        }
 
         if (errors.size() > 0)
 

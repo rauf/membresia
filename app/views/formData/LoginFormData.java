@@ -1,4 +1,4 @@
-package services.formData;
+package views.formData;
 
 import models.User;
 import play.i18n.Messages;

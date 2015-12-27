@@ -8,8 +8,8 @@ import play.mvc.*;
 import models.Member;
 import models.SelectOptionItem;
 import services.*;
-import services.formData.MemberFormData;
-import services.formData.SubscriptionFormData;
+import views.formData.MemberFormData;
+import views.formData.SubscriptionFormData;
 
 import java.util.List;
 import java.util.Map;

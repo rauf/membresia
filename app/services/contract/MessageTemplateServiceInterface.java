@@ -2,7 +2,7 @@ package services.contract;
 
 import models.MessageTemplate;
 import play.data.Form;
-import services.formData.MessageTemplateFormData;
+import views.formData.MessageTemplateFormData;
 import services.Pager;
 
 import java.util.List;

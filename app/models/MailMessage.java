@@ -2,7 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
-import services.formData.MailMessageFormData;
+import views.formData.MailMessageFormData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,6 @@ public class MailMessage extends Model {
 
     @Constraints.Required
     protected String body;
-
-    @Constraints.Required
-    protected String referrer;
 
     @Constraints.Required
     protected List<User> recipients = new ArrayList<>();
@@ -39,7 +36,6 @@ public class MailMessage extends Model {
     public void setData(MailMessageFormData formData) {
         this.setSubject(formData.getSubject());
         this.setBody(formData.getBody());
-        this.setReferrer(formData.getReferrer());
 
         User user = new User();
         for (String recipient : formData.getRecipients()) {
@@ -70,14 +66,6 @@ public class MailMessage extends Model {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public String getReferrer() {
-        return referrer;
-    }
-
-    public void setReferrer(String referrer) {
-        this.referrer = referrer;
     }
 
     public List<User> getRecipients() {
