@@ -115,6 +115,8 @@ member.form.helper.subscriptions = Please select the desired subscriptions
 member.form.save.message.notification = The member {0} has been created/updated correctly.
 member.form.remove.message.success = The selected member has been removed.
 member.form.remove.message.error = The selected member could not me removed.
+member.form.remove.archive.success = The selected member has been archived.
+member.form.remove.archive.error = The selected member could not be archived.
 
 member.mail.subject.newAccount = new account information
 member.mail.body.line1 = Hi there.
@@ -132,6 +134,13 @@ member.show.payments.link = Click here to make a payment.
 # Pay
 member.pay.global.title = Make Payment
 
+member.archive.name.placeholder = MEMBER
+member.archive.lastName.placeholder = REMOVED
+
+member.delete.confirm.title = Irreversible Member Deletion
+member.delete.confirm.body = Do you really wish to remove
+member.delete.confirm.close = Close
+member.delete.confirm.delete = Delete member
 ##### Form admin users
 
 # List
@@ -186,6 +195,11 @@ adminUser.mail.body.line3b = and your current password is
 adminUser.mail.body.line4 = Please remember that you can change your username/email address and password at any time from your user profile settings.
 adminUser.mail.body.line5 = Thanks, have a lovely day.
 
+adminUser.delete.confirm.title = Irreversible Admin User Deletion
+adminUser.delete.confirm.body = Do you really wish to remove
+adminUser.delete.confirm.close = Close
+adminUser.delete.confirm.delete = Delete user
+
 
 ##### MailMessage templates #####
 
@@ -221,6 +235,12 @@ messageTemplate.form.save.message.notification = The template "{0}" has been cre
 messageTemplate.form.remove.message.success = The selected template has been removed.
 messageTemplate.form.remove.message.error = The selected template could not me removed.
 
+
+messageTemplate.delete.confirm.title = Irreversible Message Template Deletion
+messageTemplate.delete.confirm.body = Do you really wish to remove
+messageTemplate.delete.confirm.close = Close
+messageTemplate.delete.confirm.delete = Delete template
+
 ##### Subscriptions #####
 
 # List
@@ -246,6 +266,7 @@ subscription.form.label.description = Description
 subscription.form.label.amount= Installment amount
 subscription.form.label.periodicity= Periodicity
 subscription.form.label.dueDatePeriod= Subscription next due date
+subscription.form.label.subscribers=Subscribers
 subscription.form.label.endDate= Subscription last installment date
 
 # Helpers
@@ -286,6 +307,13 @@ subscription.mail.body.line1 = Hi there.
 subscription.mail.body.line2 = There are been changed to the "{0}" subscription. The subscription billing information is a follow:
 subscription.mail.body.line3 = Thanks, have a lovely day.
 
+
+subscription.delete.confirm.title = Irreversible Subscription Deletion
+subscription.delete.confirm.body1 = Do you really wish to remove
+subscription.delete.confirm.body2 = and all its installment and payment information
+subscription.delete.confirm.close = Close
+subscription.delete.confirm.delete = Delete subscription
+
 model.periodicity.unique.title = One timer
 model.periodicity.week.title = Weekly
 model.periodicity.month.title = Monthly
@@ -293,6 +321,7 @@ model.periodicity.bimonth.title  = Bimonthly
 model.periodicity.trimester.title = Trimestral
 model.periodicity.semester.title = Semestral
 model.periodicity.year.title = Yearly
+
 
 
 ##### MailMessage ####
@@ -382,7 +411,7 @@ recovery.mail.body.line5 = Thanks, have a lovely day.
 
 memberInstallment.mail.body.line1 = Installment Notice
 memberInstallment.mail.body.line2 = A new installment has been released for the ''{0}'' subscription.
-memberInstallment.mail.body.line3 = The total amount due for this installment is of {0}€. Please click on the following link to proceed with your payment.
+memberInstallment.mail.body.line3 = The total amount due for this installment is of {0}. Please click on the following link to proceed with your payment.
 memberInstallment.mail.body.line4 = Click here to pay now.
 memberInstallment.mail.body.line5 =  This new installment is due on the {0}.
 memberInstallment.mail.body.line6 = Thanks, have a lovely day.

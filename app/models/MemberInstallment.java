@@ -33,7 +33,7 @@ public class MemberInstallment extends Model {
     @ManyToOne(cascade = CascadeType.PERSIST)
     protected Member member;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     protected Installment installment;
 
     @OneToMany(mappedBy = "memberInstallment", cascade = CascadeType.ALL)

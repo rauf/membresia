@@ -100,18 +100,6 @@ public class AdminUserController extends Controller {
     }
 
     /**
-     * Show admin user's details by user token
-     *
-     * @param token Unique user token identifier
-     * @return Result
-     */
-    public Result show(String token) {
-        AdminUser member = adminUserService.getAdminUser(token);
-
-        return ok(views.html.adminUser.show.render(member));
-    }
-
-    /**
      * Removes a specific admin user by token
      *
      * @param token Unique user token identifier

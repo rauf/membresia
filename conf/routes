@@ -22,7 +22,6 @@ GET         /all-admin-users                           controllers.AdminUserCont
 GET         /create-admin-users                        controllers.AdminUserController.create()
 GET         /edit-admin-users                          controllers.AdminUserController.edit(token: String)
 POST        /save-admin-users                          controllers.AdminUserController.save()
-GET         /show-admin-users/:token                   controllers.AdminUserController.show(token: String)
 GET         /delete-admin-users/:token                 controllers.AdminUserController.remove(token: String)
 
 GET         /all-subscriptions                         controllers.SubscriptionController.index(currentPage: Integer ?= 1)
