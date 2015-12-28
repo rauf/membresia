@@ -14,9 +14,6 @@
         </li>
         <li class="user-footer">
             <div class="pull-left">
-                <a href="@routes.AdminUserController.show(session.get("token"))" class="btn btn-default btn-flat">@Messages.get("user.general.profile.show")</a>
-            </div>
-            <div class="pull-left">
                 <a href="@routes.AdminUserController.edit(session.get("token"))" class="btn btn-default btn-flat">@Messages.get("user.general.profile.edit")</a>
             </div>
             <div class="pull-right">

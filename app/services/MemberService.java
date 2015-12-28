@@ -4,6 +4,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 import models.Member;
+import models.MemberInstallment;
 import models.Subscription;
 import play.api.libs.mailer.MailerClient;
 import play.data.Form;
@@ -59,7 +60,8 @@ public class MemberService implements MemberServiceInterface {
      * {@inheritDoc}
      */
     public boolean remove(String token) {
-        clearSubscriptions(token);
+        if (hasPayments(token)) return archiveMember(token);
+
         return getModel().remove(token);
     }
 
@@ -90,6 +92,20 @@ public class MemberService implements MemberServiceInterface {
     }
 
     /**
+     * Checks is a specific member has realized any payments in the past
+     *
+     * @param token Unique member identifier
+     * @return boolean
+     */
+    private boolean hasPayments(String token) {
+        Member member = getModel().get("token", token);
+        for (MemberInstallment memberInstallment : member.getMemberInstallments()) {
+            if (!memberInstallment.getPayments().isEmpty()) return true;
+        }
+        return false;
+    }
+
+    /**
      * Removes all subscription relations from member
      *
      * @param token Unique member identifier
@@ -100,6 +116,32 @@ public class MemberService implements MemberServiceInterface {
             member.getSubscriptions().clear();
             member.save();
         }
+    }
+
+    /**
+     * Archive member and set its attributes to null
+     *
+     * @param token Unique user identifier
+     */
+    private boolean archiveMember(String token) {
+        Member member = getModel().get("token", token);
+        if (member != null) {
+            member.setAddress(null);
+            member.setCity(null);
+            member.setCountry(null);
+            member.setState(null);
+            member.setCp(null);
+            member.setPassword(null);
+            member.setEmail(null);
+            member.setNif(null);
+            member.setPhone(null);
+            member.setStatus(false);
+            member.setName(Messages.get("member.archive.name.placeholder"));
+            member.setLastName(Messages.get("member.archive.lastName.placeholder"));
+            member.save();
+            return true;
+        }
+        return false;
     }
 
     /**

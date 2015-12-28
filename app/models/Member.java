@@ -21,25 +21,25 @@ public class Member extends User {
     @Column(unique = true)
     protected String memberId;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String address;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String cp;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String city;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String state;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String country;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String nif;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String phone;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -115,7 +115,7 @@ public class Member extends User {
         pager.setRecordCount(Ebean.find(Member.class).findRowCount());
         pager.resolvePager();
 
-        return Ebean.find(Member.class).setFirstRow(pager.getOffset()).setMaxRows(pager.getRows()).findList();
+        return Ebean.find(Member.class).where().eq("status", true).setFirstRow(pager.getOffset()).setMaxRows(pager.getRows()).findList();
     }
 
     /**

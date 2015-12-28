@@ -5,5 +5,63 @@
     @import views.html.common.templates.main;
 
     @main(Messages.get("app.global.title") + " - " + subscription) {
+        <div class="row">
+            <div class="col-md-3">
 
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        <h3 class="profile-username text-center">@subscription.toString</h3>
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>@Messages.get("subscription.form.label.amount")</b> <a class="pull-right">@subscription.getFormattedAmount</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("subscription.form.label.periodicity")</b> <a class="pull-right">@subscription.getFormattedDueDate</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("subscription.form.label.periodicity")</b> <a class="pull-right">@subscription.getPeriodicity</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>@Messages.get("subscription.form.label.subscribers")</b> <a class="pull-right">@subscription.getMembers.size()</a>
+                            </li>
+
+                        </ul>
+
+                        <a href="@routes.SubscriptionController.edit(subscription.getToken)" class="btn btn-primary btn-block"><b>@Messages.get("subscription.form.global.edit.title")</b></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-9">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Messages.get("member.show.payment.history")</h3>
+                    </div>
+                    <div class="box-body">
+                    @if(!subscription.getInstallments.isEmpty) {
+                        <ul>
+                        @for( installment <- subscription.getInstallments) {
+                            <li>@installment.toString</li>
+                            @if(!installment.getPayments.isEmpty) {
+                                <ul>
+                                @for( payment <- installment.getPayments) {
+                                    <li>@payment.toString - @payment.getMemberInstallment.getMember.toString</li>
+                                }
+                                </ul>
+                            }
+                        }
+                        </ul>
+                    } else {
+                        <div class="callout callout-info">
+                            <h4>@Messages.get("member.show.payment.empty")</h4>
+                        </div>
+                    }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
     }

@@ -28,12 +28,11 @@ public class User extends Model {
     @Id
     protected Long id;
 
-    @Constraints.Required
     @Constraints.Email
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     protected String email;
 
-    @Constraints.Required
+    @Column(nullable = true)
     protected String password;
 
     @Transient
@@ -58,6 +57,8 @@ public class User extends Model {
     protected Date updated_at = new Date();
 
     protected UserService userService = new UserService();
+
+    protected boolean status = true;
 
     /**
      * Generic constructor
@@ -219,5 +220,13 @@ public class User extends Model {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

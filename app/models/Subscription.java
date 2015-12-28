@@ -5,10 +5,12 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.*;
+import services.MoneyFormat;
 import views.formData.SubscriptionFormData;
 import services.MD5;
 import services.Pager;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.persistence.*;
 
@@ -169,6 +171,26 @@ public class Subscription extends Model {
      */
     public String generateToken() {
         return MD5.getMD5((new Date()).toString());
+    }
+
+    /**
+     * Returns a string with formatted due date for printing purposes
+     *
+     * @return String
+     */
+    public String getFormattedDueDate() {
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+
+        return format1.format(this.getDueDatePeriod().getTime());
+    }
+
+    /**
+     * Returns a string with formatted amount due for printing purposes
+     *
+     * @return String
+     */
+    public String getFormattedAmount() {
+        return MoneyFormat.setMoney(getAmount());
     }
 
     public String toString() {
