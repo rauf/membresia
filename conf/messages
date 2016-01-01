@@ -25,6 +25,7 @@ app.menu.mailMessage.send = Compose new message
 app.menu.messageTemplate.list = List all message templates
 app.menu.messageTemplate.create = Create a message template
 
+app.menu.dashboard.title = Dashboard
 
 
 ##### Global form #####
@@ -373,6 +374,8 @@ payment.form.validation.excess = Your payment amount is higher than the due amou
 
 payment.form.save.message.notification = Your payment has been registered.
 
+payment.show.chart.subscription = Accumulative Payment Evolution
+
 ##### Login ####
 
 login.form.label.email = Email
@@ -394,6 +397,7 @@ user.general.profile.show = Profile
 user.login.passwordRecovery.title = Password Recovery
 login.form.submit.label = Sign in
 login.form.recovery.label = Recover
+user.login.global.title = User Login
 
 login.form.passwordRecovery.title = Enter your email address to recover your password
 login.form.login.link = Sign in
@@ -427,3 +431,10 @@ paymentPublic.message.pay.thankyou = Thank you
 paymentPublic.message.pay.sorry = Sorry
 paymentPublic.pay.paypal.title = Paypal Payment
 paymentPublic.pay.complete.title = Payment completed
+
+##### Statistics  ####
+
+statistic.global.title.dashboard = Dashboard
+statistic.dashboard.payments.title = Latest Payments
+statistic.dashboard.chart.title = Overall Collections
+statistic.dashboard.installments.title = Current Installments

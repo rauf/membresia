@@ -55,15 +55,9 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
      */
     public Double getTotalPaid(String token) {
         if (token != null) {
-
             MemberInstallment memberInstallment = getModel().get("token", token);
-            Double totalPaid = 0.0;
             if (memberInstallment != null) {
-                for (Payment payment : memberInstallment.getPayments()) {
-                    if (payment.getStatus() == 1) totalPaid += payment.getAmount();
-                }
-
-                return totalPaid;
+                return memberInstallment.getTotalPaid();
             }
         }
 
@@ -76,17 +70,10 @@ public class MemberInstallmentService implements MemberInstallmentServiceInterfa
     public Double getAmountDue(String token) {
         if (token != null) {
             MemberInstallment memberInstallment = getModel().get("token", token);
-
-            Double totalPaid = 0.0;
             if (memberInstallment != null) {
-                for (Payment payment : memberInstallment.getPayments()) {
-                    if (payment.getStatus() == 1) totalPaid += payment.getAmount();
-                }
-
-                return memberInstallment.getInstallment().getAmount() - totalPaid;
+                return memberInstallment.getAmountDue();
             }
         }
-
         return 0.0;
     }
 

@@ -91,6 +91,33 @@ public class MemberInstallment extends Model {
     }
 
     /**
+     * Calculates total amount paid per member installment
+     *
+     * @return double
+     */
+    public Double getTotalPaid() {
+        double totalPaid = 0.0;
+        for (Payment payment : getPayments()) {
+            if (payment.getStatus() == 1) totalPaid += payment.getAmount();
+        }
+        return totalPaid;
+    }
+
+    /**
+     * Calculates total amount due per member installment
+     *
+     * @return double
+     */
+    public Double getAmountDue() {
+        Double totalPaid = 0.0;
+        for (Payment payment : getPayments()) {
+            if (payment.getStatus() == 1) totalPaid += payment.getAmount();
+        }
+
+        return getInstallment().getAmount() - totalPaid;
+    }
+
+    /**
      * Generates unique member installment token
      *
      * @return String

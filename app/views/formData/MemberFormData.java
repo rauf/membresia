@@ -139,7 +139,7 @@ public class MemberFormData {
      * Creates a list of member installments for given installment to use as a pull down menu
      *
      * @param member Member to show the installments for
-     * @return
+     * @return Map
      */
     public Map<SelectOptionItem, Boolean> makeMemberInstallmentMap(Member member) {
         MemberInstallmentService memberInstallmentService = new MemberInstallmentService();

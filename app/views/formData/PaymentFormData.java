@@ -96,4 +96,8 @@ public class PaymentFormData {
     public void setMemberToken(String memberToken) {
         this.memberToken = memberToken;
     }
+
+    public String getMemberToken() {
+        return memberToken;
+    }
 }

@@ -47,9 +47,9 @@ public class PaymentController extends Controller {
     @With(SecuredAction.class)
     public Result makePayment(String token) {
         PaymentFormData paymentFormData = new PaymentFormData();
+        paymentFormData.setMemberToken(token);
         Form<PaymentFormData> formData = Form.form(PaymentFormData.class).fill(paymentFormData);
 
-        paymentFormData.setMemberToken(token);
         Member member = memberService.getMember(token);
         Map<SelectOptionItem, Boolean> memberInstallmentMap = memberFormData.makeMemberInstallmentMap(member);
 
@@ -64,11 +64,11 @@ public class PaymentController extends Controller {
      */
     public Result makePublicPayment(String token) {
         PaymentFormData paymentFormData = new PaymentFormData();
-        Form<PaymentFormData> formData = Form.form(PaymentFormData.class).fill(paymentFormData);
-
         MemberInstallment memberInstallment = memberInstallmentService.get("token", token);
         paymentFormData.setMemberToken(memberInstallment.getMember().generateToken());
         paymentFormData.setMemberInstallmentToken(memberInstallment.getToken());
+
+        Form<PaymentFormData> formData = Form.form(PaymentFormData.class).fill(paymentFormData);
         String amountDue = MoneyFormat.setMoney(memberInstallmentService.getAmountDue(token));
 
         return ok(views.html.payment.makePublicPayment.render(Messages.get("member.pay.global.title"), formData, memberInstallment, amountDue));

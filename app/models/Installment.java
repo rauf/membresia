@@ -137,6 +137,21 @@ public class Installment extends Model {
         return MoneyFormat.setMoney(getAmount());
     }
 
+    /**
+     * Calculates percentage of collected payments
+     *
+     * @return int
+     */
+    public int getProgress() {
+        double totalPayments = 0.0;
+        for (Payment payment : getPayments()) {
+            totalPayments += payment.getAmount();
+        }
+        double totalDue = getAmount() * getSubscription().getMembers().size();
+
+        return (int) (totalPayments / totalDue * 100);
+    }
+
     public String toString() {
         return this.getSubscription().toString() + " - " + getFormattedDueDate() + " (" + getFormattedAmount() + ")";
     }

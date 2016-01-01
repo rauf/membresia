@@ -8,6 +8,7 @@ import play.mvc.With;
 
 import models.SelectOptionItem;
 import models.Subscription;
+import services.StatisticService;
 import views.formData.SubscriptionFormData;
 import services.InstallmentService;
 import services.Pager;
@@ -124,8 +125,10 @@ public class SubscriptionController extends Controller {
      */
     public Result show(String token) {
         Subscription subscription = subscriptionService.getSubscription(token);
+        StatisticService statisticService = new StatisticService();
+        List statisticData = statisticService.getTotalPaymentsBySubscription(token);
 
-        return ok(views.html.subscription.show.render(subscription));
+        return ok(views.html.subscription.show.render(subscription, statisticData));
     }
 
     /**

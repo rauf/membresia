@@ -44,7 +44,7 @@ public class UserController extends Controller {
             return badRequest(views.html.user.login.render(Messages.get("user.login.global.title"), loginForm));
         }
 
-        return redirect(routes.SubscriptionController.index(1));
+        return redirect(routes.StatisticController.index());
     }
 
     /**

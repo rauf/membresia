@@ -11,7 +11,6 @@ import services.MoneyFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import javax.inject.Inject;
 import javax.persistence.*;
 
 /**

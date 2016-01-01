@@ -50,7 +50,7 @@ GET         /pay-complete                              controllers.PaymentContro
 GET         /make-payment                              controllers.PaymentController.makePayment(token: String)
 GET         /register-payment                          controllers.PaymentController.registerPayment()
 
-
+GET         /dashboard                                 controllers.StatisticController.index()
 
 
 # Map static resources from the /public folder to the /assets URL path
