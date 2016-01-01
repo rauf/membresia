@@ -13,7 +13,7 @@ public class Statistic {
      * @return List
      */
     public List<SqlRow> getTotalPaymentsBySubscriptionAndPeriod(String token) {
-        String sql =
+        String sqlMySql =
                 "SELECT" +
                         " SUM(payment.amount) AS amount," +
                         " DATE_FORMAT(payment.created_at, '%m/%Y') AS period" +
@@ -25,7 +25,19 @@ public class Statistic {
                         " ORDER BY period" +
                         " LIMIT :limit";
 
-        return Ebean.createSqlQuery(sql)
+        String sqlPostgreSQL =
+                "SELECT" +
+                        " SUM(payment.amount) AS amount," +
+                        " to_char(payment.created_at, 'MM/YYYY') AS period" +
+                        " FROM payment" +
+                        " LEFT JOIN installment ON installment_id = installment.id" +
+                        " LEFT JOIN subscription ON installment.subscription_id = subscription.id" +
+                        " WHERE subscription.token = :token" +
+                        " GROUP BY period" +
+                        " ORDER BY period" +
+                        " LIMIT :limit";
+
+        return Ebean.createSqlQuery(sqlPostgreSQL)
                 .setParameter("token", token)
                 .setParameter("limit", 12)
                 .findList();
@@ -37,7 +49,7 @@ public class Statistic {
      * @return List
      */
     public List<SqlRow> getTotalPaymentsByPeriod() {
-        String sql =
+        String sqlMySql =
                 "SELECT" +
                         " SUM(payment.amount) AS amount," +
                         " DATE_FORMAT(payment.created_at, '%m/%Y') AS period" +
@@ -48,7 +60,18 @@ public class Statistic {
                         " ORDER BY period" +
                         " LIMIT :limit";
 
-        return Ebean.createSqlQuery(sql)
+        String sqlPostgreSQL =
+                "SELECT" +
+                        " SUM(payment.amount) AS amount," +
+                        " to_char(payment.created_at, 'MM/YYYY') AS period" +
+                        " FROM payment" +
+                        " LEFT JOIN installment ON installment_id = installment.id" +
+                        " LEFT JOIN subscription ON installment.subscription_id = subscription.id" +
+                        " GROUP BY period" +
+                        " ORDER BY period" +
+                        " LIMIT :limit";
+
+        return Ebean.createSqlQuery(sqlPostgreSQL)
                 .setParameter("limit", 12)
                 .findList();
     }
