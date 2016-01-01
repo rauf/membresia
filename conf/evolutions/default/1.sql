@@ -3,6 +3,7 @@
 
 # --- !Ups
 
+
 create table installment (
   id                        bigserial not null,
   due_date                  timestamp,
