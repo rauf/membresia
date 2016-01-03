@@ -19,6 +19,24 @@ public class InstallmentService implements InstallmentServiceInterface {
     /**
      * {@inheritDoc}
      **/
+    public void generateInstallments() {
+        SubscriptionService subscriptionService = new SubscriptionService();
+
+        List<Subscription> subscriptions = subscriptionService.getActiveSubscriptions();
+        for (Subscription subscription : subscriptions) {
+            Installment lastInstallment = getSubscriptionLastInstallment(subscription);
+            Calendar installmentDate = Calendar.getInstance();
+            installmentDate.setTime(lastInstallment.getDueDate());
+
+            if (installmentDate.before(Calendar.getInstance())) {
+                createInstallment(subscription);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     **/
     public void createInstallment(Subscription subscription) {
         Integer periodIncrement = (int) Periodicity.valueOf(subscription.getPeriodicity()).getValue();
         Date lastInstallmentDueDate = getLastInstallmentDueDate(subscription);
@@ -54,23 +72,6 @@ public class InstallmentService implements InstallmentServiceInterface {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     **/
-    public void generateInstallments() {
-        SubscriptionService subscriptionService = new SubscriptionService();
-
-        List<Subscription> subscriptions = subscriptionService.getActiveSubscriptions();
-        for (Subscription subscription : subscriptions) {
-            Installment lastInstallment = getSubscriptionLastInstallment(subscription);
-            Calendar installmentDate = Calendar.getInstance();
-            installmentDate.setTime(lastInstallment.getDueDate());
-
-            if (installmentDate.before(Calendar.getInstance())) {
-                createInstallment(subscription);
-            }
-        }
-    }
 
     /**
      * {@inheritDoc}

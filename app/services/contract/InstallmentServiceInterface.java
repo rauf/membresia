@@ -6,6 +6,11 @@ import models.Subscription;
 public interface InstallmentServiceInterface {
 
     /**
+     * Generate a new installment whenever is needed among all available subscriptions
+     */
+    void generateInstallments();
+
+    /**
      * Add a new installment to a subscription
      *
      * @param subscription Subscription to add the installment to
@@ -19,10 +24,6 @@ public interface InstallmentServiceInterface {
      */
     void updateInstallments(Subscription subscription);
 
-    /**
-     * Generate a new installment whenever is needed among all available subscriptions
-     */
-    void generateInstallments();
 
     /**
      * Retrieves a subscrition las installment or generate a new one
