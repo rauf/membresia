@@ -1,0 +1,34 @@
+@import views.formData.PaymentFormData
+
+@(title: String, paymentStatus: Boolean)
+
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.clean;
+
+    @clean(title) {
+        <div class="login-box">
+
+            <div class="login-logo">
+                <b>@Messages.get("app.global.title")</b>
+            </div>
+            <div class="box box-solid">
+                @notification()
+                <div class="box-header with-border">
+                @if(paymentStatus) {
+                    <h4 class="text-center">@Messages.get("paymentPublic.message.pay.thankyou")</h4>
+                } else {
+                    <h4 class="text-center">@Messages.get("paymentPublic.message.pay.sorry")</h4>
+                }
+                </div>
+                <div class="box-body">
+                @if(paymentStatus) {
+                    <p class="text-center text-green">@Messages.get("paymentPublic.message.pay.success")</p>
+                } else {
+                    <p class="text-center text-red">@Messages.get("paymentPublic.message.pay.fail")</p>
+
+                }
+                </div>
+            </div>
+        </div>
+    }

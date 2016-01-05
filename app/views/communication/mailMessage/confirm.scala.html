@@ -1,0 +1,15 @@
+@(title: String)
+
+@import play.i18n.Messages;
+@import views.html.common.templates.main;
+
+@main(title) {
+    <div class="box">
+        <div class="box-body">
+            <div class="callout callout-info">
+                <h4>@title</h4>
+                <p>@flash.get("success") <a href="@controllers.communication.routes.MailMessageController.sendMailForm()">@Messages.get("mailMessage.form.global.new.title")</a></p>
+            </div>
+        </div>
+    </div>
+}

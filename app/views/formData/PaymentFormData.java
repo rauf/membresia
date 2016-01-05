@@ -3,8 +3,8 @@ package views.formData;
 
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
-import services.MD5;
-import services.MemberInstallmentService;
+import lib.MD5;
+import services.subscription.MemberInstallmentService;
 
 import java.util.ArrayList;
 import java.util.Date;

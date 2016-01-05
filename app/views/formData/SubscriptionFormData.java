@@ -1,9 +1,9 @@
 package views.formData;
 
-import models.Member;
-import models.Periodicity;
-import models.SelectOptionItem;
-import models.Subscription;
+import models.user.Member;
+import models.subscription.Periodicity;
+import models.formData.SelectOptionItem;
+import models.subscription.Subscription;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 

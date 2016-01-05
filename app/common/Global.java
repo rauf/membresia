@@ -5,21 +5,16 @@ import com.typesafe.config.ConfigFactory;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import models.AdminUser;
-import models.User;
-import services.InstallmentService;
-import services.UserService;
+import models.user.AdminUser;
+import models.user.User;
+import services.subscription.InstallmentService;
+import services.user.UserService;
 
-import play.Application;
-import play.GlobalSettings;
 import play.libs.Akka;
 import scala.concurrent.duration.FiniteDuration;
 
-import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 

@@ -1,6 +1,8 @@
 @import java.util
-@import com.avaje.ebean.SqlRow
 
+@import models.subscription.Installment
+@import com.avaje.ebean.SqlRow
+@import models.subscription.Payment
 @(
         latestPayments: util.List[Payment],
         paymentsByPeriod: util.List[SqlRow],
@@ -35,8 +37,8 @@
                             @for( payment <- latestPayments) {
                                 <tr>
                                     <td>@payment.getFormattedPaymentDate</td>
-                                    <td><a href="@routes.MemberController.show(payment.getMemberInstallment.getMember.getToken)">@payment.getMemberInstallment.getMember.toString</a></td>
-                                    <td><a href="@routes.SubscriptionController.show(payment.getInstallment.getSubscription.getToken)">@payment.getInstallment.getSubscription.toString</a></td>
+                                    <td><a href="@controllers.user.routes.MemberController.show(payment.getMemberInstallment.getMember.getToken)">@payment.getMemberInstallment.getMember.toString</a></td>
+                                    <td><a href="@controllers.subscription.routes.SubscriptionController.show(payment.getInstallment.getSubscription.getToken)">@payment.getInstallment.getSubscription.toString</a></td>
                                     <td>@payment.getFormattedAmount</td>
                                 </tr>
                             }

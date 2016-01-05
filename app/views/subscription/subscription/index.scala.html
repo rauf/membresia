@@ -1,0 +1,103 @@
+@import java.util
+
+@import lib.Pager
+
+@import models.subscription.Subscription
+@(title: String, subscriptions: util.List[Subscription], pager: Pager)
+
+    @import play.i18n.Messages;
+    @import views.html.common.parts._;
+    @import views.html.common.templates.main;
+    @import views.common.helpers.TemplateHelpers
+
+    @main(title) {
+
+        <div class="box">
+            <div class="box-header with-border">
+                @notification()
+                <a href="@controllers.subscription.routes.SubscriptionController.create()" class="btn btn-primary pull-right" role="button">@Messages.get("subscription.form.global.new.title")</a>
+            </div>
+            <div class="box-body">
+            @if(!subscriptions.isEmpty) {
+                <table class="table table-bordered">
+                    <tr>
+                        <th>@Messages.get("subscription.list.table.id")</th>
+                        <th>@Messages.get("subscription.list.table.title")</th>
+                        <th>@Messages.get("subscription.list.table.amount")</th>
+                        <th>@Messages.get("subscription.list.table.periodicity")</th>
+                        <th>@Messages.get("subscription.list.table.subscribers")</th>
+                        <th>@Messages.get("subscription.list.table.installments")</th>
+
+                        <th>&nbsp;</th>
+                    </tr>
+                    @for( subscription <- subscriptions) {
+                        <tr>
+                            <th class="item-id">@subscription.getSubscriptionId</th>
+                            <td class="item-title">@subscription.getTitle</td>
+                            <td class="item-info">@("%.2f".format(subscription.getAmount)) &euro;</td>
+                            <td class="item-info">@subscription.getPeriodicity</td>
+                            <td class="item-info">@subscription.getMembers.size()</td>
+                            <td class="item-info">@subscription.getInstallments.size()</td>
+
+                            <td>
+                                <div class="toolbar">
+                                    @if(subscription.getMembers.isEmpty) {
+                                        <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target=".remove-subscription-modal-@subscription.getToken"></button>
+                                    }
+                                <a href="@controllers.subscription.routes.SubscriptionController.edit(subscription.getToken)" role="button" class="btn btn-primary fa fa-pencil-square-o"></a>
+                                <a href="@controllers.subscription.routes.SubscriptionController.show(subscription.getToken)" role="button" class="btn btn-primary fa fa-folder-open-o"></a>
+                                </div>
+                                @if(subscription.getMembers.isEmpty) {
+                                    <div class="modal modal-danger remove-subscription-modal-@subscription.getToken">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title">@Messages.get("subscription.delete.confirm.title")</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>@Messages.get("subscription.delete.confirm.body1") <strong>@subscription.toString</strong>
+                                                        @Messages.get("subscription.delete.confirm.body2")?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">
+                                                    @Messages.get("subscription.delete.confirm.close")</button>
+                                                    <a role="button" href="@controllers.subscription.routes.SubscriptionController.remove(subscription.getToken)" class="btn btn-outline">
+                                                    @Messages.get("subscription.delete.confirm.delete")</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            } else {
+                <div class="callout callout-info">
+                    <h4>@Messages.get("subscription.list.empty.title")</h4>
+                    <p>@Messages.get("subscription.list.empty.text") <a href="@controllers.subscription.routes.SubscriptionController.create()">@Messages.get("subscription.list.empty.link")</a></p>
+                </div>
+            }
+            </div>
+            <div class="box-footer clearfix">
+            @if(!subscriptions.isEmpty) {
+                @if(pager.getTotalPages > 1) {
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        @if(pager.getCurrentPage > 1) {
+                            <li><a href="@controllers.subscription.routes.SubscriptionController.index(pager.getCurrentPage - 1)">&laquo;</a></li>
+                        }
+                        @for( index <- TemplateHelpers.createRange(pager.getCurrentPage, pager.getPageSize, pager.getTotalPages)) {
+                            <li @if(pager.getCurrentPage == index) {
+                                class='active'}><a href="@controllers.subscription.routes.SubscriptionController.index(index)">@index</a></li>
+                        }
+                        @if(pager.getCurrentPage < pager.getTotalPages) {
+                            <li><a href="@controllers.subscription.routes.SubscriptionController.index(pager.getCurrentPage + 1)">&raquo;</a></li>
+                        }
+                    </ul>
+                }
+            }
+            </div>
+        </div>
+    }

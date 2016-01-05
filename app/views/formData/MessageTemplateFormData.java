@@ -1,6 +1,6 @@
 package views.formData;
 
-import models.MessageTemplate;
+import models.communication.MessageTemplate;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 

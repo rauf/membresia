@@ -1,7 +1,7 @@
 package views.formData;
 
-import models.MailMessage;
-import models.User;
+import models.communication.MailMessage;
+import models.user.User;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 
