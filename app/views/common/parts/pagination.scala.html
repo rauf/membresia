@@ -1,18 +1,19 @@
-@import services.Pager
-
+@import lib.Pager
 @import views.common.helpers.TemplateHelpers
+
 @(pager: Pager)
+
 @pager.getTotalPages
 @if(pager.getTotalPages > 0) {
     <ul class="pagination pagination-sm no-margin pull-right">
         @if(pager.getCurrentPage > 1) {
-            <li><a href="@routes.AdminUserController.index(pager.getCurrentPage - 1)">&laquo;</a></li>
+            <li><a href="@controllers.user.routes.AdminUserController.index(pager.getCurrentPage - 1)">&laquo;</a></li>
         }
         @for( index <- TemplateHelpers.createRange(pager.getCurrentPage, pager.getPageSize, pager.getTotalPages)) {
-            <li><a href="@routes.AdminUserController.index(index)">@index</a></li>
+            <li><a href="@controllers.user.routes.AdminUserController.index(index)">@index</a></li>
         }
         @if(pager.getCurrentPage < pager.getTotalPages) {
-            <li><a href="@routes.AdminUserController.index(pager.getCurrentPage + 1)">&raquo;</a></li>
+            <li><a href="@controllers.user.routes.AdminUserController.index(pager.getCurrentPage + 1)">&raquo;</a></li>
         }
     </ul>
 }

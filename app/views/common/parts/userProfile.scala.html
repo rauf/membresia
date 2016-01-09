@@ -14,10 +14,10 @@
         </li>
         <li class="user-footer">
             <div class="pull-left">
-                <a href="@routes.AdminUserController.edit(session.get("token"))" class="btn btn-default btn-flat">@Messages.get("user.general.profile.edit")</a>
+                <a href="@controllers.user.routes.AdminUserController.edit(session.get("token"))" class="btn btn-default btn-flat">@Messages.get("user.general.profile.edit")</a>
             </div>
             <div class="pull-right">
-                <a href="@routes.UserController.logout()" class="btn btn-default btn-flat">@Messages.get("user.general.logout.label")</a>
+                <a href="@controllers.user.routes.UserController.logout()" class="btn btn-default btn-flat">@Messages.get("user.general.logout.label")</a>
             </div>
         </li>
     </ul>

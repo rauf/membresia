@@ -1,13 +1,13 @@
 package views.formData;
 
-import models.SelectOptionItem;
+import models.formData.SelectOptionItem;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
-import models.Member;
-import models.Subscription;
-import services.MemberInstallmentService;
-import services.MemberService;
-import services.MoneyFormat;
+import models.user.Member;
+import models.subscription.Subscription;
+import services.subscription.MemberInstallmentService;
+import services.user.MemberService;
+import lib.MoneyFormat;
 
 import java.util.ArrayList;
 import java.util.HashMap;

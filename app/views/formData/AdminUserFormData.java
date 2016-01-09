@@ -1,9 +1,9 @@
 package views.formData;
 
-import models.AdminUser;
+import models.user.AdminUser;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
-import services.AdminUserService;
+import services.user.AdminUserService;
 
 import java.util.ArrayList;
 import java.util.List;

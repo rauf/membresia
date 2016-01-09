@@ -1,0 +1,8 @@
+@import models.communication.MailMessage
+@(mailMessage: MailMessage)
+
+    @import views.html.common.templates.mailTemplate;
+
+    @mailTemplate(mailMessage.getSubject: String) {
+        @Html(mailMessage.getBody)
+    }

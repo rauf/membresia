@@ -1,8 +1,8 @@
 package views.formData;
 
-import models.User;
+import models.user.User;
 import play.i18n.Messages;
-import services.UserService;
+import services.user.UserService;
 
 /**
  * Class for processing the user login form

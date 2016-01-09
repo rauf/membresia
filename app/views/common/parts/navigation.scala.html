@@ -5,7 +5,7 @@
 <ul class="sidebar-menu">
     <li class="header">@Messages.get("app.global.menu.title")</li>
     <li>
-        <a href="@routes.StatisticController.index()">
+        <a href="@controllers.statistic.routes.StatisticController.index()">
             <i class="fa fa-th"></i>
             <span>@Messages.get("app.menu.dashboard.title")</span>
         </a>
@@ -17,8 +17,8 @@
             <span>@Messages.get("app.menu.member.title")</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="@routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.member.list")</a></li>
-            <li><a href="@routes.MemberController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.member.create")</a></li>
+            <li><a href="@controllers.user.routes.MemberController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.member.list")</a></li>
+            <li><a href="@controllers.user.routes.MemberController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.member.create")</a></li>
         </ul>
     </li>
 
@@ -28,8 +28,8 @@
             <span>@Messages.get("app.menu.subscription.title")</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="@routes.SubscriptionController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.list")</a></li>
-            <li><a href="@routes.SubscriptionController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.create")</a></li>
+            <li><a href="@controllers.subscription.routes.SubscriptionController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.list")</a></li>
+            <li><a href="@controllers.subscription.routes.SubscriptionController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.subscription.create")</a></li>
         </ul>
     </li>
 
@@ -39,9 +39,9 @@
             <span>@Messages.get("app.menu.mailMessage.title")</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="@routes.MailMessageController.sendMailForm()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.mailMessage.send")</a></li>
-            <li><a href="@routes.MessageTemplateController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.list")</a></li>
-            <li><a href="@routes.MessageTemplateController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.create")</a></li>
+            <li><a href="@controllers.communication.routes.MailMessageController.sendMailForm()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.mailMessage.send")</a></li>
+            <li><a href="@controllers.communication.routes.MessageTemplateController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.list")</a></li>
+            <li><a href="@controllers.communication.routes.MessageTemplateController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.messageTemplate.create")</a></li>
         </ul>
     </li>
 
@@ -51,9 +51,9 @@
             <span>@Messages.get("app.menu.adminUser.title")</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="@routes.AdminUserController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.list")</a></li>
-            <li><a href="@routes.AdminUserController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.create")</a></li>
+            <li><a href="@controllers.user.routes.AdminUserController.index()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.list")</a></li>
+            <li><a href="@controllers.user.routes.AdminUserController.create()"><i class="fa fa-circle-o"></i> @Messages.get("app.menu.adminUser.create")</a></li>
         </ul>
     </li>
-    <li><a href="@routes.UserController.logout()"><i class="fa  fa-sign-out"></i> <span>@Messages.get("user.general.logout.label")</span></a></li>
+    <li><a href="@controllers.user.routes.UserController.logout()"><i class="fa  fa-sign-out"></i> <span>@Messages.get("user.general.logout.label")</span></a></li>
 </ul>
