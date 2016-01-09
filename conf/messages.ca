@@ -145,7 +145,7 @@ member.delete.confirm.delete = membre Delete
 ##### Usuaris administradors Formulari
 
 # Llista
-Llista adminUser.list.global.title = de l'usuari admin
+adminUser.list.global.title = Llista de l'usuari admin
 adminUser.list.table.name = Nom
 adminUser.list.table.email = Email
 adminUser.list.empty.link = Feu clic aquí per crear un nou usuari administrador
@@ -205,7 +205,7 @@ adminUser.delete.confirm.delete = Eliminar usuari
 ##### Plantilles MailMessage #####
 
 # Llista
-Plantilles messageTemplate.list.global.title = Missatge
+messageTemplate.list.global.title = Plantilles Missatge
 messageTemplate.list.table.title = Títol
 messageTemplate.list.empty.link = Feu clic aquí per crear una plantilla
 messageTemplate.list.empty.text = No hi ha plantilles disponibles per a ser mostrat.
@@ -295,7 +295,7 @@ subscription.form.validation.periodicity = es va introduir cap termini a termini
 subscription.form.validation.dueDatePeriod = Sense data de venciment de subscripció s'ha introduït.
 subscription.form.validation.endDate = Sense subscripció última data de lliurament va ser ingressat.
 subscription.form.validation.dueDatePeriod.before = Data de venciment ha de ser més gran que la de la data d'avui
-subscription.form.validation.endDate.before date = Últim tram ha de ser més gran que la de la data i la data de venciment inicial d'avui.
+subscription.form.validation.endDate.before  = Últim tram ha de ser més gran que la de la data i la data de venciment inicial d'avui.
 
 # Missatges
 subscription.form.save.message.notification = La subscripció "{0}" ha estat creat / modificat correctament.

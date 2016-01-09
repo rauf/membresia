@@ -145,7 +145,7 @@ member.delete.confirm.delete = miembro Delete
 ##### Usuarios administradores Formulario
 
 # Lista
-Lista adminUser.list.global.title = del usuario admin
+adminUser.list.global.title = Listado de usuarios admin
 adminUser.list.table.name = Nombre
 adminUser.list.table.email = Email
 adminUser.list.empty.link = Haga clic aquí para crear un nuevo usuario administrador
@@ -205,7 +205,7 @@ adminUser.delete.confirm.delete = Eliminar usuario
 ##### Plantillas MailMessage #####
 
 # Lista
-Plantillas messageTemplate.list.global.title = Mensaje
+#messageTemplate.list.global.title = Plantillas de Mensaje
 messageTemplate.list.table.title = Título
 messageTemplate.list.empty.link = Haga clic aquí para crear una nueva plantilla
 messageTemplate.list.empty.text = No hay plantillas disponibles para ser mostrado.
@@ -295,7 +295,7 @@ subscription.form.validation.periodicity = se introdujo ningún plazo a plazos.
 subscription.form.validation.dueDatePeriod = Sin fecha de vencimiento de suscripción se ha introducido.
 subscription.form.validation.endDate = Sin suscripción última fecha de entrega fue ingresado.
 subscription.form.validation.dueDatePeriod.before = Fecha de vencimiento debe ser mayor que la de la fecha de hoy
-subscription.form.validation.endDate.before date = Último tramo debe ser mayor que la de la fecha y la fecha de vencimiento inicial de hoy.
+subscription.form.validation.endDate.before  = Último tramo debe ser mayor que la de la fecha y la fecha de vencimiento inicial de hoy.
 
 # Mensajes
 subscription.form.save.message.notification = La suscripción "{0}" ha sido creado / modificado correctamente.
