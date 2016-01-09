@@ -1,38 +1,440 @@
-app.global.title = Membresia
+##### Global #####
+app.global.title = Membres
+app.global.menu.title = navegació principal
 
-app.menu.logout = logout
-app.menu.profile = profile
-app.home.welcome = Welcome back
-app.menu.user.title = Users
-app.menu.user.list = List all users
-app.menu.user.create = Create a new user
-app.menu.member.list = List all members
-app.menu.member.create = Create a new member
+##### Quadre Perfil d'usuari #####
+app.home.welcome = Benvingut de nou
+app.menu.logout = tancament de sessió
+app.menu.profile = perfil
+
+##### Navegació #####
+app.menu.adminUser.title = admin Usuaris
+app.menu.adminUser.list = Llistar tots els usuaris administradors
+app.menu.adminUser.create = Crea un nou usuari administrador
+
+app.menu.member.title = Membres
+app.menu.member.list = Llistar tots els membres
+app.menu.member.create = Crea un nou membre
+
+app.menu.subscription.title = Subscripcions
+app.menu.subscription.list = Enumerar totes les subscripcions
+app.menu.subscription.create = Crear una nova subscripció
+
+app.menu.mailMessage.title = Missatgeria
+app.menu.mailMessage.send = Redactar un nou missatge
+app.menu.messageTemplate.list = Llista totes les plantilles de missatges
+app.menu.messageTemplate.create = Crea una plantilla de missatge
+
+app.menu.dashboard.title = Dashboard
 
 
-member.form.validation.name = No name was given.
-member.form.validation.lastName  = No last name was given.
-member.form.validation.email = No email was given or format is invalid.
-member.form.validation.password = No password was given.
-member.form.validation.password.length = Given password is less than five characters.
-member.form.validation.address = No address was given.
-member.form.validation.city = No city was given.
-member.form.validation.state = No state/province was given.
-member.form.validation.country = No country was given.
-member.form.validation.cp = No postal code was given.
-member.form.validation.phone = No phone was given.
-member.form.validation.nif = No nif was given.
-member.form.validation.subscription = Unknown subscription: {0}
+##### ##### Forma global
+app.global.validation.message = Si us plau, corregeixi els errors anteriorment.
+app.global.form.submit = Desa
+app.global.form.send = Enviar
+app.global.form.pay = Pagament
+app.global.form.cancel = Cancel
+app.common.form.select.default = Seleccioneu un valor
+app.common.form.select.unselect = valor No seleccionat
 
-member.form.global.new.title = Create new member
-member.form.global.edit.title = Edit member
 
-member.form.label.name = Name
-member.form.label.lastName = Surname
-member.form.label.nif = Identification number
+##### Membres Formulari #####
+
+# Llista
+member.list.global.title = Llista de Membres
+member.list.search.label = Cerca per
+member.list.search.placeholder = Cerca per ...
+member.list.search.button = Cercar
+member.list.table.name = Nom
+member.list.table.phone = Telèfon de contacte
+member.list.table.email = Email
+member.list.table.city = Ciutat (Estat)
+member.list.empty.link = Feu clic aquí per crear un nou membre
+member.list.empty.text = No hi ha membres disponibles per a ser mostrat.
+member.list.empty.title = No hi ha membres disponibles
+
+
+# Títols
+member.form.global.new.title = Crea un nou membre
+member.form.global.edit.title = Edita membre
+member.list.show.title = perfil de membre
+# Validació
+member.form.validation.name = No es va donar nom.
+member.form.validation.lastName = No es va donar cap cognom.
+member.form.validation.nif = No es va donar cap nif.
+member.form.validation.email = a de correu electrònic se li va donar o el format no és vàlid.
+member.form.validation.emailUsed = Ja hi ha un membre amb aquesta adreça de correu electrònic.
+member.form.validation.address = No es va donar cap adreça.
+member.form.validation.city = No es va donar cap ciutat.
+member.form.validation.state = No es va donar cap estat / província.
+member.form.validation.country = No es va donar país.
+member.form.validation.cp = No es va donar cap codi postal.
+member.form.validation.phone = No es va donar cap telèfon.
+member.form.validation.subscriptions =
+
+
+# Validació
+member.form.label.name = Nom
+member.form.label.lastName = Cognoms
+member.form.label.nif = Número d'identificació
 member.form.label.email = Email
+member.form.label.address = Direcció
+member.form.label.city = Ciutat
+member.form.label.state = Estat / Província
+member.form.label.cp = Codi postal
+member.form.label.country = País
+member.form.label.phone = Telèfon
+member.form.label.subscriptions = Subscripcions
 
-member.form.helper.name = Please enter your name
-member.form.helper.lastName = Please enter your last name
-member.form.helper.nif = Please enter your nif
-member.form.helper.email = Please enter your email
+# Placeholder
+member.form.placeholder.name =
+member.form.placeholder.lastName =
+member.form.placeholder.nif =
+member.form.placeholder.email =
+member.form.placeholder.address =
+member.form.placeholder.city =
+member.form.placeholder.state =
+member.form.placeholder.cp =
+member.form.placeholder.country =
+member.form.placeholder.phone =
+member.form.placeholder.subscriptions =
+
+# Ajudants
+member.form.helper.name = Si us plau, introduïu el nom del membre
+member.form.helper.lastName = Si us plau, introdueixi el cognom membre
+member.form.helper.nif = Si us plau, introdueixi el NIF membre
+member.form.helper.email = Si us plau, introdueixi l'email membre
+member.form.helper.address = Si us plau, introdueixi l'adreça física
+member.form.helper.city = Si us plau ingressi la ciutat membre
+member.form.helper.state = Si us plau, introdueixi l'Estat membre o província de residència
+member.form.helper.country = Si us plau, introdueixi el país membre de la residència
+member.form.helper.cp = Si us plau, introdueixi el codi postal direcció de membre
+member.form.helper.phone = Si us plau, introduïu un número de telèfon de contacte
+member.form.helper.subscriptions = Seleccioneu les subscripcions desitjades
+
+# Missatges
+member.form.save.message.notification = L'element {0} ha estat creat / modificat correctament.
+member.form.remove.message.success = L'element seleccionat s'ha eliminat.
+member.form.remove.message.error = L'element seleccionat no podria haver-me retirat.
+member.form.remove.archive.success = L'element seleccionat s'ha arxivat.
+member.form.remove.archive.error = L'element seleccionat no podia ser arxivat.
+
+member.mail.subject.newAccount = nova informació del compte
+member.mail.body.line1 = Hi there.
+member.mail.body.line2 = Ha estat registrat com a membre al membresía.
+member.mail.body.line3 = Vostè va a rebre correus diaris amb instruccions sobre com fer els seus pagaments a terminis en línia.
+member.mail.body.line4 = Gràcies, tenir un dia preciós.
+
+# Mostra
+member.show.payment.action = Realitzar un pagament
+member.show.payment.history = Historial de pagaments
+member.show.payment.empty = No hi ha pagaments registrats trobats
+member.show.payment.text = No hi ha pagaments registrered d'aquest usuari.
+member.show.payments.link = Feu clic aquí per realitzar un pagament.
+
+# Pagament
+member.pay.global.title = Realitzar Pagament
+
+member.archive.name.placeholder = MEMBRES
+member.archive.lastName.placeholder = RETIRAT
+
+member.delete.confirm.title = Irreversible Supressió membre
+member.delete.confirm.body = Realment voleu eliminar
+member.delete.confirm.close = Tancar
+member.delete.confirm.delete = membre Delete
+##### Usuaris administradors Formulari
+
+# Llista
+Llista adminUser.list.global.title = de l'usuari admin
+adminUser.list.table.name = Nom
+adminUser.list.table.email = Email
+adminUser.list.empty.link = Feu clic aquí per crear un nou usuari administrador
+adminUser.list.empty.text = No hi ha usuaris administradors disponibles per a ser mostrat.
+adminUser.list.empty.title = No hi ha usuaris administradors disponibles
+
+# Títols
+adminUser.form.global.new.title = Crea un nou usuari
+adminUser.form.global.edit.title = Edita usuari
+
+# Etiquetes
+adminUser.form.label.name = Nom
+adminUser.form.label.lastName = Cognom
+adminUser.form.label.email = Email
+adminUser.form.label.password = Contrasenya
+
+# Ajudants
+adminUser.form.helper.name = Si us plau, introduïu el nom d'usuari
+adminUser.form.helper.lastName = Si us plau, introdueixi l'últim nom d'usuari
+adminUser.form.helper.password = Si us plau, introduïu la contrasenya d'usuari
+adminUser.form.helper.email = Si us plau introdueixi el correu electrònic de l'usuari
+
+# Placeholder
+adminUser.form.placeholder.name =
+adminUser.form.placeholder.lastName =
+adminUser.form.placeholder.password =
+adminUser.form.placeholder.email =
+
+# Validació
+adminUser.form.validation.name = No es va donar nom.
+adminUser.form.validation.lastName = No es va donar cap cognom.
+adminUser.form.validation.password = No es va donar cap contrasenya.
+adminUser.form.validation.password.length = Donada contrasenya és menys de cinc caràcters.
+adminUser.form.validation.email = a de correu electrònic se li va donar o el format no és vàlid.
+adminUser.form.validation.emailUsed = Ja existeix un usuari amb aquest e-mail.
+
+
+# Missatges
+adminUser.form.save.message.notification = L'usuari "{0}" ha estat creat / modificat correctament.
+adminUser.form.remove.message.success = L'usuari seleccionat s'ha eliminat.
+adminUser.form.remove.message.error = L'usuari seleccionat no podia em eliminat.
+
+adminUser.mail.subject.newAccount = nova informació del compte
+adminUser.mail.body.line1 = Hi there.
+adminUser.mail.body.line2 = Ha estat registrat com a usuari administrador en membresía.
+adminUser.mail.body.line3a = Vostè nom d'usuari és
+adminUser.mail.body.line3b = i la contrasenya actual és
+adminUser.mail.body.line4 = Si us plau, recordi que vostè pot canviar el seu nom d'usuari / adreça de correu electrònic i contrasenya en qualsevol moment des de la configuració del perfil d'usuari.
+adminUser.mail.body.line5 = Gràcies, té un dia preciós.
+
+adminUser.delete.confirm.title = admin Irreversible Supressió de l'usuari
+adminUser.delete.confirm.body = Realment voleu eliminar
+adminUser.delete.confirm.close = Tancar
+adminUser.delete.confirm.delete = Eliminar usuari
+
+
+##### Plantilles MailMessage #####
+
+# Llista
+Plantilles messageTemplate.list.global.title = Missatge
+messageTemplate.list.table.title = Títol
+messageTemplate.list.empty.link = Feu clic aquí per crear una plantilla
+messageTemplate.list.empty.text = No hi ha plantilles disponibles per a ser mostrat.
+messageTemplate.list.empty.title = No hi ha plantilles disponibles
+
+# Títols
+messageTemplate.form.global.new.title = Crear una nova plantilla
+messageTemplate.form.global.edit.title = Edita la plantilla
+
+# Etiquetes
+messageTemplate.form.label.title = Títol
+messageTemplate.form.label.body = Cos
+
+# Ajudants
+messageTemplate.form.helper.title = Si us plau, introdueixi el títol de la plantilla
+messageTemplate.form.helper.body = Si us plau, introdueixi el cos de la plantilla
+
+# Placeholder
+messageTemplate.form.placeholder.title =
+messageTemplate.form.placeholder.body =
+
+# Validació
+messageTemplate.form.validation.title = No es va donar títol.
+messageTemplate.form.validation.body = No es va donar cos.
+
+# Missatges
+messageTemplate.form.save.message.notification = La plantilla "{0}" ha estat creat / modificat correctament.
+messageTemplate.form.remove.message.success = La plantilla seleccionada s'ha eliminat.
+messageTemplate.form.remove.message.error = La plantilla seleccionada no podia em eliminat.
+
+
+messageTemplate.delete.confirm.title = Irreversible Missatge Plantilla Supressió
+messageTemplate.delete.confirm.body = Realment voleu eliminar
+messageTemplate.delete.confirm.close = Tancar
+messageTemplate.delete.confirm.delete = Eliminar plantilla
+
+##### ##### Subscripcions
+
+# Llista
+subscription.list.global.title = Llista de subscripció
+subscription.list.table.id = ID
+subscription.list.table.title = Títol
+subscription.list.table.amount = Quota
+subscription.list.table.periodicity = Periodicitat
+subscription.list.empty.link = Feu clic aquí per crear una nova subscripció
+subscription.list.empty.text = No hi ha subscripcions disponibles per a ser mostrat.
+subscription.list.empty.title = No hi ha subscripcions disponibles
+subscription.list.table.subscribers = Subscriptors
+subscription.list.table.installments = Quotes
+
+
+# Títols
+subscription.form.global.new.title = Crear una nova subscripció
+subscription.form.global.edit.title = Edita subscripció
+
+# Etiquetes
+subscription.form.label.title = Títol
+subscription.form.label.description = Descripció
+subscription.form.label.amount = Import Quota
+subscription.form.label.periodicity = Periodicitat
+subscription.form.label.dueDatePeriod = subscripció propera data de venciment
+subscription.form.label.subscribers = Subscriptors
+subscription.form.label.endDate = Subscripció data última quota
+
+# Ajudants
+subscription.form.helper.title = Si us plau, introdueixi el títol de subscripció
+subscription.form.helper.description = Si us plau, introdueixi la descripció subscripció
+subscription.form.helper.amount = Si us plau ingressi la quantitat a terminis de subscripció
+subscription.form.helper.periodicity = Si us plau, introdueixi el període de subscripció a terminis
+subscription.form.helper.dueDatePeriod = Si us plau, introdueixi la subscripció propera data de venciment
+subscription.form.helper.endDate = Si us plau, introdueixi la subscripció última data de lliurament
+
+# Placeholder
+subscription.form.placeholder.title =
+subscription.form.placeholder.description =
+subscription.form.placeholder.amount =
+subscription.form.placeholder.periodicity =
+subscription.form.placeholder.dueDatePeriod =
+subscription.form.placeholder.endDate =
+
+
+# Validació
+subscription.form.validation.title = No es va donar títol.
+subscription.form.validation.description = La descripció no se li va donar.
+subscription.form.validation.amount = es va definir Cap quantitat a terminis.
+subscription.form.validation.periodicity = es va introduir cap termini a terminis.
+subscription.form.validation.dueDatePeriod = Sense data de venciment de subscripció s'ha introduït.
+subscription.form.validation.endDate = Sense subscripció última data de lliurament va ser ingressat.
+subscription.form.validation.dueDatePeriod.before = Data de venciment ha de ser més gran que la de la data d'avui
+subscription.form.validation.endDate.before date = Últim tram ha de ser més gran que la de la data i la data de venciment inicial d'avui.
+
+# Missatges
+subscription.form.save.message.notification = La subscripció "{0}" ha estat creat / modificat correctament.
+subscription.form.remove.message.success = La subscripció seleccionada s'ha eliminat.
+subscription.form.remove.message.error = La subscripció seleccionada no podria haver-me retirat.
+subscription.form.edit.note = Els canvis realitzats en la quantitat i la quota vençuda i periodicitat es reflectiran en quotes actuals i futurs només si no pagament s'ha registrat encara.
+
+subscription.mail.subject.update = actualització de subscripció
+subscription.mail.body.line1 = Hi there.
+subscription.mail.body.line2 = No s'ha canviat a la "{0}" subscripció. La informació de facturació de subscripció és una continuació:
+subscription.mail.body.line3 = Gràcies, tenir un dia preciós.
+
+
+subscription.delete.confirm.title = Irreversible subscripció Supressió
+subscription.delete.confirm.body1 = Realment voleu eliminar
+subscription.delete.confirm.body2 = i tota la seva informació de lliurament i pagament
+subscription.delete.confirm.close = Tancar
+subscription.delete.confirm.delete = Eliminar la subscripció
+
+model.periodicity.unique.title = Un temporitzador
+model.periodicity.week.title = Setmanal
+model.periodicity.month.title = Mensual
+model.periodicity.bimonth.title = Bimestral
+model.periodicity.trimester.title = Trimestral
+model.periodicity.semester.title = Semestral
+model.periodicity.year.title = anual
+
+
+
+##### MailMessage ####
+
+# Títols
+mailMessage.form.send.title = redactar missatge
+
+# Etiquetes
+mailMessage.form.label.subject = Assumpte
+mailMessage.form.label.body = Cos
+mailMessage.form.label.recipients = Destinataris
+
+# Ajudants
+mailMessage.form.helper.subject = Si us plau, entreu l'assumpte del missatge
+mailMessage.form.helper.body = Si us plau, introdueixi el cos del missatge
+mailMessage.form.helper.recipients = Seleccioneu els destinataris de missatges
+
+
+# Placeholder
+mailMessage.form.placeholder.subject =
+mailMessage.form.placeholder.body =
+mailMessage.form.placeholder.recipients =
+
+# Validació
+mailMessage.form.validation.subject = No es va donar cap matèria.
+mailMessage.form.validation.body = No es va donar cos.
+mailMessage.form.validation.recipients = No es van seleccionar els beneficiaris.
+
+# Missatges
+mailMessage.form.save.message.notification = El missatge ha estat enviat
+mailMessage.form.save.message.notification.message = El missatge ha estat enviat a tots els destinataris seleccionats.
+mailMessage.form.global.new.title = Enviar nou missatge
+
+##### Pagament ####
+
+payment.form.instructions.installment = Seleccioneu una quota activa i introduïu la quantitat del seu pagament.
+
+payment.form.label.installment = Quota a pagar
+payment.form.helper.installment = Seleccioneu la quota per a realitzar el pagament a.
+payment.form.label.amount = quantitat a pagar
+payment.form.helper.amount = Introduïu la quantitat que desitja paga per a lliurament seleccionat
+
+payment.form.placeholder.amount =
+payment.form.placeholder.installment =
+
+payment.form.validation.memberInstallmentToken = Seleccioneu una quota a pagar
+payment.form.validation.amount = Proporcionar la quantitat a pagar
+payment.form.validation.excess = La quantitat del seu pagament és superior a la quantitat deguda de {0}
+
+payment.form.save.message.notification = El seu pagament ha estat registrada.
+
+payment.show.chart.subscription = Evolució pagament acumulatiu
+
+##### Iniciar Sessió ####
+
+login.form.label.email = Email
+login.form.placeholder.email =
+login.form.helper.email = Si us plau, introdueixi el seu correu electrònic
+login.form.validation.email = Proporciona una adreça de correu electrònic vàlida
+
+login.form.label.password = Contrasenya
+login.form.placeholder.password =
+login.form.helper.password = Si us plau, Entre la seva contrasenya
+login.form.validation.password = Introduïu la contrasenya
+
+login.form.password.link = He oblidat la contrasenya
+login.form.header.title = Ingressa tal d'iniciar sessió
+login.form.auth.error = credencials no vàlides
+user.general.logout.label = Sortir
+user.general.profile.edit = Edita el perfil
+user.general.profile.show = Perfil
+user.login.passwordRecovery.title = Password Recovery
+login.form.submit.label = Entrada
+login.form.recovery.label = Recuperar
+user.login.global.title = Entrada Registre
+
+login.form.passwordRecovery.title = Introdueix la teva adreça de correu electrònic per recuperar la seva contrasenya
+login.form.login.link = Ingressa
+login.form.recovery.error = compte de correu electrònic vàlida.
+
+login.mail.subject.recovery = Password Recovery
+recovery.mail.body.line1 = Hi there.
+recovery.mail.body.line2 = La seva contrasenya ha estat reiniciat.
+recovery.mail.body.line3a = Vostè nom d'usuari és
+recovery.mail.body.line3b = i la seva nova contrasenya és
+recovery.mail.body.line4 = Si us plau, recordeu que és possible que vulgueu canviar el seu nom d'usuari / adreça de correu electrònic a la contrasenya en qualsevol moment des que el perfil d'usuari.
+recovery.mail.body.line5 = Gràcies, tenir un dia preciós.
+
+##### MemberInstallment ####
+
+memberInstallment.mail.body.line1 = Avís Quota
+memberInstallment.mail.body.line2 = Una nova entrega s'ha llançat per al '' {0} '' subscripció.
+memberInstallment.mail.body.line3 = La suma total a pagar per aquest lliurament és de {0}. Si us plau, feu clic al següent enllaç per procedir al seu pagament.
+memberInstallment.mail.body.line4 = Feu clic aquí per pagar ara.
+memberInstallment.mail.body.line5 = Aquest nou lliurament es deu a la {0}.
+memberInstallment.mail.body.line6 = Gràcies, té un dia preciós.
+
+##### Pagament Pública ####
+
+paymentPublic.form.header.title = Si us plau ingressi la quantitat que amb el de pagar al lliurament seleccionat.
+paymentPublic.form.payed.title = Aquest lliurament de subscripció ja ha estat pagat en la seva totalitat.
+paymentPublic.form.amount.due = Import a pagar
+paymentPublic.message.pay.success = El seu pagament s'ha registrat correctament.
+paymentPublic.message.pay.fail = El seu pagament no es va poder processar.
+PaymentPublic.message.pay.thankyou =  Gràcies
+paymentPublic.message.pay.sorry = Ho sento
+paymentPublic.pay.paypal.title = pagament de PayPal
+paymentPublic.pay.complete.title = Pagament completat
+
+##### Estadística ####
+
+statistic.global.title.dashboard = Dashboard
+statistic.dashboard.payments.title = Darrers Pagaments
+statistic.dashboard.chart.title = Total Col·leccions
+statistic.dashboard.installments.title = Quotes actuals
