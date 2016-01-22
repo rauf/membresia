@@ -5,7 +5,7 @@
 # Home page
 GET         /                                          controllers.user.UserController.login()
 GET         /user-login                                controllers.user.UserController.login()
-GET         /user-authenticate                         controllers.user.UserController.authenticate()
+POST        /user-authenticate                         controllers.user.UserController.authenticate()
 GET         /password-recovery                         controllers.user.UserController.passwordRecovery()
 GET         /logout                                    controllers.user.UserController.logout()
 GET         /change-password                           controllers.user.UserController.changePassword()
